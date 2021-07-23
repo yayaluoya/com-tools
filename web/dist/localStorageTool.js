@@ -2,6 +2,21 @@
  * localStorage工具类
  */
 export default class localStorageTool {
+    /** 获取本地的全部数据，直接用属性访问 */
+    static get localData() {
+        return new Proxy({}, {
+            get(target, p, receiver) {
+                return localStorageTool.getItem(p);
+            },
+            has(target, p) {
+                return localStorage.getItem(p) != null;
+            },
+            set(target, p, value, receiver) {
+                localStorageTool.setItem(p, value);
+                return true;
+            },
+        });
+    }
     /**
      * 获取数据代理
      * 这个对象是可能会动态更改的，所以要用的时候直接从这里获取就行不要另存一份
@@ -77,16 +92,17 @@ class localStorageData {
     }
     /** 获取数据 */
     getData() {
+        let _data = localStorage.getItem(this.key);
         try {
-            let _valid = (this.valid++, this.valid);
-            this.rootData = createProxyObj(JSON.parse(localStorage.getItem(this.key)), (...arg) => {
-                _valid == this.valid && this.editBack(...arg);
-            });
+            //反序列化数据，如果报错则说明是纯字符串，就不用管它了
+            _data = JSON.parse(_data);
         }
-        catch (_a) {
-            localStorage.removeItem(this.key);
-            this.rootData = null;
-        }
+        catch (_a) { }
+        //获取一个代理数据，并添加监听
+        let _valid = (this.valid++, this.valid);
+        this.rootData = createProxyObj(_data, (...arg) => {
+            _valid == this.valid && this.editBack(...arg);
+        });
     }
     /** 数据修改回调 */
     editBack(target, p, value) {

@@ -7,6 +7,24 @@ export default class localStorageTool {
     [index: string]: localStorageData;
   } = {};
 
+  /** 获取本地的全部数据，直接用属性访问 */
+  public static get localData(): {
+    [index: string]: any
+  } {
+    return new Proxy({}, {
+      get(target: any, p: string | symbol, receiver: any): any {
+        return localStorageTool.getItem(p as string);
+      },
+      has(target: any, p: string | symbol): boolean {
+        return localStorage.getItem(p as string) != null;
+      },
+      set(target: any, p: string | symbol, value: any, receiver: any): boolean {
+        localStorageTool.setItem(p as string, value);
+        return true;
+      },
+    });
+  }
+
   /**
    * 获取数据代理
    * 这个对象是可能会动态更改的，所以要用的时候直接从这里获取就行不要另存一份
@@ -94,17 +112,17 @@ class localStorageData {
 
   /** 获取数据 */
   public getData() {
+    let _data = localStorage.getItem(this.key);
     try {
-      let _valid = (this.valid++, this.valid);
-      this.rootData = createProxyObj(
-        JSON.parse(localStorage.getItem(this.key)),
-        (...arg: [any, any, any]) => {
-          _valid == this.valid && this.editBack(...arg);
-        });
-    } catch {
-      localStorage.removeItem(this.key);
-      this.rootData = null;
+      //反序列化数据，如果报错则说明是纯字符串，就不用管它了
+      _data = JSON.parse(_data);
     }
+    catch { }
+    //获取一个代理数据，并添加监听
+    let _valid = (this.valid++, this.valid);
+    this.rootData = createProxyObj(_data, (...arg: [any, any, any]) => {
+      _valid == this.valid && this.editBack(...arg);
+    });
   }
 
   /** 数据修改回调 */
