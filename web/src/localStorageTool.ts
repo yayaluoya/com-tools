@@ -12,12 +12,15 @@ export default class localStorageTool {
     [index: string]: any
   } {
     return new Proxy({}, {
+      /** 获取 */
       get(target: any, p: string | symbol, receiver: any): any {
         return localStorageTool.getItem(p as string);
       },
+      /** 判断有没有 */
       has(target: any, p: string | symbol): boolean {
         return localStorage.getItem(p as string) != null;
       },
+      /** 设置 */
       set(target: any, p: string | symbol, value: any, receiver: any): boolean {
         localStorageTool.setItem(p as string, value);
         return true;

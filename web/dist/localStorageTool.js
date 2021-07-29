@@ -5,12 +5,15 @@ export default class localStorageTool {
     /** 获取本地的全部数据，直接用属性访问 */
     static get localData() {
         return new Proxy({}, {
+            /** 获取 */
             get(target, p, receiver) {
                 return localStorageTool.getItem(p);
             },
+            /** 判断有没有 */
             has(target, p) {
                 return localStorage.getItem(p) != null;
             },
+            /** 设置 */
             set(target, p, value, receiver) {
                 localStorageTool.setItem(p, value);
                 return true;
