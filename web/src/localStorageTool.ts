@@ -241,18 +241,28 @@ function createProxyObj(obj: any, _setFun: Function = null) {
       _f && typeof _f == 'function' && _f(target, p, value);
     }
 
+    /** 获取回调函数，再代理内部就不能直接使用闭包中的回调函数了 */
+    let _getBackF = (target) => {
+      return Reflect.get(target, _proxyFunKey);
+    }
+
     //
     obj = new Proxy(obj, {
-      /** 数据设置代理 */
+      /** 数据被设置 */
       set(target, p, value, receiver) {
         //先为旧值清理监听
         CleanProxyObjFun(Reflect.get(target, p));
-        //再为新添加监听
-        value = createProxyObj(value, _setFun);
+        //再为新值添加监听
+        value = createProxyObj(value, _getBackF(target));
         //调用回调
         _setBackF(target, p, value);
         //
         return Reflect.set(target, p, value, receiver);
+      },
+      /** 数据被获取 */
+      get(target, p, receiver) {
+        //根据当前对象的回调函数动态设置一下子对象的回调函数
+        return createProxyObj(Reflect.get(target, p, receiver), _getBackF(target));
       },
       /** 数据被删除 */
       deleteProperty(target, p) {
