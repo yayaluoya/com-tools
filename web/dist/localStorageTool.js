@@ -1,7 +1,7 @@
 /**
  * localStorage工具类
  */
-export default class localStorageTool {
+class localStorageTool {
     /** 获取本地的全部数据，直接用属性访问 */
     static get localData() {
         return new Proxy({}, {
@@ -196,6 +196,24 @@ class localStorageData {
 const _proxyKey = Symbol('_proxyKey');
 /** 代理对象回调执行方法标识 */
 const _proxyFunKey = Symbol('_proxyFunKey');
+/** 代理对象保留key标识 */
+const _proxyKeepKeys = [_proxyKey, _proxyFunKey];
+/** 关闭代理队列，此值只能在securityExeFun方法中被设置，这样才能保证它永远不会小于0 */
+let _offProxyQueue = 0;
+/**
+ * 以安全的方式执行某个方法
+ * 就是说执行这个方法的期间触发的代理操作都不会产生副作用
+ * @param _f 目标方法
+ */
+function securityExeFun(_f) {
+    _offProxyQueue++;
+    _f(); //执行目标方法
+    _offProxyQueue--;
+}
+/** 是否能执行代理副作用操作 */
+let _isProxy = () => {
+    return _offProxyQueue === 0;
+};
 /**
  * 创建一个代理对象
  * @param obj 原始对象
@@ -207,7 +225,10 @@ function createProxyObj(obj, _fun = null) {
     }
     //递归添加代理
     for (let i in obj) {
-        obj[i] = createProxyObj(obj[i], _fun);
+        //以安全的方式执行
+        securityExeFun(() => {
+            obj[i] = createProxyObj(obj[i], _fun);
+        });
     }
     //判断是否已经设置了代理了，没有设置的话就设置
     if (!getProxyObjKey(obj)) {
@@ -232,9 +253,8 @@ function createProxyObj(obj, _fun = null) {
             /** 数据被设置 */
             set(target, p, value, receiver) {
                 var _a, _b;
-                console.log('set', p);
-                //这里必须要判断下被设置的键是否是执行函数绑定的键
-                if (p !== _proxyFunKey) {
+                //
+                if (_isProxy() && !_proxyKeepKeys.includes(p)) {
                     let _value = Reflect.get(target, p);
                     //先为旧值清理监听
                     cleanProxyObjFun(_value);
@@ -249,20 +269,27 @@ function createProxyObj(obj, _fun = null) {
             /** 数据被获取 */
             get(target, p, receiver) {
                 var _a, _b;
-                console.log('get', p);
-                //调用回调
-                (_b = (_a = getProxyObjBackF(target)) === null || _a === void 0 ? void 0 : _a.get) === null || _b === void 0 ? void 0 : _b.call(_a, target, p);
-                //根据当前对象的回调函数动态设置一下子对象的回调函数
-                return createProxyObj(Reflect.get(target, p, receiver), getProxyObjBackF(target));
+                let _value = Reflect.get(target, p, receiver);
+                //
+                if (_isProxy() && !_proxyKeepKeys.includes(p)) {
+                    //调用回调
+                    (_b = (_a = getProxyObjBackF(target)) === null || _a === void 0 ? void 0 : _a.get) === null || _b === void 0 ? void 0 : _b.call(_a, target, p);
+                    //根据当前对象的回调函数动态设置一下子对象的回调函数
+                    _value = createProxyObj(_value, getProxyObjBackF(target));
+                }
+                return _value;
             },
             /** 数据被删除 */
             deleteProperty(target, p) {
                 var _a, _b;
-                let _value = Reflect.get(target, p);
-                //清理监听
-                cleanProxyObjFun(_value);
-                //调用回调
-                (_b = (_a = getProxyObjBackF(target)) === null || _a === void 0 ? void 0 : _a.set) === null || _b === void 0 ? void 0 : _b.call(_a, target, p, undefined, _value);
+                //
+                if (_isProxy()) {
+                    let _value = Reflect.get(target, p);
+                    //清理监听
+                    cleanProxyObjFun(_value);
+                    //调用回调
+                    (_b = (_a = getProxyObjBackF(target)) === null || _a === void 0 ? void 0 : _a.set) === null || _b === void 0 ? void 0 : _b.call(_a, target, p, undefined, _value);
+                }
                 //
                 return Reflect.deleteProperty(target, p);
             },
@@ -281,7 +308,7 @@ function getProxyObjKey(obj) {
 function getProxyObjBackF(obj) {
     return Reflect.get(obj, _proxyFunKey);
 }
-/** 设置带来对象回调函数 */
+/** 设置代理对象回调函数 */
 function setProxyObjBackF(obj, _fun) {
     Reflect.set(obj, _proxyFunKey, _fun);
 }
@@ -298,8 +325,12 @@ function cleanProxyObjFun(obj) {
     }
     //递归清理
     for (let i in obj) {
-        cleanProxyObjFun(obj[i]);
+        //以安全的方式执行
+        securityExeFun(() => {
+            cleanProxyObjFun(obj[i]);
+        });
     }
     //
     setProxyObjBackF(obj, null);
 }
+//# sourceMappingURL=localStorageTool.js.map

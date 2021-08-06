@@ -22,3 +22,4 @@ export function dateToString(_date, _op = 'y/t/d ih:m:s') {
         }
     });
 }
+//# sourceMappingURL=dateToString.js.map

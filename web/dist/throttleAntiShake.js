@@ -26,3 +26,4 @@ export function createAntiShakeFun(_fun, _time) {
         }
     };
 }
+//# sourceMappingURL=throttleAntiShake.js.map
