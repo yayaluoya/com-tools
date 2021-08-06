@@ -278,12 +278,12 @@ function createProxyObj(obj: any, _fun: proxyFunType = null) {
         //
         if (_isProxy() && !_proxyKeepKeys.includes(p as any)) {
           let _value = Reflect.get(target, p);
-          //先为旧值清理监听
+          //先为旧值清理代理回调
           cleanProxyObjFun(_value);
           //再为新值添加监听
           value = createProxyObj(value, getProxyObjBackF(target));
           //调用回调
-          getProxyObjBackF(target)?.set?.(target, p, value, _value);
+          getProxyObjBackF(target)?.set?.(target, p as any, value, _value);
         }
         //
         return Reflect.set(target, p, value, receiver);
@@ -294,9 +294,12 @@ function createProxyObj(obj: any, _fun: proxyFunType = null) {
         //
         if (_isProxy() && !_proxyKeepKeys.includes(p as any)) {
           //调用回调
-          getProxyObjBackF(target)?.get?.(target, p);
+          getProxyObjBackF(target)?.get?.(target, p as any);
           //根据当前对象的回调函数动态设置一下子对象的回调函数
-          _value = createProxyObj(_value, getProxyObjBackF(target));
+          if (_value && typeof _value == 'object' && getProxyObjBackF(_value) != getProxyObjBackF(target)) {
+            //定义执行监听回调
+            setProxyObjBackF(_value, getProxyObjBackF(target));
+          }
         }
         return _value;
       },
@@ -305,10 +308,10 @@ function createProxyObj(obj: any, _fun: proxyFunType = null) {
         //
         if (_isProxy()) {
           let _value = Reflect.get(target, p);
-          //清理监听
+          //清理代理回调
           cleanProxyObjFun(_value);
           //调用回调
-          getProxyObjBackF(target)?.set?.(target, p, undefined, _value);
+          getProxyObjBackF(target)?.set?.(target, p as any, undefined, _value);
         }
         //
         return Reflect.deleteProperty(target, p);
