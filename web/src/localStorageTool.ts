@@ -278,12 +278,15 @@ function createProxyObj(obj: any, _fun: proxyFunType = null) {
         //
         if (_isProxy() && !_proxyKeepKeys.includes(p as any)) {
           let _value = Reflect.get(target, p);
-          //先为旧值清理代理回调
-          cleanProxyObjFun(_value);
-          //再为新值添加监听
+          //为新值添加监听
           value = createProxyObj(value, getProxyObjBackF(target));
-          //调用回调
-          getProxyObjBackF(target)?.set?.(target, p as any, value, _value);
+          //新旧值不一样时触发回调
+          if (_value !== value) {
+            //先为旧值清理代理回调
+            cleanProxyObjFun(_value);
+            //调用回调
+            getProxyObjBackF(target)?.set?.(target, p as any, value, _value);
+          }
         }
         //
         return Reflect.set(target, p, value, receiver);

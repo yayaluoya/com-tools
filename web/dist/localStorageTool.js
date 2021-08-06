@@ -256,12 +256,15 @@ function createProxyObj(obj, _fun = null) {
                 //
                 if (_isProxy() && !_proxyKeepKeys.includes(p)) {
                     let _value = Reflect.get(target, p);
-                    //先为旧值清理代理回调
-                    cleanProxyObjFun(_value);
-                    //再为新值添加监听
+                    //为新值添加监听
                     value = createProxyObj(value, getProxyObjBackF(target));
-                    //调用回调
-                    (_c = (_a = getProxyObjBackF(target)) === null || _a === void 0 ? void 0 : (_b = _a).set) === null || _c === void 0 ? void 0 : _c.call(_b, target, p, value, _value);
+                    //新旧值不一样时触发回调
+                    if (_value !== value) {
+                        //先为旧值清理代理回调
+                        cleanProxyObjFun(_value);
+                        //调用回调
+                        (_c = (_a = getProxyObjBackF(target)) === null || _a === void 0 ? void 0 : (_b = _a).set) === null || _c === void 0 ? void 0 : _c.call(_b, target, p, value, _value);
+                    }
                 }
                 //
                 return Reflect.set(target, p, value, receiver);
