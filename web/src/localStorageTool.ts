@@ -74,9 +74,6 @@ export default class localStorageTool {
   }
 }
 
-/** 代理对象标识 */
-const _proxyKey = Symbol('_proxyKey');
-
 /**
  * 数据保存对象
  */
@@ -88,12 +85,13 @@ class localStorageData {
 
   /** 记录是否编辑 */
   private ifEdit: boolean = false;
+
   /** 监听器列表 */
   private watchs: {
     this: any,
     fun: Function,
-    objKey: any,
-    key: string,
+    objKey: symbol,
+    key: string | symbol,
   }[] = [];
 
   /** 获取数据 */
@@ -120,16 +118,19 @@ class localStorageData {
     }
     catch { }
     //获取一个代理数据，并添加监听
-    this.rootData = createProxyObj(_data, (...arg: [any, any, any]) => {
-      this.editBack(...arg);
+    this.rootData = createProxyObj(_data, {
+      set: (...arg) => {
+        this.setBack(...arg);
+      },
     });
   }
 
   /** 数据修改回调 */
-  private editBack(target: any, p: string | symbol, value: any) {
+  private setBack(target: any, p: string | symbol, newValue: any, value: any) {
+    let _objKey: symbol = getProxyObjKey(target);
     //触发监听
     this.watchs.forEach((item) => {
-      if (target[_proxyKey] == item.objKey && item.key == p) {
+      if (_objKey == item.objKey && item.key == p) {
         item.fun.call(item.this);
       }
     });
@@ -149,13 +150,14 @@ class localStorageData {
    * @param _key 监听键
    */
   public on(_this: any, _fun: Function, _obj: any, _key: string | string[]) {
-    if (!_obj[_proxyKey]) { return; }
+    let _objKey: symbol = getProxyObjKey(_obj);
+    if (!_objKey) { return; }
     if (!Array.isArray(_key)) { _key = [_key]; }
     _key.forEach((key) => {
       this.watchs.push({
         this: _this,
         fun: _fun,
-        objKey: _obj[_proxyKey],
+        objKey: _objKey,
         key: key,
       });
     });
@@ -168,7 +170,8 @@ class localStorageData {
    * @param _key 监听键
    */
   public once(_this: any, _fun: Function, _obj: any, _key: string | string[]) {
-    if (!_obj[_proxyKey]) { return; }
+    let _objKey: symbol = getProxyObjKey(_obj);
+    if (!_objKey) { return; }
     if (!Array.isArray(_key)) { _key = [_key]; }
     let __this = this;
     _key.forEach((key) => {
@@ -200,24 +203,34 @@ class localStorageData {
   }
 }
 
-/** 代理对象回调执行方法 */
+/** 代理对象唯一key标识 */
+const _proxyKey = Symbol('_proxyKey');
+/** 代理对象回调执行方法标识 */
 const _proxyFunKey = Symbol('_proxyFunKey');
+
+/** 代理对象的回调执行方法类型 */
+type proxyFunType = {
+  /** 数据被设置的回调 */
+  set?: (target, p: string | symbol, newValue, value) => void;
+  /** 数据被获取时的回调 */
+  get?: (target, p: string | symbol) => void;
+};
 
 /**
  * 创建一个代理对象
  * @param obj 原始对象
- * @param _setFun 修改回调
+ * @param _fun 回调
  */
-function createProxyObj(obj: any, _setFun: Function = null) {
+function createProxyObj(obj: any, _fun: proxyFunType = null) {
   if (!obj || typeof obj != 'object') { return obj; }
 
   //递归添加代理
   for (let i in obj) {
-    obj[i] = createProxyObj(obj[i], _setFun);
+    obj[i] = createProxyObj(obj[i], _fun);
   }
 
   //判断是否已经设置了代理了，没有设置的话就设置
-  if (!obj[_proxyKey]) {
+  if (!getProxyObjKey(obj)) {
     //定义代理对象必备的不可配置不可枚举属性
     Object.defineProperties(obj, {
       //唯一标识，不可写
@@ -227,7 +240,7 @@ function createProxyObj(obj: any, _setFun: Function = null) {
         writable: false,
         value: Symbol(),
       },
-      //添加一个执行回调，可写
+      //执行回调，可写
       [_proxyFunKey]: {
         configurable: false,
         enumerable: false,
@@ -235,63 +248,73 @@ function createProxyObj(obj: any, _setFun: Function = null) {
       }
     });
 
-    /** 回调函数 */
-    let _setBackF = (target, p, value) => {
-      let _f = Reflect.get(target, _proxyFunKey);
-      _f && typeof _f == 'function' && _f(target, p, value);
-    }
-
-    /** 获取回调函数，再代理内部就不能直接使用闭包中的回调函数了 */
-    let _getBackF = (target) => {
-      return Reflect.get(target, _proxyFunKey);
-    }
-
     //
     obj = new Proxy(obj, {
       /** 数据被设置 */
       set(target, p, value, receiver) {
-        //先为旧值清理监听
-        CleanProxyObjFun(Reflect.get(target, p));
-        //再为新值添加监听
-        value = createProxyObj(value, _getBackF(target));
-        //调用回调
-        _setBackF(target, p, value);
+        //这里必须要判断下被设置的键是否是执行函数绑定的键
+        if (p !== _proxyFunKey) {
+          let _value = Reflect.get(target, p);
+          //先为旧值清理监听
+          cleanProxyObjFun(_value);
+          //再为新值添加监听
+          value = createProxyObj(value, getProxyObjBackF(target));
+          //调用回调
+          getProxyObjBackF(target)?.set?.(target, p, value, _value);
+        }
         //
         return Reflect.set(target, p, value, receiver);
       },
       /** 数据被获取 */
-      get(target, p, receiver) {
-        //根据当前对象的回调函数动态设置一下子对象的回调函数
-        return createProxyObj(Reflect.get(target, p, receiver), _getBackF(target));
-      },
+      // get(target, p, receiver) {
+      //   console.log('get', p);
+      //   //调用回调
+      //   getProxyObjBackF(target)?.get?.(target, p);
+      //   //根据当前对象的回调函数动态设置一下子对象的回调函数
+      //   return createProxyObj(Reflect.get(target, p, receiver), getProxyObjBackF(target));
+      // },
       /** 数据被删除 */
       deleteProperty(target, p) {
+        let _value = Reflect.get(target, p);
         //清理监听
-        CleanProxyObjFun(Reflect.get(target, p));
+        cleanProxyObjFun(_value);
         //调用回调
-        _setBackF(target, p, undefined);
+        getProxyObjBackF(target)?.set?.(target, p, undefined, _value);
         //
         return Reflect.deleteProperty(target, p);
       },
     });
   }
   //定义执行监听回调
-  obj[_proxyFunKey] = _setFun;
+  setProxyObjBackF(obj, _fun);
   //
   return obj;
 }
 
+/** 获取代理对象唯一key */
+function getProxyObjKey(obj): symbol {
+  return Reflect.get(obj, _proxyKey);
+}
+/** 获取代理对象回调函数 */
+function getProxyObjBackF(obj): proxyFunType {
+  return Reflect.get(obj, _proxyFunKey);
+}
+/** 设置带来对象回调函数 */
+function setProxyObjBackF(obj, _fun: proxyFunType) {
+  Reflect.set(obj, _proxyFunKey, _fun);
+}
+
 /**
- * 清理代理对象执行回调
+ * 清理代理对象回调函数
  * @param obj 目标对象
  */
-function CleanProxyObjFun(obj: any) {
+function cleanProxyObjFun(obj: any) {
   if (!obj || typeof obj != 'object') { return; }
-  if (!obj[_proxyFunKey]) { return; }
+  if (!getProxyObjBackF(obj)) { return; }
   //递归清理
   for (let i in obj) {
-    CleanProxyObjFun(obj[i]);
+    cleanProxyObjFun(obj[i]);
   }
   //
-  obj[_proxyFunKey] = null;
+  setProxyObjBackF(obj, null);
 }
