@@ -252,7 +252,7 @@ function createProxyObj(obj, _fun = null) {
         obj = new Proxy(obj, {
             /** 数据被设置 */
             set(target, p, value, receiver) {
-                var _a, _b, _c;
+                var _a, _b;
                 //
                 if (_isProxy() && !_proxyKeepKeys.includes(p)) {
                     let _value = Reflect.get(target, p);
@@ -263,7 +263,7 @@ function createProxyObj(obj, _fun = null) {
                         //先为旧值清理代理回调
                         cleanProxyObjFun(_value);
                         //调用回调
-                        (_c = (_a = getProxyObjBackF(target)) === null || _a === void 0 ? void 0 : (_b = _a).set) === null || _c === void 0 ? void 0 : _c.call(_b, target, p, value, _value);
+                        (_b = (_a = getProxyObjBackF(target)) === null || _a === void 0 ? void 0 : _a.set) === null || _b === void 0 ? void 0 : _b.call(_a, target, p, value, _value);
                     }
                 }
                 //
@@ -271,12 +271,12 @@ function createProxyObj(obj, _fun = null) {
             },
             /** 数据被获取 */
             get(target, p, receiver) {
-                var _a, _b, _c;
+                var _a, _b;
                 let _value = Reflect.get(target, p, receiver);
                 //
                 if (_isProxy() && !_proxyKeepKeys.includes(p)) {
                     //调用回调
-                    (_c = (_a = getProxyObjBackF(target)) === null || _a === void 0 ? void 0 : (_b = _a).get) === null || _c === void 0 ? void 0 : _c.call(_b, target, p);
+                    (_b = (_a = getProxyObjBackF(target)) === null || _a === void 0 ? void 0 : _a.get) === null || _b === void 0 ? void 0 : _b.call(_a, target, p);
                     //根据当前对象的回调函数动态设置一下子对象的回调函数
                     if (_value && typeof _value == 'object' && getProxyObjBackF(_value) != getProxyObjBackF(target)) {
                         //定义执行监听回调
@@ -287,14 +287,14 @@ function createProxyObj(obj, _fun = null) {
             },
             /** 数据被删除 */
             deleteProperty(target, p) {
-                var _a, _b, _c;
+                var _a, _b;
                 //
                 if (_isProxy()) {
                     let _value = Reflect.get(target, p);
                     //清理代理回调
                     cleanProxyObjFun(_value);
                     //调用回调
-                    (_c = (_a = getProxyObjBackF(target)) === null || _a === void 0 ? void 0 : (_b = _a).set) === null || _c === void 0 ? void 0 : _c.call(_b, target, p, undefined, _value);
+                    (_b = (_a = getProxyObjBackF(target)) === null || _a === void 0 ? void 0 : _a.set) === null || _b === void 0 ? void 0 : _b.call(_a, target, p, undefined, _value);
                 }
                 //
                 return Reflect.deleteProperty(target, p);
