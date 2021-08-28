@@ -1,4 +1,5 @@
-import { createProxyObj, getProxyObjKey } from "./createProxyObj";
+import { createMicroTasks } from "../../createMicroTasks";
+import { cleanProxyObjFun, createProxyObj, getProxyObjKey } from "./createProxyObj";
 
 /**
  * 本地数据代理
@@ -8,6 +9,8 @@ export class LocalStorageDataProxy {
   private key: string;
   /** root数据 */
   private rootData: any;
+  /** 状态码 */
+  private stateCode: number = 0;
 
   /** 记录是否编辑 */
   private ifEdit: boolean = false;
@@ -26,14 +29,15 @@ export class LocalStorageDataProxy {
   }
   /** 设置数据 */
   set data(_data: any) {
-    if (typeof _data == 'object') {
-      _data = JSON.stringify(_data);
-    } else if (typeof _data == 'function') {
-      _data = '';
-    }
+    if (this.rootData == _data) { return; }
+    // 清理掉上一个对象上绑定的回调
+    cleanProxyObjFun(this.rootData);
     //
-    localStorage.setItem(this.key, _data);
+    this._save(_data);
+    //重新获取数据
     this.getData();
+    //修改编辑状态
+    this.ifEdit = false;
   }
 
   /** 初始化 */
@@ -56,6 +60,8 @@ export class LocalStorageDataProxy {
         this.setBack(...arg);
       },
     });
+    //递增状态码
+    this.stateCode++;
   }
 
   /** 数据修改回调 */
@@ -69,8 +75,12 @@ export class LocalStorageDataProxy {
     });
     if (this.ifEdit) { return; }
     this.ifEdit = true;
-    //
-    Promise.resolve().then(() => {
+    let _stateCode: number = this.stateCode;
+    //用微任务来执行保存方法
+    createMicroTasks(() => {
+      /** 状态码不一样了的话说明根数据发送的变化，此时就不用在保存之前的根数据了 */
+      if (_stateCode != this.stateCode) { return; }
+      //
       this.save();
     });
   }
@@ -127,11 +137,29 @@ export class LocalStorageDataProxy {
     });
   }
 
+  /** 
+   * 强制保存数据
+   */
+  public forceSave() {
+    this._save(this.rootData);
+  }
+
   /** 保存数据 */
-  public save() {
+  private save() {
     if (!this.ifEdit) { return; };
     this.ifEdit = false;
     //
-    localStorage.setItem(this.key, JSON.stringify(this.rootData));
+    this._save(this.rootData);
+  }
+
+  /** 保存数据到本地 */
+  private _save(_data: any) {
+    if (typeof _data == 'object') {
+      _data = JSON.stringify(_data);
+    } else if (typeof _data == 'function') {
+      _data = '';
+    }
+    //
+    localStorage.setItem(this.key, _data);
   }
 }
