@@ -1,6 +1,8 @@
 {
   //设置不显示在编辑器的文件夹
-  "files.exclude": {},
+  "files.exclude": {
+    "**/node_modules/": true,
+  },
   "editor.formatOnSave": true,
   "editor.formatOnType": true,
   "git.ignoreLimitWarning": true

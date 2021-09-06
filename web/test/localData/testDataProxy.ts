@@ -1,5 +1,5 @@
-import { BaseData } from "../../localData/BaseData";
-import { BaseDataProxy } from "../../localData/BaseDataProxy";
+import { BaseData } from "../../src/localData/BaseData";
+import { BaseDataProxy } from "../../src/localData/BaseDataProxy";
 
 class Data extends BaseData {
     a: number = 1;

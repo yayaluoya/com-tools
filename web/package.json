@@ -4,8 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "ts-build": "tsc -w"
+    "ts-build": "tsc -w",
+    "webpack-test": "webpack"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^4.4.2",
+    "webpack": "^5.52.0",
+    "webpack-cli": "^4.8.0"
+  }
 }
