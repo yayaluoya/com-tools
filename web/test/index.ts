@@ -22,7 +22,8 @@ let apiCon = createApiCon('www.baidu.com', {
         },
         c: {
             getC(_op: string) {
-                return this.path + '/' + _op;
+                //相当于fetch('www.baidu.com/b/c');
+                fetch(this.path).then(() => { });
             },
         },
     },

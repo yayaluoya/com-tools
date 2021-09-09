@@ -43,8 +43,8 @@ export function createApiCon<ApiObj extends object = {}>(_rootPath: string, _api
             path: ''
         }, {
             get(_, p: string | symbol) {
-                switch (p) {
-                    case 'path':
+                switch (true) {
+                    case /^\$?(path|api)$/i.test(p as string):
                         //返回一个整理好的路径
                         return _rootPath.replace(/\/+$/, '') + '/' + byApiObjGetPath(_apiObj, _op.pathNodeKeyName).replace(/^\/+/, '').replace(/\/+/g, '/');
                 }
