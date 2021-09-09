@@ -8,7 +8,7 @@ class Data extends BaseData {
 
 export class TestDataProxy extends BaseDataProxy<Data> {
     /** 获取新数据 */
-    getDefaultData(): Data {
+    protected getDefaultData(): Data {
         return new Data();
     }
 }

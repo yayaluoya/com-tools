@@ -3,6 +3,7 @@ import { LocalStorageDataProxy } from "./LocalStorageDataProxy";
 /**
  * 本地数据类
  * * 一个localStorage的镜像类，有着差不多的方法，但是从这里获取的数据是带有自动保存的功能的。
+ * 缓存用到的数据，不用每次获取时就去读取
  */
 export class LocalStorage_ {
   /** 缓存数据代理列表 */

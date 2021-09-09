@@ -1,7 +1,7 @@
-const chokidar = require('chokidar');
-const path = require('path');
-const fs = require('fs');
-const child_process = require('child_process');
+import chokidar from 'chokidar';
+import path from 'path';
+import fs from 'fs';
+import child_process from 'child_process';
 
 const _changeDir = path.resolve(__dirname, '../pages/');
 const matchReg = /\.less$/;
@@ -18,7 +18,7 @@ chokidar.watch(_changeDir).on('all', (event, _path) => {
         let _content = fs.readFileSync(_newPath).toString();
         _content = _content.replace(/url\("(.*)"\)/g, (_, _url) => {
             let _imgContent = fs.readFileSync(path.resolve(path.dirname(_path), _url));
-            let _base64 = Buffer.from(_imgContent, 'binary').toString('base64');
+            let _base64 = Buffer.from(_imgContent).toString('base64');
             return `url("data:image/${path.extname(_url).replace(/^\./, '')};base64,${_base64}")`;
         });
         fs.writeFileSync(_newPath, _content);

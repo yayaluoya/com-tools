@@ -25,7 +25,7 @@ export abstract class BaseDataProxy<Data extends BaseData> {
     }
     /** 获取数据 */
     public get data(): Data {
-        return LocalStorage_.getItem(this._key,);
+        return LocalStorage_.getItem(this._key, this.getDefaultData());
     }
     /** 设置数据 */
     public set data(_data: Data) {
@@ -33,5 +33,5 @@ export abstract class BaseDataProxy<Data extends BaseData> {
     }
 
     /** 获取默认数据 */
-    abstract getDefaultData(): Data;
+    protected abstract getDefaultData(): Data;
 }
