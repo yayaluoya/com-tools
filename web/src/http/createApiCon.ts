@@ -39,9 +39,7 @@ export function createApiCon<ApiObj extends object = {}>(_rootPath: string, _api
     function getPathObjProxy(_apiObj: object): {
         path: string,
     } {
-        return new Proxy({
-            path: ''
-        }, {
+        return new Proxy<any>({}, {
             get(_, p: string | symbol) {
                 switch (true) {
                     case /^\$?(path|api)$/i.test(p as string):
