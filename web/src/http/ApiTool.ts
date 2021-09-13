@@ -1,6 +1,7 @@
 import { ApiConfig } from "./ApiConfig";
 
 const pathArgsReg = /\{.*?\}/g;
+const keyWorldsReg = /\w+/g;
 
 /**
  * Api工具
@@ -14,7 +15,7 @@ export class ApiTool {
      */
     static getApi(domainName: string, keyWorlds: string, ...args: string[]): string {
         let url: string = ApiConfig.apiPath as any;
-        for (let _o of keyWorlds.split('.')) {
+        for (let _o of keyWorlds.match(keyWorldsReg)) {
             url = url[_o];
             //
             if (typeof url == 'undefined' || url == null) {
