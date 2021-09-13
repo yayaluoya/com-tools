@@ -48,7 +48,7 @@ export class ApiTool {
             return;
         }
         domainPath = domainPath.replace(/\/+$/, '');
-        url = url.replace(/\\+/, '/').replace(/^\//, '').replace(/\/+/g, '/');
+        url = url.replace(/[\\/]+/g, '/').replace(/^\//, '');
         //
         return `${domainPath}/${url}`;
     }
