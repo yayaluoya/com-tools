@@ -53,7 +53,9 @@ export class LocalStorageDataProxy {
       //反序列化数据，如果报错则说明是纯字符串，就不用管它了
       _data = JSON.parse(_data);
     }
-    catch { }
+    catch {
+      //
+    }
     //获取一个代理数据，并添加监听
     this.rootData = createProxyObj(_data, {
       set: (...arg) => {
@@ -146,7 +148,7 @@ export class LocalStorageDataProxy {
 
   /** 保存数据 */
   private save() {
-    if (!this.ifEdit) { return; };
+    if (!this.ifEdit) { return; }
     this.ifEdit = false;
     //
     this._save(this.rootData);
