@@ -63,6 +63,10 @@
 ## GitHub Plus Theme
 
     一个GitHub启发颜色主题的VSCode代码和界面!
+    
+## Nebula Theme
+    
+    一个非常好看的主题
 
 ## 常用
 
