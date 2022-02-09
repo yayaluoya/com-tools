@@ -1,6 +1,6 @@
 # VsCode常用的插件
 
-## Chinese (Simplified) Language Pack for Visual Studio Code
+## Chinese (Simplified) Language Pack for Visual Studio Code [必须]
 
     中文(简体)语言包扩展
     安装后，在 locale.json 中添加 "locale": "zh-cn"，即可载入中文（简体）语言包。要修改 locale.json，你可以同时按下 Ctrl+Shift+P 打开命令面板，之后输入 "config" 筛选可用命令列表，最后选择配置语言命令。
@@ -14,11 +14,11 @@
     格式化
     配置了自动格式化后没有效果，就手动点击格式代码，然后手动指定格式化插件
 
-## Debugger for Chrome [必须]
+## Debugger for Chrome
 
     在Chrome浏览器中调试你的JavaScript代码，或任何其他支持Chrome调试协议的目标。
 
-## TypeScript Her [必须]
+## TypeScript Her
 
     TypeScript的附加工具
 
