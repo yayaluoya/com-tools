@@ -164,3 +164,11 @@
 ## Code Spell Checker
 
     Visual Studio代码的拼写检查器
+    
+## Vue Language Features (Volar)
+    
+    为Vue提供TypeScript支持
+    
+## Vetur
+    
+    为vue提供代码提示
