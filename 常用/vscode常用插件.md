@@ -180,3 +180,7 @@
 ## z-reader
 
     用来摸鱼或学习的小说阅读插件,支持在线搜索和本地阅读,支持 txt 和 epub 格式
+    
+## LeetCode
+    
+    在 VS Code 中练习 LeetCode
