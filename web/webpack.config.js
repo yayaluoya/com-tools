@@ -27,14 +27,14 @@ const webpackConfig = {
                 exclude: /node_modules/
             },
             {
-                test: /\.(md|txt|glsl|vs|fs)$/,
+                test: /\.(md|txt)$/,
                 use: ["raw-loader"],
                 exclude: /node_modules/
             },
         ]
     },
     resolve: {
-        extensions: ['.tsx', '.ts', '.js', 'glsl', 'md', 'txt', 'vs', 'fs'],
+        extensions: ['.ts', '.tsx', '.js', 'md', 'txt'],
         plugins: [
             //! 这里有个大bug，ts文件结构过深时会使用非相对路径，这个时候就会出错，所以需要这个路径映射插件
             new TsconfigPathsPlugin(),
