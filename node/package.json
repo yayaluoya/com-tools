@@ -10,6 +10,9 @@
   "license": "ISC",
   "dependencies": {
     "@types/node": "^16.9.0",
-    "chokidar": "^3.5.2"
+    "@types/ssh2": "^0.5.52",
+    "chalk": "^5.0.1",
+    "chokidar": "^3.5.2",
+    "ssh2": "^1.10.0"
   }
 }
