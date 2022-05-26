@@ -1,1 +1,0 @@
-{"version":3,"file":"byUrlLoadFile.js","sourceRoot":"","sources":["../src/byUrlLoadFile.ts"],"names":[],"mappings":"AAAA;;;;GAIG;AACH,MAAM,UAAU,aAAa,CAAC,IAAY,EAAE,KAAc;IACtD,IAAI,CAAC,GAAG,QAAQ,CAAC,aAAa,CAAC,GAAG,CAAC,CAAC;IACpC,CAAC,CAAC,IAAI,GAAG,IAAI,CAAC;IACd,CAAC,CAAC,QAAQ,GAAG,KAAK,CAAC;IACnB,CAAC,CAAC,KAAK,EAAE,CAAC;AACd,CAAC"}

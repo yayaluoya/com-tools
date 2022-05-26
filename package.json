@@ -1,0 +1,14 @@
+{
+  "name": "yayaluoya-tool",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./",
+  "scripts": {
+    "build": "tsc -w"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^16.9.0"
+  }
+}
