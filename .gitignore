@@ -1,5 +1,5 @@
 #忽略所有node的包文件
-node_modules/
+node_modules
 
 #忽略所有的密钥
 .ssh

@@ -1,10 +1,11 @@
 {
   "name": "yayaluoya-tool",
   "version": "1.0.0",
-  "description": "",
-  "main": "./",
+  "description": "一些常用的工具",
+  "main": "./dist/index.js",
   "scripts": {
-    "build": "tsc -w"
+    "build": "tsc -w",
+    "npm-publish": "npm publish"
   },
   "author": "",
   "license": "ISC",
