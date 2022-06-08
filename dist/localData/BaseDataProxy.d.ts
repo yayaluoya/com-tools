@@ -11,7 +11,8 @@ export declare abstract class BaseDataProxy<D = any> extends BaseEvent {
     private _ifEdit;
     /** 状态码 */
     private stateCode;
-    abstract LocalStorage_: ILocalStorage_;
+    /** localStorage处理器 */
+    abstract get LocalStorage_(): ILocalStorage_;
     /** 保存的名字，默认是类名 */
     protected get name(): string;
     /** 数据 */

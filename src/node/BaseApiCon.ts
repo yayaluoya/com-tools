@@ -50,7 +50,7 @@ export abstract class BaseApiCon extends BaseApiCon_ {
     requestData<D>(_op: AxiosRequestConfig) {
         return this.request(_op)
             .catch((res) => {
-                throw this.resData_(res.data, false, res);
+                throw this.resData_(res?.data, false, res);
             })
             .then((res) => {
                 return this.resData_(res.data, true, res) as ResData<D>;
