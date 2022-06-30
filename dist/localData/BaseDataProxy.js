@@ -137,6 +137,9 @@ var BaseDataProxy = /** @class */ (function (_super) {
         if (p === void 0) { p = ''; }
         if (newValue === void 0) { newValue = null; }
         if (value === void 0) { value = null; }
+        //触发事件
+        this.emit('update', target, p, newValue, value);
+        //
         this.update();
     };
     /** 更新 */

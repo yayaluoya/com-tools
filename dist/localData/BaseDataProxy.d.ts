@@ -4,7 +4,7 @@ import { ILocalStorage_ } from "./ILocalStorage_";
  * 基类本地数据代理
  * 一个通用的版本，需要根据不同的应用场景封装
  */
-export declare abstract class BaseDataProxy<D = any> extends BaseEvent {
+export declare abstract class BaseDataProxy<D = any> extends BaseEvent<'update'> {
     /** 数据 */
     private _data;
     /** 是否编辑 */
