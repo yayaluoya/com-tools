@@ -7,7 +7,7 @@ import { ILocalStorage_ } from "./ILocalStorage_";
  * 基类本地数据代理
  * 一个通用的版本，需要根据不同的应用场景封装
  */
-export abstract class BaseDataProxy<D = any> extends BaseEvent<'update'> {
+export abstract class BaseDataProxy<D = any> extends BaseEvent<'update' | 'set' | 'save'> {
     /** 数据 */
     private _data: D | any;
     /** 是否编辑 */
@@ -83,9 +83,9 @@ export abstract class BaseDataProxy<D = any> extends BaseEvent<'update'> {
     /** 数据修改回调 */
     private setBack(target: any = null, p: string | symbol = '', newValue: any = null, value: any = null) {
         //触发事件
-        this.emit('update', target, p, newValue, value);
+        this.emit('set', target, p, newValue, value);
         //
-        this.update();
+        this.update(false);
     }
 
     /** 更新 */
@@ -95,6 +95,7 @@ export abstract class BaseDataProxy<D = any> extends BaseEvent<'update'> {
             this._ifEdit = false;
         }
         if (this._ifEdit) { return; }
+        this.emit('update');
         this._ifEdit = true;
         let _stateCode: number = this.stateCode;
         //用微任务来执行保存方法
@@ -112,6 +113,7 @@ export abstract class BaseDataProxy<D = any> extends BaseEvent<'update'> {
         this.LocalStorage_.setItem(this.name, this.data, (s) => {
             return this.dataHandle(s, 'set');
         });
+        this.emit('save');
     }
 
     /** 获取一份新数据 */

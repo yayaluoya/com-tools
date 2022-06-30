@@ -138,9 +138,9 @@ var BaseDataProxy = /** @class */ (function (_super) {
         if (newValue === void 0) { newValue = null; }
         if (value === void 0) { value = null; }
         //触发事件
-        this.emit('update', target, p, newValue, value);
+        this.emit('set', target, p, newValue, value);
         //
-        this.update();
+        this.update(false);
     };
     /** 更新 */
     BaseDataProxy.prototype.update = function (f) {
@@ -153,6 +153,7 @@ var BaseDataProxy = /** @class */ (function (_super) {
         if (this._ifEdit) {
             return;
         }
+        this.emit('update');
         this._ifEdit = true;
         var _stateCode = this.stateCode;
         //用微任务来执行保存方法
@@ -172,6 +173,7 @@ var BaseDataProxy = /** @class */ (function (_super) {
         this.LocalStorage_.setItem(this.name, this.data, function (s) {
             return _this.dataHandle(s, 'set');
         });
+        this.emit('save');
     };
     /** 数据处理，可以在数据被获取和设置前做加密解密操作 */
     BaseDataProxy.prototype.dataHandle = function (str, type) {
