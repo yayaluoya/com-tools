@@ -20,8 +20,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BaseApiCon = void 0;
 var axios_1 = __importDefault(require("axios"));
-var ObjectUtils_1 = require("../ObjectUtils");
 var BaseApiCon_1 = require("../http/BaseApiCon");
+var ObjectUtils_1 = require("../obj/ObjectUtils");
 /**
  * 基类Api控制器
  */

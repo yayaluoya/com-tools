@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
-import { ObjectUtils } from "../ObjectUtils";
 import { BaseApiCon as BaseApiCon_ } from "../http/BaseApiCon";
-import { ResData } from "src/http/ResData";
+import { ResData } from "../http/ResData";
+import { ObjectUtils } from "../obj/ObjectUtils";
 /**
  * 基类Api控制器
  */

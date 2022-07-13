@@ -1,4 +1,6 @@
-/** 二维向量 */
+/**
+ * 二维向量
+ */
 export declare class Vector2 {
     /** x轴分量 */
     x: number;
@@ -19,3 +21,4 @@ export declare class Vector2 {
     /** 向量相减 */
     static subtract(a: Vector2, b: Vector2, _v?: Vector2): Vector2;
 }
+//# sourceMappingURL=Vector2.d.ts.map

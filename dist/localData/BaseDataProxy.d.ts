@@ -24,7 +24,7 @@ export declare abstract class BaseDataProxy<D = any> extends BaseEvent<'update' 
     constructor();
     /**
      * 获取本地数据
-     * 这里暴露给派生类是为了方便对该方法加以修饰，不要重写
+     * TODO 这里暴露给派生类是为了方便对该方法加以修饰，不要重写
      * @param _data 指定一个数据，如果不存在且本地没有数据的话则会调用获取数据的方法获取数据
      */
     protected getLocalData(_data?: any): void;
@@ -39,3 +39,4 @@ export declare abstract class BaseDataProxy<D = any> extends BaseEvent<'update' 
     /** 数据处理，可以在数据被获取和设置前做加密解密操作 */
     protected dataHandle(str: string, type: 'get' | 'set'): string;
 }
+//# sourceMappingURL=BaseDataProxy.d.ts.map

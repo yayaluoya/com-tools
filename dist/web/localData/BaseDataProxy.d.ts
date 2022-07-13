@@ -6,3 +6,4 @@ import { LocalStorage_ } from "./LocalStorage_";
 export declare abstract class BaseDataProxy<D = any> extends BaseDataProxy_ {
     get LocalStorage_(): typeof LocalStorage_;
 }
+//# sourceMappingURL=BaseDataProxy.d.ts.map

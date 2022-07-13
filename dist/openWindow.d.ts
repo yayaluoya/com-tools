@@ -8,3 +8,4 @@ export declare function openWindow(url: string, opt?: {
     noopener?: boolean;
     noreferrer?: boolean;
 }): void;
+//# sourceMappingURL=openWindow.d.ts.map

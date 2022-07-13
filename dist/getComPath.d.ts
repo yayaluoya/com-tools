@@ -4,3 +4,4 @@
  * @param _path
  */
 export declare function getComPath(_path?: string): string;
+//# sourceMappingURL=getComPath.d.ts.map

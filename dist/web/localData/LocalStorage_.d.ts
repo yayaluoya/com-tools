@@ -26,3 +26,4 @@ export declare class LocalStorage_ {
      */
     static clear(): void;
 }
+//# sourceMappingURL=LocalStorage_.d.ts.map

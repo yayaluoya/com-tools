@@ -1,13 +1,17 @@
 /**
  * 数组工具
  */
-export default class ArrayUtils {
+export class ArrayUtils {
+
     /**
      * 获取数组的某个元素
      * @param array 
      * @param _n 索引，可以是负数
      */
     public static at<T = any>(array: T[], _n: number): T {
+        if (array.at) {
+            return array.at(_n);
+        }
         // console.log(_n);
         if (_n >= 0) {
             return array[_n];
@@ -46,23 +50,16 @@ export default class ArrayUtils {
     /**
      * 数组是否包含某个数据
      * @param arr 
-     * @param obj 
+     * @param op 
      */
-    public static has<T>(arr: T[], obj: T): boolean {
-        let index = arr.indexOf(obj);
-        return index >= 0;
-    }
-
-    /**
-     * 复制一个数组
-     * @param arr 源数组
-     */
-    public static copy<T>(arr: T[]): T[] {
-        let result = [];
-        for (let i = 0; i < arr.length; ++i) {
-            result.push(arr[i]);
+    public static has<T>(arr: T[], op: T | { (_: T): boolean }): boolean {
+        let index = -1;
+        if (typeof op == 'function') {
+            index = arr.findIndex((_) => (op as Function)(_));
+        } else {
+            index = arr.indexOf(op);
         }
-        return result;
+        return index >= 0;
     }
 
     /**
@@ -121,7 +118,7 @@ export default class ArrayUtils {
      * @param {*} array 原数组
      * @param {*} v 验证方式 可以是方法和正则，如果都不是的话采用==来验证，这些条件都可以是数组
      */
-    static eliminate(array, v) {
+    static eliminate<T = any>(array: Array<T>, v: (RegExp | { (_: T, i: number): boolean } | T) | Array<RegExp | { (_: T, i: number): boolean } | T>) {
         if (!Array.isArray(v)) {
             v = [v];
         }
@@ -132,10 +129,10 @@ export default class ArrayUtils {
                 let index;
                 switch (true) {
                     case typeof v == 'function':
-                        index = array.findIndex(v);
+                        index = array.findIndex(v as any);
                         break;
                     case v instanceof RegExp:
-                        index = array.findIndex(_ => v.test(_));
+                        index = array.findIndex(_ => (v as RegExp).test(_ as any));
                         break;
                     default:
                         index = array.findIndex(_ => _ == v);

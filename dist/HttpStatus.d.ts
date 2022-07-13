@@ -52,3 +52,4 @@ export declare enum HttpStatus {
     GATEWAY_TIMEOUT = 504,
     HTTP_VERSION_NOT_SUPPORTED = 505
 }
+//# sourceMappingURL=HttpStatus.d.ts.map

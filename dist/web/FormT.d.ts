@@ -16,3 +16,4 @@ export declare class FormT {
     static FV(ctx: any, vs: Record<string, vf>, _this?: any): boolean;
 }
 export {};
+//# sourceMappingURL=FormT.d.ts.map

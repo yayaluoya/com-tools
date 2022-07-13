@@ -12,6 +12,7 @@ export class BaseEvent<E extends string | symbol = string | symbol> {
         /** 执行方法 */
         f: Function,
     }[] = [];
+
     /** 延迟触发事件列表 */
     private _eventList: Function[] = [];
 
@@ -37,7 +38,7 @@ export class BaseEvent<E extends string | symbol = string | symbol> {
         if (!key) { return; }
         let _that = this;
         //重新包装下该函数
-        let _f = function (this: any,...arg: any[]) {
+        let _f = function (this: any, ...arg: any[]) {
             //清理调该函数
             _that.off(key, _this, _f);
             //

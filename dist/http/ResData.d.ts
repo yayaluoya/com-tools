@@ -14,3 +14,4 @@ export declare class ResData<D = any> {
     [key: string]: any;
     constructor(d?: D, status?: number, mes?: string, timeStamp?: number);
 }
+//# sourceMappingURL=ResData.d.ts.map

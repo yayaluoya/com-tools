@@ -1,7 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Vector2 = void 0;
-/** 二维向量 */
+/**
+ * 二维向量
+ */
 var Vector2 = /** @class */ (function () {
     /**
      * 初始化

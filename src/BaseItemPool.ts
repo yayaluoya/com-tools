@@ -1,7 +1,7 @@
 /**
  * 基类对象池
  */
-export default class BaseItemPool {
+export class BaseItemPool {
     /** 池子 */
     private m_itemPool: {
         [_key: string]: any[],
@@ -26,7 +26,7 @@ export default class BaseItemPool {
      * 从对象池中获取对象
      * @param _key key
      */
-    public getItemByPool<T extends object>(_key: string): T|null {
+    public getItemByPool<T extends object>(_key: string): T | null {
         //先判断是否有内容
         if (this.poolHasItem(_key)) {
             return this.m_itemPool[_key].pop() as T;

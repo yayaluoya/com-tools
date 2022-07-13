@@ -1,4 +1,6 @@
-/** 二维向量 */
+/** 
+ * 二维向量
+ */
 export class Vector2 {
     /** x轴分量 */
     x: number;

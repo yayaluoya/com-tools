@@ -10,8 +10,34 @@ var __values = (this && this.__values) || function(o) {
     };
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
+var __read = (this && this.__read) || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+};
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ObjectUtils = void 0;
+var is_1 = require("../is");
 /**
  * 对象工具类
  */
@@ -118,12 +144,14 @@ var ObjectUtils = /** @class */ (function () {
             for (var bs_1 = __values(bs), bs_1_1 = bs_1.next(); !bs_1_1.done; bs_1_1 = bs_1.next()) {
                 var b = bs_1_1.value;
                 for (var i in b) {
-                    if (Array.isArray(a[i])) {
-                        ObjectUtils.merge(a[i], b[i] || []);
+                    // 如果双方都是数组的话，直接合并
+                    if (Array.isArray(a[i]) && Array.isArray(b[i])) {
+                        a[i] = __spreadArray(__spreadArray([], __read(a[i]), false), __read(b[i]), false);
                         continue;
                     }
-                    if (a[i] && typeof a[i] == 'object') {
-                        ObjectUtils.merge(a[i], b[i] || {});
+                    // 如果双方都是对象的话则递归
+                    if ((0, is_1.isObject)(a[i]) && (0, is_1.isObject)(b[i])) {
+                        ObjectUtils.merge(a[i], b[i]);
                         continue;
                     }
                     //

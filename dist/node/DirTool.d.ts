@@ -8,3 +8,4 @@ export declare class DirTool {
      */
     static delDirChildSync(path: any): void;
 }
+//# sourceMappingURL=DirTool.d.ts.map

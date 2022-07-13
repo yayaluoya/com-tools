@@ -35,3 +35,4 @@ export declare class ObjectUtils {
      */
     static merge<T>(a: T, ...bs: T[]): T;
 }
+//# sourceMappingURL=ObjectUtils.d.ts.map

@@ -42,8 +42,8 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BaseDataProxy = void 0;
 var BaseEvent_1 = require("../BaseEvent");
-var createProxyObj_1 = require("../createProxyObj");
-var ObjectUtils_1 = require("../ObjectUtils");
+var createProxyObj_1 = require("../obj/createProxyObj");
+var ObjectUtils_1 = require("../obj/ObjectUtils");
 /**
  * 基类本地数据代理
  * 一个通用的版本，需要根据不同的应用场景封装
@@ -57,7 +57,6 @@ var BaseDataProxy = /** @class */ (function (_super) {
         _this._ifEdit = false;
         /** 状态码 */
         _this.stateCode = 0;
-        //获取一份数据
         _this.getLocalData();
         return _this;
     }
@@ -77,7 +76,7 @@ var BaseDataProxy = /** @class */ (function (_super) {
         /** 设置数据，要注意之前加的监听将会失去意义 */
         set: function (_d) {
             if (this._data !== _d) {
-                this.getLocalData(_d); //重置数据
+                this.getLocalData(_d);
             }
         },
         enumerable: false,
@@ -86,30 +85,25 @@ var BaseDataProxy = /** @class */ (function (_super) {
     Object.defineProperty(BaseDataProxy.prototype, "cloneData", {
         /** 获取一份克隆数据 */
         get: function () {
-            return ObjectUtils_1.ObjectUtils.clone(this._data);
+            return ObjectUtils_1.ObjectUtils.clone_(this._data);
         },
         enumerable: false,
         configurable: true
     });
     /**
      * 获取本地数据
-     * 这里暴露给派生类是为了方便对该方法加以修饰，不要重写
+     * TODO 这里暴露给派生类是为了方便对该方法加以修饰，不要重写
      * @param _data 指定一个数据，如果不存在且本地没有数据的话则会调用获取数据的方法获取数据
      */
     BaseDataProxy.prototype.getLocalData = function (_data) {
         var _this = this;
         var data;
         if (_data) {
-            //清空代理选项
             (0, createProxyObj_1.cleanProxyObjFun)(this._data);
-            //删除本地数据
-            this.LocalStorage_.removeItem(this.name);
-            //
             this.LocalStorage_.setItem(this.name, _data, function (s) {
                 return _this.dataHandle(s, 'set');
             });
             data = _data;
-            //触发一次更新
             this.update(true);
         }
         else {
@@ -118,9 +112,10 @@ var BaseDataProxy = /** @class */ (function (_super) {
             });
             if (!data) {
                 data = this.getNewData();
+                this.update(true);
             }
         }
-        //除了加一层自动保存的监听外还要加一层vue的视图更新监听
+        //
         this._data = (0, createProxyObj_1.createProxyObj)(data, {
             set: function () {
                 var arg = [];
@@ -132,13 +127,13 @@ var BaseDataProxy = /** @class */ (function (_super) {
         });
     };
     /** 数据修改回调 */
-    BaseDataProxy.prototype.setBack = function (target, p, newValue, value) {
+    BaseDataProxy.prototype.setBack = function (target, p, newValue, value, objKey) {
         if (target === void 0) { target = null; }
         if (p === void 0) { p = ''; }
         if (newValue === void 0) { newValue = null; }
         if (value === void 0) { value = null; }
         //触发事件
-        this.emit('set', target, p, newValue, value);
+        this.emit('set', target, p, newValue, value, objKey);
         //
         this.update(false);
     };

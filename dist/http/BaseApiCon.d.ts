@@ -39,3 +39,4 @@ export declare abstract class BaseApiCon extends BaseEvent {
      */
     protected response_<R>(res: R): Promise<R>;
 }
+//# sourceMappingURL=BaseApiCon.d.ts.map

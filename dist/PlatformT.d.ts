@@ -8,3 +8,4 @@ export declare class PlatformT {
      */
     static userAgent(): 'android' | 'ios' | 'pc';
 }
+//# sourceMappingURL=PlatformT.d.ts.map

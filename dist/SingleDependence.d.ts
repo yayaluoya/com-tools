@@ -17,3 +17,4 @@ export declare class SingleDependence {
      */
     static get<T>(key: any): T;
 }
+//# sourceMappingURL=SingleDependence.d.ts.map

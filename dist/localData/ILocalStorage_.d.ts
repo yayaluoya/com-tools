@@ -26,3 +26,4 @@ export interface ILocalStorage_ {
      */
     clear(): any;
 }
+//# sourceMappingURL=ILocalStorage_.d.ts.map

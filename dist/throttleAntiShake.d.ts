@@ -10,3 +10,4 @@ export declare function createThrottleFun(_fun: Function, _time: number): (this:
 * @param {*} _time 间隔时间
 */
 export declare function createAntiShakeFun(_fun: Function, _time: number): (this: any, ...arg: any[]) => void;
+//# sourceMappingURL=throttleAntiShake.d.ts.map

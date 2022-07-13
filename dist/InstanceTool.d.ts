@@ -8,3 +8,4 @@ export declare function InstanceTool(name?: string): (_class: {
     [key: number]: any;
     [key: symbol]: any;
 }) => void;
+//# sourceMappingURL=InstanceTool.d.ts.map

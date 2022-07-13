@@ -1,3 +1,5 @@
+import { isObject } from "../is";
+
 /**
  * 对象工具类
  */
@@ -85,12 +87,14 @@ export class ObjectUtils {
     static merge<T>(a: T, ...bs: T[]): T {
         for (let b of bs) {
             for (let i in b) {
-                if (Array.isArray(a[i])) {
-                    ObjectUtils.merge(a[i], b[i] || []);
+                // 如果双方都是数组的话，直接合并
+                if (Array.isArray(a[i]) && Array.isArray(b[i])) {
+                    (a[i] as any) = [...(a[i] as any), ...(b[i] as any)];
                     continue;
                 }
-                if (a[i] && typeof a[i] == 'object') {
-                    ObjectUtils.merge(a[i], b[i] || {});
+                // 如果双方都是对象的话则递归
+                if (isObject(a[i]) && isObject(b[i])) {
+                    ObjectUtils.merge(a[i], b[i]);
                     continue;
                 }
                 //

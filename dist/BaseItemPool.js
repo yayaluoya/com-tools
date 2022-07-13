@@ -25,6 +25,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     return to.concat(ar || Array.prototype.slice.call(from));
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.BaseItemPool = void 0;
 /**
  * 基类对象池
  */
@@ -81,4 +82,4 @@ var BaseItemPool = /** @class */ (function () {
     };
     return BaseItemPool;
 }());
-exports.default = BaseItemPool;
+exports.BaseItemPool = BaseItemPool;

@@ -1,6 +1,6 @@
 import { BaseEvent } from "../BaseEvent";
-import { cleanProxyObjFun, createProxyObj, getProxyObjKey } from "../createProxyObj";
-import { ObjectUtils } from "../ObjectUtils";
+import { cleanProxyObjFun, createProxyObj } from "../obj/createProxyObj";
+import { ObjectUtils } from "../obj/ObjectUtils";
 import { ILocalStorage_ } from "./ILocalStorage_";
 
 /**
@@ -30,39 +30,33 @@ export abstract class BaseDataProxy<D = any> extends BaseEvent<'update' | 'set' 
     /** 设置数据，要注意之前加的监听将会失去意义 */
     set data(_d: D) {
         if (this._data !== _d) {
-            this.getLocalData(_d);//重置数据
+            this.getLocalData(_d);
         }
     }
     /** 获取一份克隆数据 */
     get cloneData(): D {
-        return ObjectUtils.clone(this._data);
+        return ObjectUtils.clone_(this._data);
     }
 
     //
     constructor() {
         super();
-        //获取一份数据
         this.getLocalData();
     }
 
     /**
      * 获取本地数据
-     * 这里暴露给派生类是为了方便对该方法加以修饰，不要重写
+     * TODO 这里暴露给派生类是为了方便对该方法加以修饰，不要重写
      * @param _data 指定一个数据，如果不存在且本地没有数据的话则会调用获取数据的方法获取数据
      */
     protected getLocalData(_data?: any) {
         let data;
         if (_data) {
-            //清空代理选项
             cleanProxyObjFun(this._data);
-            //删除本地数据
-            this.LocalStorage_.removeItem(this.name);
-            //
             this.LocalStorage_.setItem(this.name, _data, (s) => {
                 return this.dataHandle(s, 'set');
             });
             data = _data;
-            //触发一次更新
             this.update(true);
         } else {
             data = this.LocalStorage_.getItem(this.name, (s) => {
@@ -70,9 +64,10 @@ export abstract class BaseDataProxy<D = any> extends BaseEvent<'update' | 'set' 
             });
             if (!data) {
                 data = this.getNewData();
+                this.update(true);
             }
         }
-        //除了加一层自动保存的监听外还要加一层vue的视图更新监听
+        //
         this._data = createProxyObj(data, {
             set: (...arg) => {
                 this.setBack(...arg);
@@ -81,9 +76,9 @@ export abstract class BaseDataProxy<D = any> extends BaseEvent<'update' | 'set' 
     }
 
     /** 数据修改回调 */
-    private setBack(target: any = null, p: string | symbol = '', newValue: any = null, value: any = null) {
+    private setBack(target: any = null, p: string | symbol = '', newValue: any = null, value: any = null, objKey: symbol) {
         //触发事件
-        this.emit('set', target, p, newValue, value);
+        this.emit('set', target, p, newValue, value, objKey);
         //
         this.update(false);
     }

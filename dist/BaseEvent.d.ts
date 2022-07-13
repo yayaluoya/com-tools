@@ -38,3 +38,4 @@ export declare class BaseEvent<E extends string | symbol = string | symbol> {
     /** 清理延迟触发事件 */
     clearDeferEmit(): void;
 }
+//# sourceMappingURL=BaseEvent.d.ts.map

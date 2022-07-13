@@ -27,8 +27,8 @@ var __assign = (this && this.__assign) || function () {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BaseApiCon = void 0;
-var ObjectUtils_1 = require("../ObjectUtils");
 var BaseApiCon_1 = require("../http/BaseApiCon");
+var ObjectUtils_1 = require("../obj/ObjectUtils");
 /**
  * 基类Api控制器
  */

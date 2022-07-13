@@ -9,3 +9,4 @@ export declare class FileT {
      */
     static download(url: string, name: string): void;
 }
+//# sourceMappingURL=FileT.d.ts.map

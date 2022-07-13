@@ -1,6 +1,6 @@
 import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import { BaseApiCon as BaseApiCon_ } from "../http/BaseApiCon";
-import { ResData } from "src/http/ResData";
+import { ResData } from "../http/ResData";
 /**
  * 基类Api控制器
  */
@@ -30,3 +30,4 @@ export declare abstract class BaseApiCon extends BaseApiCon_ {
      */
     protected abstract resData_(data: any, con: boolean, res: AxiosResponse): ResData;
 }
+//# sourceMappingURL=BaseApiCon.d.ts.map

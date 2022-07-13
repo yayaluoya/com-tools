@@ -20,3 +20,4 @@ export declare function isMap(val: unknown): val is Map<any, any>;
 export declare const isServer: boolean;
 export declare const isClient: boolean;
 export declare function isUrl(path: string): boolean;
+//# sourceMappingURL=is.d.ts.map

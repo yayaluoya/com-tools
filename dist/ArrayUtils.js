@@ -27,6 +27,7 @@ var __read = (this && this.__read) || function (o, n) {
     return ar;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ArrayUtils = void 0;
 /**
  * 数组工具
  */
@@ -39,6 +40,9 @@ var ArrayUtils = /** @class */ (function () {
      * @param _n 索引，可以是负数
      */
     ArrayUtils.at = function (array, _n) {
+        if (array.at) {
+            return array.at(_n);
+        }
         // console.log(_n);
         if (_n >= 0) {
             return array[_n];
@@ -89,22 +93,17 @@ var ArrayUtils = /** @class */ (function () {
     /**
      * 数组是否包含某个数据
      * @param arr
-     * @param obj
+     * @param op
      */
-    ArrayUtils.has = function (arr, obj) {
-        var index = arr.indexOf(obj);
-        return index >= 0;
-    };
-    /**
-     * 复制一个数组
-     * @param arr 源数组
-     */
-    ArrayUtils.copy = function (arr) {
-        var result = [];
-        for (var i = 0; i < arr.length; ++i) {
-            result.push(arr[i]);
+    ArrayUtils.has = function (arr, op) {
+        var index = -1;
+        if (typeof op == 'function') {
+            index = arr.findIndex(function (_) { return op(_); });
         }
-        return result;
+        else {
+            index = arr.indexOf(op);
+        }
+        return index >= 0;
     };
     /**
      * 随机打乱数组
@@ -198,4 +197,4 @@ var ArrayUtils = /** @class */ (function () {
     };
     return ArrayUtils;
 }());
-exports.default = ArrayUtils;
+exports.ArrayUtils = ArrayUtils;

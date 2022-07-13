@@ -1,7 +1,7 @@
 /**
  * 基类对象池
  */
-export default class BaseItemPool {
+export declare class BaseItemPool {
     /** 池子 */
     private m_itemPool;
     /** 获取对象池 */
@@ -29,3 +29,4 @@ export default class BaseItemPool {
      */
     emptyPool(): void;
 }
+//# sourceMappingURL=BaseItemPool.d.ts.map

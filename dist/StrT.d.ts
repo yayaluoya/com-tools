@@ -9,3 +9,4 @@ export declare class StrT {
      */
     static omit(s: string, n: number): string;
 }
+//# sourceMappingURL=StrT.d.ts.map
