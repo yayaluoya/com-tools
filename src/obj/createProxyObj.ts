@@ -1,3 +1,4 @@
+import { isObject } from "../is";
 import { ProxyObjWatch } from "./ProxyObjWatch";
 
 /** 代理对象的回调执行方法类型 */
@@ -69,7 +70,7 @@ const proxyFunKey = Symbol();
  * @param fun 数据被设置时的回调
  */
 export function createProxyObj<T extends Record<string | symbol, any> = any>(obj: T, fun: proxyFunType = null): T {
-    if (!obj) { return obj; }
+    if (!isObject(obj)) { return obj; }
     let setPF: (fun: proxyFunType) => void = obj[proxyFunKey];
     if (setPF) {
         setPF(fun);
@@ -88,9 +89,7 @@ export function createProxyObj<T extends Record<string | symbol, any> = any>(obj
                 };
             }
             let value = Reflect.get(target, p, receiver);
-            if (typeof value == 'object') {
-                value = createProxyObj(value, getProxyFun(target));
-            }
+            value = createProxyObj(value, getProxyFun(target));
             getProxyFun(target)?.get?.(
                 target,
                 p,
@@ -103,11 +102,13 @@ export function createProxyObj<T extends Record<string | symbol, any> = any>(obj
             return value;
         },
         set: (target: T, p: string | symbol, value: any, receiver: any): boolean => {
+            let passValue = Reflect.get(target, p, receiver);
+            cleanProxyObjFun(passValue);
             getProxyFun(target)?.set?.(
                 target,
                 p,
                 value,
-                Reflect.get(target, p, receiver),
+                passValue,
                 getProxyKey(target)
             );
             ProxyObjWatch.set({

@@ -11,7 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "@types/node": "^16.9.0",
-    "axios": "^0.27.2"
+    "axios": "^0.27.2",
+    "js-base64": "^3.7.2"
   },
   "devDependencies": {
     "@types/uni-app": "^1.4.4"

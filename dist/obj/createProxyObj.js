@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.cleanProxyObjFun = exports.createProxyObj = void 0;
+var is_1 = require("../is");
 var ProxyObjWatch_1 = require("./ProxyObjWatch");
 /** 代理对象列表 */
 var proxyObjMap = new WeakMap();
@@ -56,7 +57,7 @@ var proxyFunKey = Symbol();
  */
 function createProxyObj(obj, fun) {
     if (fun === void 0) { fun = null; }
-    if (!obj) {
+    if (!(0, is_1.isObject)(obj)) {
         return obj;
     }
     var setPF = obj[proxyFunKey];
@@ -79,9 +80,7 @@ function createProxyObj(obj, fun) {
                 };
             }
             var value = Reflect.get(target, p, receiver);
-            if (typeof value == 'object') {
-                value = createProxyObj(value, getProxyFun(target));
-            }
+            value = createProxyObj(value, getProxyFun(target));
             (_b = (_a = getProxyFun(target)) === null || _a === void 0 ? void 0 : _a.get) === null || _b === void 0 ? void 0 : _b.call(_a, target, p, getProxyKey(target));
             ProxyObjWatch_1.ProxyObjWatch.get({
                 key: p,
@@ -91,7 +90,9 @@ function createProxyObj(obj, fun) {
         },
         set: function (target, p, value, receiver) {
             var _a, _b;
-            (_b = (_a = getProxyFun(target)) === null || _a === void 0 ? void 0 : _a.set) === null || _b === void 0 ? void 0 : _b.call(_a, target, p, value, Reflect.get(target, p, receiver), getProxyKey(target));
+            var passValue = Reflect.get(target, p, receiver);
+            cleanProxyObjFun(passValue);
+            (_b = (_a = getProxyFun(target)) === null || _a === void 0 ? void 0 : _a.set) === null || _b === void 0 ? void 0 : _b.call(_a, target, p, value, passValue, getProxyKey(target));
             ProxyObjWatch_1.ProxyObjWatch.set({
                 key: p,
                 objKey: getProxyKey(target),
