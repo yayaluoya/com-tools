@@ -1,5 +1,5 @@
 import { BaseEvent } from "../BaseEvent";
-import { cleanProxyObjFun, createProxyObj } from "../obj/createProxyObj";
+import { cleanProxyObjCon, createProxyObj } from "../obj/createProxyObj";
 import { ObjectUtils } from "../obj/ObjectUtils";
 import { ILocalStorage_ } from "./ILocalStorage_";
 
@@ -52,7 +52,7 @@ export abstract class BaseDataProxy<D = any> extends BaseEvent<'update' | 'set' 
     protected getLocalData(_data?: any) {
         let data;
         if (_data) {
-            cleanProxyObjFun(this._data);
+            cleanProxyObjCon(this._data);
             this.LocalStorage_.setItem(this.name, _data, (s) => {
                 return this.dataHandle(s, 'set');
             });

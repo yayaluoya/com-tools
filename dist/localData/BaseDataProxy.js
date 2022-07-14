@@ -99,7 +99,7 @@ var BaseDataProxy = /** @class */ (function (_super) {
         var _this = this;
         var data;
         if (_data) {
-            (0, createProxyObj_1.cleanProxyObjFun)(this._data);
+            (0, createProxyObj_1.cleanProxyObjCon)(this._data);
             this.LocalStorage_.setItem(this.name, _data, function (s) {
                 return _this.dataHandle(s, 'set');
             });

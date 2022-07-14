@@ -1,8 +1,9 @@
-import { isObject } from "../is";
-import { ProxyObjWatch } from "./ProxyObjWatch";
+import { ArrayUtils } from "../ArrayUtils";
 
-/** 代理对象的回调执行方法类型 */
-export type proxyFunType = {
+/** 
+ * 代理对象控制器类型
+ */
+export type proxyConType = {
     /** 
      * 数据被设置的回调
      * TODO 注意这个objKey是对象独有的
@@ -15,117 +16,245 @@ export type proxyFunType = {
     get?: (target, p: string | symbol, objKey: symbol) => void;
 };
 
-/** 代理对象列表 */
-const proxyObjMap = new WeakMap<any, {
-    key: symbol,
-    fun: proxyFunType,
-}>();
+/** 对象->代理对象映射 */
+const obj_proxy_Map = new WeakMap<any, any>();
+
+/** 
+ * 代理对象的标识key，可以通过这个key获取和设置代理对象的标识对象
+ * TODO 这个key也是判断代理对象的关键
+ */
+const proxySignKey = Symbol();
+
+/** 代理对象控制器的类型 */
+type proxyObjSignType = {
+    /** 对象唯一key */
+    key: symbol;
+    /** 代理控制器 */
+    con?: proxyConType;
+    /** 禁用 */
+    d?: boolean;
+};
 
 /**
- * 获取代理对象的处理方法
- * @param obj 
- */
-function getProxyFun(obj): proxyFunType {
-    if (proxyObjMap.has(obj)) {
-        return proxyObjMap.get(obj).fun || {};
-    } else {
-        return {};
-    }
-}
-/**
- * 设置代理对象的处理方法
- * @param obj 
- * @param fun 
- */
-function setProxyFun(obj, fun: proxyFunType = null) {
-    if (proxyObjMap.has(obj)) {
-        let proxyObjCon = proxyObjMap.get(obj);
-        proxyObjCon.fun = fun;
-    } else {
-        proxyObjMap.set(obj, {
-            key: Symbol(),
-            fun,
-        });
-    }
-}
-/**
- * 获取代理对象的key
+ * 是否是一个对象
  * @param obj 
  * @returns 
  */
-function getProxyKey(obj): symbol {
-    return proxyObjMap.get(obj)?.key;
+function isObject(obj: any): boolean {
+    return typeof obj == 'object' && obj;
 }
-
-/** 
- * 直接获取代理对象处理函数的key
- * TODO 这个key也是判断代理对象的关键
- */
-const proxyFunKey = Symbol();
 
 /**
  * 创建一个代理对象
- * 会把对这个对象的各种操作回调出去
+ * TODO 渐进式的，只有访问该对象的某个属性时才会对该属性添加深度代理
+ * 会把对这个对象的get,set操作回调出去
+ * 并且配合ProxyObjWatch收集相关依赖
  * @param obj 原始对象
- * @param fun 数据被设置时的回调
+ * @param con 对象被代理的操作
+ * @param resSetD 重置禁用状态
  */
-export function createProxyObj<T extends Record<string | symbol, any> = any>(obj: T, fun: proxyFunType = null): T {
+export function createProxyObj<T extends Record<string | symbol, any> = any>(obj: T, con?: proxyConType, resSetD = true): T {
     if (!isObject(obj)) { return obj; }
-    let setPF: (fun: proxyFunType) => void = obj[proxyFunKey];
-    if (setPF) {
-        setPF(fun);
-        return obj;
-    } else {
-        proxyObjMap.set(obj, {
-            key: Symbol(),
-            fun,
-        });
+
+    // 先在缓存中找
+    let proxyObj;
+    let sign: proxyObjSignType;
+    if (obj_proxy_Map.has(obj)) {
+        proxyObj = obj_proxy_Map.get(obj);
+        sign = proxyObj[proxySignKey];
+        sign.con = con;
+        if (resSetD) {
+            sign.d = false;
+        }
+        return proxyObj;
     }
-    return new Proxy(obj, {
-        get: (target: T, p: string | symbol, receiver: any): any => {
-            if (p == proxyFunKey) {
-                return (fun) => {
-                    setProxyFun(target, fun);
-                };
-            }
-            let value = Reflect.get(target, p, receiver);
-            value = createProxyObj(value, getProxyFun(target));
-            getProxyFun(target)?.get?.(
+
+    // 新建一个sign
+    sign = {
+        key: Symbol(),
+        con,
+        d: false,
+    };
+
+    proxyObj = new Proxy(obj, {
+        deleteProperty: (target: T, p: string | symbol): boolean => {
+            let passValue = Reflect.get(target, p);
+            cleanProxyObjCon(obj_proxy_Map.get(passValue));
+            let setResult = Reflect.deleteProperty(target, p);
+            sign.d || sign.con?.set?.(
                 target,
                 p,
-                getProxyKey(target),
+                undefined,
+                passValue,
+                sign.key,
             );
-            ProxyObjWatch.get({
+            sign.d || ROSet({
                 key: p,
-                objKey: getProxyKey(target),
+                objKey: sign.key,
+            });
+            return setResult;
+        },
+        get: (target: T, p: string | symbol, receiver: any): any => {
+            if (p == proxySignKey) {
+                return sign;
+            }
+            let value = Reflect.get(target, p, receiver);
+            value = createProxyObj(value, sign.con, false);
+            sign.d || sign.con?.get?.(
+                target,
+                p,
+                sign.key,
+            );
+            sign.d || ROGet({
+                key: p,
+                objKey: sign.key,
             });
             return value;
         },
         set: (target: T, p: string | symbol, value: any, receiver: any): boolean => {
             let passValue = Reflect.get(target, p, receiver);
-            cleanProxyObjFun(passValue);
-            getProxyFun(target)?.set?.(
+            cleanProxyObjCon(obj_proxy_Map.get(passValue));
+            let setResult = Reflect.set(target, p, value, receiver);
+            sign.d || sign.con?.set?.(
                 target,
                 p,
                 value,
                 passValue,
-                getProxyKey(target)
+                sign.key,
             );
-            ProxyObjWatch.set({
+            sign.d || ROSet({
                 key: p,
-                objKey: getProxyKey(target),
+                objKey: sign.key,
             });
-            return Reflect.set(target, p, value, receiver);
+            return setResult;
         },
+    });
+
+    // 设置到缓存中
+    obj_proxy_Map.set(obj, proxyObj);
+
+    return proxyObj;
+}
+
+/**
+ * 清除对象的代理
+ * @param obj 
+ * @returns 
+ */
+export function cleanProxyObjCon<T extends Record<string | symbol, any> = any>(obj: T): T {
+    if (!isObject(obj)) { return obj; }
+    let sign = obj[proxySignKey] as proxyObjSignType;
+    if (sign) {
+        sign.d = true;
+        sign.con = null;
+    }
+    for (let i in obj) {
+        cleanProxyObjCon(obj[i]);
+    }
+    return obj;
+}
+
+/**
+ * 
+ * TODO 以下是依赖收集和触发的内容
+ * RO rely on 依赖 的缩写
+ * 
+ */
+
+/**
+ * 依赖类型
+ */
+type ROKType = {
+    /** 该对象键的key */
+    key: string | symbol;
+    /** 对象独有的key */
+    objKey: symbol;
+};
+
+/** 依赖列表 */
+const relyOnList: ROKType[][] = [];
+/** 监听依赖列表 */
+const watchRNList: {
+    keys: ROKType[];
+    f: Function;
+}[] = [];
+
+/**
+ * 触发依赖
+ * TODO 由createProxyObj模块驱动
+ * @param key  
+ */
+function ROSet(key: ROKType) {
+    watchRNList.forEach((item) => {
+        if (ArrayUtils.has(item.keys, _ => _.objKey == key.objKey && _.key == key.key)) {
+            //TODO 这里不直接执行，而是执行并重新收集依赖
+            autoROF(item.f);
+        }
+    });
+}
+/**
+ * 依赖收集
+ * TODO 由createProxyObj模块驱动
+ * @param key 
+ */
+function ROGet(key: ROKType) {
+    //收集依赖
+    if (relyOnList.length > 0) {
+        ArrayUtils.at(relyOnList, -1).push(key);
+    }
+}
+
+/**
+ * 收集依赖
+ * @param f 
+ */
+export function ROCollect(f: Function): ROKType[] {
+    let list: ROKType[] = [];
+    relyOnList.push(list);
+    try {
+        f();
+    } catch (e) {
+        console.error('获取依赖方法执行错误', e);
+        list.length = 0;
+    }
+    if (list !== relyOnList.pop()) {
+        console.error('收集到的依赖有偏差');
+    }
+    return list;
+}
+
+/**
+ * 删除某个依赖方法
+ * @param f
+ */
+export function RORemove(f: Function): boolean {
+    let length = watchRNList.length;
+    ArrayUtils.eliminate(watchRNList, _ => _.f === f);
+    return watchRNList.length != length;
+}
+
+/**
+ * 自动执行某个带有依赖的方法
+ * @param f 
+ * @param getROF 
+ */
+export function autoROF(f: Function, getROF?: Function) {
+    let _ROF = getROF || f;
+    //先删除之前的依赖
+    RORemove(f);
+    let ROs = ROCollect(_ROF);
+    watchRNList.push({
+        keys: ROs,
+        f,
     });
 }
 
 /**
- * 清除对象的代理触发函数
- * @param obj 
- * @returns 
+ * 自动执行一次某个带有依赖的方法
+ * @param f 
+ * @param getROF 
  */
-export function cleanProxyObjFun<T extends Record<string, any> = any>(obj: T): T {
-    proxyObjMap.delete(obj);
-    return obj;
+export function autoOneROF(f: Function, getROF?: Function) {
+    autoROF(f, getROF);
+    RORemove(f);
 }

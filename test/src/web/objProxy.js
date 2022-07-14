@@ -1,5 +1,4 @@
-const { createProxyObj } = require("yayaluoya-tool/dist/obj/createProxyObj");
-const { ProxyObjWatch } = require("yayaluoya-tool/dist/obj/ProxyObjWatch");
+const { createProxyObj, cleanProxyObjCon, autoROF } = require("yayaluoya-tool/dist/obj/createProxyObj");
 const { BaseDataProxy } = require("yayaluoya-tool/dist/web/localData/BaseDataProxy");
 
 let testData = createProxyObj({
@@ -22,8 +21,8 @@ let testData = createProxyObj({
 
 window.testData = testData;
 
-ProxyObjWatch.autoF(() => {
-    console.log(testData.c.a);
+autoROF(() => {
+    console.log('自动依赖执行', testData.c.a);
 });
 
 class A extends BaseDataProxy {
@@ -42,3 +41,5 @@ class A extends BaseDataProxy {
 }
 
 window.localTestData = new A();
+
+window.cleanProxyObjCon = cleanProxyObjCon;
