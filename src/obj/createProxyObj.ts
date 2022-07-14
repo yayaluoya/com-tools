@@ -18,6 +18,15 @@ export type proxyConType = {
 
 /** 对象->代理对象映射 */
 const obj_proxy_Map = new WeakMap<any, any>();
+// const obj_proxy_Map = new Map<any, any>();
+
+/**
+ * 获取对象代理映射
+ * @returns 
+ */
+export function getobjProxyMap() {
+    return obj_proxy_Map;
+}
 
 /** 
  * 代理对象的标识key，可以通过这个key获取和设置代理对象的标识对象

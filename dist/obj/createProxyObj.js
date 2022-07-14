@@ -1,9 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.autoOneROF = exports.autoROF = exports.RORemove = exports.ROCollect = exports.cleanProxyObjCon = exports.createProxyObj = void 0;
+exports.autoOneROF = exports.autoROF = exports.RORemove = exports.ROCollect = exports.cleanProxyObjCon = exports.createProxyObj = exports.getobjProxyMap = void 0;
 var ArrayUtils_1 = require("../ArrayUtils");
 /** 对象->代理对象映射 */
 var obj_proxy_Map = new WeakMap();
+// const obj_proxy_Map = new Map<any, any>();
+/**
+ * 获取对象代理映射
+ * @returns
+ */
+function getobjProxyMap() {
+    return obj_proxy_Map;
+}
+exports.getobjProxyMap = getobjProxyMap;
 /**
  * 代理对象的标识key，可以通过这个key获取和设置代理对象的标识对象
  * TODO 这个key也是判断代理对象的关键

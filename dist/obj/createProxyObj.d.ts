@@ -14,6 +14,11 @@ export declare type proxyConType = {
     get?: (target: any, p: string | symbol, objKey: symbol) => void;
 };
 /**
+ * 获取对象代理映射
+ * @returns
+ */
+export declare function getobjProxyMap(): WeakMap<any, any>;
+/**
  * 创建一个代理对象
  * TODO 渐进式的，只有访问该对象的某个属性时才会对该属性添加深度代理
  * 会把对这个对象的get,set操作回调出去

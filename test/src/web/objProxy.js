@@ -1,4 +1,4 @@
-const { createProxyObj, cleanProxyObjCon, autoROF } = require("yayaluoya-tool/dist/obj/createProxyObj");
+const { createProxyObj, cleanProxyObjCon, autoROF, getobjProxyMap } = require("yayaluoya-tool/dist/obj/createProxyObj");
 const { BaseDataProxy } = require("yayaluoya-tool/dist/web/localData/BaseDataProxy");
 
 let testData = createProxyObj({
@@ -12,17 +12,17 @@ let testData = createProxyObj({
     e: null,
 }, {
     set(...arg) {
-        console.log('set', ...arg);
+        // console.log('set', ...arg);
     },
     get(...arg) {
-        console.log('get', ...arg);
+        // console.log('get', ...arg);
     },
 });
 
 window.testData = testData;
 
 autoROF(() => {
-    console.log('自动依赖执行', testData.c.a);
+    // console.log('自动依赖执行', testData.c.a);
 });
 
 class A extends BaseDataProxy {
@@ -43,3 +43,21 @@ class A extends BaseDataProxy {
 window.localTestData = new A();
 
 window.cleanProxyObjCon = cleanProxyObjCon;
+
+// 弱引用测试
+let f = async () => {
+    for (let i = 0; i < 10; i++) {
+        await new Promise((r) => {
+            setTimeout(() => {
+                testData.c = { a: 20 };
+                testData.c;
+                r();
+            }, 0);
+        });
+    }
+    //
+    setTimeout(() => {
+        console.log(getobjProxyMap());
+    }, 1000);
+}
+f();
