@@ -4,6 +4,7 @@
   "description": "一些常用的工具",
   "main": "./dist/index.js",
   "scripts": {
+    "rm-dist": "node ./.node/clearDist.js",
     "build": "tsc -w",
     "npm-publish": "npm publish"
   },

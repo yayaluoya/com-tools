@@ -1,4 +1,4 @@
-import { HttpStatus } from "../HttpStatus";
+import { HttpStatus } from "./HttpStatus";
 
 /**
  * 响应数据
@@ -21,5 +21,16 @@ export class ResData<D = any> {
         this.msg = mes;
         this.status = status;
         this.timeStamp = timeStamp;
+    }
+
+    /**
+     * 失败
+     * @param msg 
+     * @returns 
+     */
+    fail(msg: string): this {
+        this.status = HttpStatus.INTERNAL_SERVER_ERROR;
+        this.msg = msg;
+        return this;
     }
 }

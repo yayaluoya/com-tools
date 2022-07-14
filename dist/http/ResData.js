@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ResData = void 0;
-var HttpStatus_1 = require("../HttpStatus");
+var HttpStatus_1 = require("./HttpStatus");
 /**
  * 响应数据
  */
@@ -16,6 +16,16 @@ var ResData = /** @class */ (function () {
         this.status = status;
         this.timeStamp = timeStamp;
     }
+    /**
+     * 失败
+     * @param msg
+     * @returns
+     */
+    ResData.prototype.fail = function (msg) {
+        this.status = HttpStatus_1.HttpStatus.INTERNAL_SERVER_ERROR;
+        this.msg = msg;
+        return this;
+    };
     return ResData;
 }());
 exports.ResData = ResData;

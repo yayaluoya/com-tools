@@ -1,5 +1,5 @@
 /**
- * url 工具
+ * URL工具
  */
 export declare class URLT {
     url: URL;
@@ -12,11 +12,34 @@ export declare class URLT {
     /** 路径 */
     set path(path: string);
     get path(): string;
+    /** 查询参数 */
+    get query(): Record<string, any>;
     /**
-     * 添加路径
-     * @param path
+     * 拼接路径路径
+     * @param paths
      */
-    addPath(path: string): void;
+    join(...paths: string[]): this;
+    /**
+     * 添加查询参数
+     * @param query
+     * @returns
+     */
+    addQuery(query?: Record<string, string>): this;
     constructor(path: string, origin?: string);
+    /**
+     * 添加查询参数
+     * @param url 原url
+     * @param _query 查询参数
+     */
+    static addQuery(url: string, query?: Record<string, string>): string;
+    /**
+     * 获取查询参数
+     */
+    static getQuery(url: string): Record<string, string>;
+    /**
+     * 拼接url
+     * @param arg
+     */
+    static join(...arg: string[]): string;
 }
 //# sourceMappingURL=URLT.d.ts.map

@@ -13,5 +13,11 @@ export declare class ResData<D = any> {
     /** 其它数据 */
     [key: string]: any;
     constructor(d?: D, status?: number, mes?: string, timeStamp?: number);
+    /**
+     * 失败
+     * @param msg
+     * @returns
+     */
+    fail(msg: string): this;
 }
 //# sourceMappingURL=ResData.d.ts.map
