@@ -10,7 +10,29 @@
 </head>
 
 <body>
-
+    <input type="file" id="fileInput" />
+    <div>
+        <span>分片后重组的图片展示</span>
+        <img src="" alt="" id="fileShow1">
+    </div>
+    <div>
+        <span>上传到阿里云的图片展示</span>
+        <img src="" alt="" id="fileShow2">
+    </div>
 </body>
+<style>
+    body {
+        display: flex;
+        flex-direction: column;
+    }
+
+    body>* {
+        margin-bottom: 20px;
+    }
+
+    img {
+        width: 200px;
+    }
+</style>
 
 </html>

@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "mime": "^3.0.0",
     "yayaluoya-tool": "file:.."
   },
   "devDependencies": {

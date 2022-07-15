@@ -5,5 +5,6 @@ console.log('web端的测试');
 // require('./objProxy');
 // require('./base64');
 // require('./URLTool');
+require('./fileT');
 
 window.Clipboard = Clipboard;
