@@ -9,4 +9,6 @@ console.log(URLT.join('http://baidu.com/hh', 'fasd', 'fds/fads///fads/fasd'));
 
 console.log(new URLT('?a=100&b=200').href);
 
-console.log(new URLT('http://baidu.com').join('a', 'b', '/c/d///e').href);
+console.log(new URLT('http://baidu.com').join('a', 'b', '/c/d/\\\\e/f').href);
+
+console.log(URLT.contrast('http://www.com\\a\\b/c/', 'http://www.com/a/b/c'));

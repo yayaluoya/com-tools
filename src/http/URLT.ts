@@ -21,7 +21,13 @@ export class URLT {
     }
     /** 路径 */
     set path(path: string) {
-        this.url.pathname = path.replace(/\/{2,}/g, '/');
+        this.url.pathname = path
+            // 统一路径分隔符
+            .replace(/\\/g, '/')
+            // 去掉多余的路径分隔符
+            .replace(/\/{2,}/g, '/')
+            // 去掉末尾的路径分隔符
+            .replace(/\/$/, '');
     }
     get path(): string {
         return this.url.pathname;
@@ -97,5 +103,14 @@ export class URLT {
             a.join(b.path);
             return a;
         }, oneUrl).href;
+    }
+
+    /**
+     * 路径对比
+     * @param a 
+     * @param b 
+     */
+    static contrast(a: string, b: string): boolean {
+        return a == b || new URLT(a).href == new URLT(b).href;
     }
 }

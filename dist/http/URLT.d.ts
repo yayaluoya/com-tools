@@ -41,5 +41,11 @@ export declare class URLT {
      * @param arg
      */
     static join(...arg: string[]): string;
+    /**
+     * 路径对比
+     * @param a
+     * @param b
+     */
+    static contrast(a: string, b: string): boolean;
 }
 //# sourceMappingURL=URLT.d.ts.map

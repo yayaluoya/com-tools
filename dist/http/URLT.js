@@ -57,7 +57,13 @@ var URLT = /** @class */ (function () {
         },
         /** 路径 */
         set: function (path) {
-            this.url.pathname = path.replace(/\/{2,}/g, '/');
+            this.url.pathname = path
+                // 统一路径分隔符
+                .replace(/\\/g, '/')
+                // 去掉多余的路径分隔符
+                .replace(/\/{2,}/g, '/')
+                // 去掉末尾的路径分隔符
+                .replace(/\/$/, '');
         },
         enumerable: false,
         configurable: true
@@ -141,6 +147,14 @@ var URLT = /** @class */ (function () {
             a.join(b.path);
             return a;
         }, oneUrl).href;
+    };
+    /**
+     * 路径对比
+     * @param a
+     * @param b
+     */
+    URLT.contrast = function (a, b) {
+        return a == b || new URLT(a).href == new URLT(b).href;
     };
     return URLT;
 }());
