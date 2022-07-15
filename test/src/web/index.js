@@ -6,5 +6,6 @@ console.log('web端的测试');
 // require('./base64');
 // require('./URLTool');
 require('./fileT');
+require('./instanceT');
 
 window.Clipboard = Clipboard;
