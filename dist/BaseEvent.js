@@ -105,7 +105,11 @@ var BaseEvent = /** @class */ (function () {
         }
         this.eventList.forEach(function (item) {
             var _a;
-            if (item.key === key) {
+            if ((item.key === key) ||
+                (typeof key == 'string' && item.key instanceof RegExp && item.key.test(key)) ||
+                (typeof item.key == 'string' && key instanceof RegExp && key.test(item.key)) ||
+                (typeof key == 'function' && key(item.key)) ||
+                (typeof item.key == 'function' && item.key(key))) {
                 (_a = item.f).call.apply(_a, __spreadArray([item._this], __read(arg), false));
             }
         });

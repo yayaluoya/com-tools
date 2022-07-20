@@ -7,5 +7,6 @@ require('./base64');
 require('./URLTool');
 require('./fileT');
 require('./instanceT');
+require('./BaseEvent');
 
 window.Clipboard = Clipboard;
