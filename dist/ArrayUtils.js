@@ -195,6 +195,14 @@ var ArrayUtils = /** @class */ (function () {
         });
         return array;
     };
+    /**
+     * 数组化
+     * @param target
+     * @returns
+     */
+    ArrayUtils.arraify = function (target) {
+        return Array.isArray(target) ? target : [target];
+    };
     return ArrayUtils;
 }());
 exports.ArrayUtils = ArrayUtils;

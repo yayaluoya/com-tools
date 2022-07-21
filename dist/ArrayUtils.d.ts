@@ -44,5 +44,11 @@ export declare class ArrayUtils {
     } | T) | Array<RegExp | {
         (_: T, i: number): boolean;
     } | T>): T[];
+    /**
+     * 数组化
+     * @param target
+     * @returns
+     */
+    static arraify<T>(target: T | T[]): T[];
 }
 //# sourceMappingURL=ArrayUtils.d.ts.map

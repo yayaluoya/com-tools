@@ -2,7 +2,6 @@
  * 数组工具
  */
 export class ArrayUtils {
-
     /**
      * 获取数组的某个元素
      * @param array 
@@ -147,5 +146,14 @@ export class ArrayUtils {
             }
         });
         return array;
+    }
+
+    /**
+     * 数组化
+     * @param target 
+     * @returns 
+     */
+    static arraify<T>(target: T | T[]): T[] {
+        return Array.isArray(target) ? target : [target]
     }
 }
