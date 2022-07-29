@@ -1,6 +1,6 @@
 {
   "name": "yayaluoya-tool",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "description": "一些常用的工具",
   "main": "./dist/index.js",
   "scripts": {
@@ -14,6 +14,7 @@
     "@types/node": "^16.9.0",
     "ali-oss": "^6.17.1",
     "axios": "^0.27.2",
+    "internal-ip": "^6.2.0",
     "js-base64": "^3.7.2"
   },
   "devDependencies": {

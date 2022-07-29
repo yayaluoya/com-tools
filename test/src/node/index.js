@@ -6,3 +6,5 @@ console.log('node测试2');
 require('./array');
 
 require('./lookupFile');
+
+require('./HttpTool');
