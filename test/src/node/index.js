@@ -8,3 +8,5 @@ require('./array');
 require('./lookupFile');
 
 require('./HttpTool');
+
+require('./SocketManager');

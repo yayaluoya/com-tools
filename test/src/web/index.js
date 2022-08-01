@@ -8,5 +8,6 @@ require('./URLTool');
 require('./fileT');
 require('./instanceT');
 require('./BaseEvent');
+require('./BaseWS');
 
 window.Clipboard = Clipboard;
