@@ -67,7 +67,7 @@ export class URLT {
 
     constructor(path: string, origin?: string) {
         // 如果没加域的话自动加上域，不然会报错
-        if (!/^(https?|ws):\/\//.test(path) && !origin) {
+        if (!/^(https?|wss?):\/\//.test(path) && !origin) {
             origin = 'http://localhost/';
             this.ifNoOrigin = true;
         }
