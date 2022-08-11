@@ -45,7 +45,7 @@ export class ObjectUtils {
      * 克隆一个对象
      * 递归克隆
      */
-    static clone_(data) {
+    static clone_<T>(data: T): T {
         if (typeof data == 'object' && data) {
             if (Array.isArray(data)) {
                 return data.reduce((a, b) => {
@@ -53,7 +53,7 @@ export class ObjectUtils {
                     return a;
                 }, []);
             }
-            let _data = {};
+            let _data: any = {};
             for (let i in data) {
                 _data[i] = this.clone_(data[i]);
             }

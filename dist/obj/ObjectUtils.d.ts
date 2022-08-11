@@ -20,7 +20,7 @@ export declare class ObjectUtils {
      * 克隆一个对象
      * 递归克隆
      */
-    static clone_(data: any): any;
+    static clone_<T>(data: T): T;
     /**
      * 属性提取
      * @param {*} obj
