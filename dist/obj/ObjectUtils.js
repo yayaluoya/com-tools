@@ -86,17 +86,15 @@ var ObjectUtils = /** @class */ (function () {
      * 递归克隆
      */
     ObjectUtils.clone_ = function (data) {
-        var _this = this;
         if (typeof data == 'object' && data) {
             if (Array.isArray(data)) {
-                return data.reduce(function (a, b) {
-                    a.push(_this.clone_(b));
-                    return a;
-                }, []);
+                return data.map(function (_) {
+                    return ObjectUtils.clone_(_);
+                });
             }
             var _data = {};
             for (var i in data) {
-                _data[i] = this.clone_(data[i]);
+                _data[i] = ObjectUtils.clone_(data[i]);
             }
             return _data;
         }

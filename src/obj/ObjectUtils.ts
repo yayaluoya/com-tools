@@ -48,14 +48,13 @@ export class ObjectUtils {
     static clone_<T>(data: T): T {
         if (typeof data == 'object' && data) {
             if (Array.isArray(data)) {
-                return data.reduce((a, b) => {
-                    a.push(this.clone_(b));
-                    return a;
-                }, []);
+                return data.map(_ => {
+                    return ObjectUtils.clone_(_)
+                }) as any;
             }
             let _data: any = {};
             for (let i in data) {
-                _data[i] = this.clone_(data[i]);
+                _data[i] = ObjectUtils.clone_(data[i]);
             }
             return _data;
         }
