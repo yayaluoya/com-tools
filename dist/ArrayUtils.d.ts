@@ -3,6 +3,12 @@
  */
 export declare class ArrayUtils {
     /**
+    * 填充指定数量的数据
+    * @param {*} d
+    * @param {*} length
+    */
+    static fill<T>(d: T, length?: number): T[];
+    /**
      * 获取数组的某个元素
      * @param array
      * @param _n 索引，可以是负数

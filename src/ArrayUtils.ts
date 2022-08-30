@@ -1,7 +1,22 @@
+import { ObjectUtils } from "./obj/ObjectUtils";
+
 /**
  * 数组工具
  */
 export class ArrayUtils {
+    /**
+    * 填充指定数量的数据
+    * @param {*} d 
+    * @param {*} length 
+    */
+    static fill<T>(d: T, length: number = 0): T[] {
+        return Array.from({
+            length,
+        }).map(() => {
+            return ObjectUtils.clone_(d);
+        });
+    }
+
     /**
      * 获取数组的某个元素
      * @param array 
@@ -79,34 +94,29 @@ export class ArrayUtils {
      * @param _weight 权重列表
      */
     public static random<T>(_array: T[], _n = 1, _weight: number[] = _array.map((item) => { return 1; })): T[] {
-        if (_array.length <= 0) { return; }
-        let _rootArray: T[] = [];
+        if (_array.length <= 0 || _array.length < _n) { return; }
         let _newArray: T[] = [];
-        //权重索引列表
-        let _indexArray: number[] = [];
-        //找到最小的权重
-        let _minWeight: number = _weight[0];
-        _weight.forEach((item) => {
-            _minWeight = Math.min(_minWeight, item);
-        });
+        let _minWeight: number = Math.min(..._weight, 1);
         _weight = _weight.map((item) => {
-            return Math.floor(item * (1 / _minWeight));
+            return Math.round((item ?? 0) / _minWeight);
         });
-        _array.forEach((item, index) => {
-            _rootArray.push(item);
-            //
-            for (let _i = 0; _i < _weight[index]; _i++) {
-                _indexArray.push(index);
-            }
-        });
+        let _indexArray: number[] = _array.map((_, index) => {
+            return ArrayUtils.fill(index, _weight[index]);
+        }).reduce((a, b) => {
+            a.push(...b);
+            return a;
+        }, []);
         let _index: number;
         for (let _i = 0; _i < _n; _i++) {
-            if (_rootArray.length <= 0) { break; }
-            _index = Math.floor(Math.random() * _indexArray.length);
+            if (_indexArray.length <= 0) {
+                console.log(_indexArray);
+                break;
+            }
+            _index = Math.round(Math.random() * (_indexArray.length - 1));
+            _newArray.push(_array[_indexArray[_index]]);
             _indexArray = _indexArray.filter((item) => {
                 return item != _index;
             });
-            _newArray.push(_rootArray.splice(_indexArray[_index], 1)[0]);
         }
         //
         return _newArray;

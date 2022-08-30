@@ -26,14 +26,37 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ArrayUtils = void 0;
+var ObjectUtils_1 = require("./obj/ObjectUtils");
 /**
  * 数组工具
  */
 var ArrayUtils = /** @class */ (function () {
     function ArrayUtils() {
     }
+    /**
+    * 填充指定数量的数据
+    * @param {*} d
+    * @param {*} length
+    */
+    ArrayUtils.fill = function (d, length) {
+        if (length === void 0) { length = 0; }
+        return Array.from({
+            length: length,
+        }).map(function () {
+            return ObjectUtils_1.ObjectUtils.clone_(d);
+        });
+    };
     /**
      * 获取数组的某个元素
      * @param array
@@ -124,38 +147,31 @@ var ArrayUtils = /** @class */ (function () {
     ArrayUtils.random = function (_array, _n, _weight) {
         if (_n === void 0) { _n = 1; }
         if (_weight === void 0) { _weight = _array.map(function (item) { return 1; }); }
-        if (_array.length <= 0) {
+        if (_array.length <= 0 || _array.length < _n) {
             return;
         }
-        var _rootArray = [];
         var _newArray = [];
-        //权重索引列表
-        var _indexArray = [];
-        //找到最小的权重
-        var _minWeight = _weight[0];
-        _weight.forEach(function (item) {
-            _minWeight = Math.min(_minWeight, item);
-        });
+        var _minWeight = Math.min.apply(Math, __spreadArray(__spreadArray([], __read(_weight), false), [1], false));
         _weight = _weight.map(function (item) {
-            return Math.floor(item * (1 / _minWeight));
+            return Math.round((item !== null && item !== void 0 ? item : 0) / _minWeight);
         });
-        _array.forEach(function (item, index) {
-            _rootArray.push(item);
-            //
-            for (var _i = 0; _i < _weight[index]; _i++) {
-                _indexArray.push(index);
-            }
-        });
+        var _indexArray = _array.map(function (_, index) {
+            return ArrayUtils.fill(index, _weight[index]);
+        }).reduce(function (a, b) {
+            a.push.apply(a, __spreadArray([], __read(b), false));
+            return a;
+        }, []);
         var _index;
         for (var _i = 0; _i < _n; _i++) {
-            if (_rootArray.length <= 0) {
+            if (_indexArray.length <= 0) {
+                console.log(_indexArray);
                 break;
             }
-            _index = Math.floor(Math.random() * _indexArray.length);
+            _index = Math.round(Math.random() * (_indexArray.length - 1));
+            _newArray.push(_array[_indexArray[_index]]);
             _indexArray = _indexArray.filter(function (item) {
                 return item != _index;
             });
-            _newArray.push(_rootArray.splice(_indexArray[_index], 1)[0]);
         }
         //
         return _newArray;

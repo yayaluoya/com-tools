@@ -10,5 +10,6 @@ require('./instanceT');
 require('./BaseEvent');
 require('./BaseWS');
 require('./objT');
+require('./ArrayT');
 
 window.Clipboard = Clipboard;
