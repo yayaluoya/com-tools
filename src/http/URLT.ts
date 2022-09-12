@@ -56,11 +56,12 @@ export class URLT {
     /**
      * 添加查询参数
      * @param query 
+     * @param objectHandle object数据处理器
      * @returns 
      */
-    addQuery(query: Record<string, string> = {}): this {
+    addQuery(query: Record<string, string> = {}, objectHandle: { (any): string } = JSON.stringify): this {
         for (let i in query) {
-            this.url.searchParams.set(i, query[i]);
+            this.url.searchParams.set(i, typeof query[i] == 'object' ? objectHandle(query[i]) : query[i]);
         }
         return this;
     }

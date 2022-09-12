@@ -108,12 +108,14 @@ var URLT = /** @class */ (function () {
     /**
      * 添加查询参数
      * @param query
+     * @param objectHandle object数据处理器
      * @returns
      */
-    URLT.prototype.addQuery = function (query) {
+    URLT.prototype.addQuery = function (query, objectHandle) {
         if (query === void 0) { query = {}; }
+        if (objectHandle === void 0) { objectHandle = JSON.stringify; }
         for (var i in query) {
-            this.url.searchParams.set(i, query[i]);
+            this.url.searchParams.set(i, typeof query[i] == 'object' ? objectHandle(query[i]) : query[i]);
         }
         return this;
     };

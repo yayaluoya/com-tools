@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "webpack": "webpack",
     "server": "http-server ./ -c-1",
     "node": "nodemon ./src/node/index.js --watch ./src/node --watch ../dist"
