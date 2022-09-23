@@ -8,9 +8,9 @@ export declare abstract class BaseApiCon extends BaseEvent {
     /**
      * 设置缓存
      * @param _key 缓存键
-     * @param _res 缓存响应
+     * @param _res 缓存响应，如果为空的话就删除这个缓存
      */
-    protected setCache(_key: string, _res: Promise<any>): void;
+    protected setCache(_key: string, _res?: Promise<any>): void | boolean;
     /**
      * 获取缓存值
      * @param _key

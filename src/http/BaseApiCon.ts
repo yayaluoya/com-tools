@@ -9,10 +9,14 @@ export abstract class BaseApiCon extends BaseEvent {
     /**
      * 设置缓存
      * @param _key 缓存键
-     * @param _res 缓存响应
+     * @param _res 缓存响应，如果为空的话就删除这个缓存
      */
-    protected setCache(_key: string, _res: Promise<any>) {
-        this.cacheResList.set(_key, _res);
+    protected setCache(_key: string, _res?: Promise<any>): void | boolean {
+        if (_res) {
+            this.cacheResList.set(_key, _res);
+        } else {
+            return this.cacheResList.delete(_key);
+        }
     }
 
     /**
