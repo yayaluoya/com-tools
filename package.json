@@ -1,6 +1,6 @@
 {
   "name": "yayaluoya-tool",
-  "version": "1.6.7",
+  "version": "1.6.8",
   "description": "yayaluoya常用的一些工具",
   "main": "./dist/index.js",
   "scripts": {

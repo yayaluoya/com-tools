@@ -4,10 +4,5 @@
  * @param {*} passive 是否被动，指的是被用到时才new
  * @param {*} arg new时带的参数
  */
-export declare function InstanceTool(name?: string, passive?: boolean, ...arg: []): (_class: {
-    new (): any;
-    [key: string]: any;
-    [key: number]: any;
-    [key: symbol]: any;
-}) => void;
-//# sourceMappingURL=InstanceTool.d.ts.map
+export declare function instanceTool(name?: string, passive?: boolean, ...arg: []): (_class: any) => void;
+//# sourceMappingURL=instanceTool.d.ts.map

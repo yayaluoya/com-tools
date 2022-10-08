@@ -25,8 +25,11 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     return to.concat(ar || Array.prototype.slice.call(from));
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.InstanceTool = void 0;
-/** 单例隐藏字段名 */
+exports.instanceTool = void 0;
+/**
+ * 单例隐藏字段名
+ * TODO 就是单纯感觉比放闭包里面好
+ */
 var instanceName = Symbol();
 /**
  * 单例装饰器
@@ -34,7 +37,7 @@ var instanceName = Symbol();
  * @param {*} passive 是否被动，指的是被用到时才new
  * @param {*} arg new时带的参数
  */
-function InstanceTool(name, passive) {
+function instanceTool(name, passive) {
     if (name === void 0) { name = 'instance'; }
     if (passive === void 0) { passive = true; }
     var arg = [];
@@ -55,4 +58,4 @@ function InstanceTool(name, passive) {
         });
     };
 }
-exports.InstanceTool = InstanceTool;
+exports.instanceTool = instanceTool;

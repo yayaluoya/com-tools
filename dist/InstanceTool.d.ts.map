@@ -1,1 +1,1 @@
-{"version":3,"file":"InstanceTool.d.ts","sourceRoot":"","sources":["../src/InstanceTool.ts"],"names":[],"mappings":"AAGA;;;;;GAKG;AACH,wBAAgB,YAAY,CAAC,IAAI,SAAa,EAAE,OAAO,UAAO,EAAE,GAAG,GAAG,EAAE,EAAE;YAE3D,GAAG;;;;WAejB"}
+{"version":3,"file":"instanceTool.d.ts","sourceRoot":"","sources":["../src/instanceTool.ts"],"names":[],"mappings":"AAMA;;;;;GAKG;AACH,wBAAgB,YAAY,CAAC,IAAI,SAAa,EAAE,OAAO,UAAO,EAAE,GAAG,GAAG,EAAE,EAAE,YAC7C,GAAG,UAa/B"}

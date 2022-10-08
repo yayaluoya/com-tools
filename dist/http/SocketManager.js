@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SocketManager = void 0;
-var InstanceTool_1 = require("../InstanceTool");
+var instanceTool_1 = require("../instanceTool");
 var ws_1 = require("ws");
 var URLT_1 = require("./URLT");
 var ArrayUtils_1 = require("../ArrayUtils");
@@ -112,7 +112,7 @@ var SocketManager = /** @class */ (function () {
         }, time);
     };
     SocketManager = __decorate([
-        (0, InstanceTool_1.InstanceTool)()
+        (0, instanceTool_1.instanceTool)()
     ], SocketManager);
     return SocketManager;
 }());

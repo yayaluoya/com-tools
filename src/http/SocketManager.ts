@@ -1,4 +1,4 @@
-import { InstanceTool } from "../InstanceTool";
+import { instanceTool } from "../instanceTool";
 import { Server, WebSocket, WebSocketServer } from 'ws';
 import { URLT } from "./URLT";
 import { ArrayUtils } from "../ArrayUtils";
@@ -15,7 +15,7 @@ function keyContrast(key: string, key2: string): boolean {
 /**
  * Socket管理器
  */
-@InstanceTool()
+@instanceTool()
 export class SocketManager {
     /** 单例 */
     static instance: SocketManager;
