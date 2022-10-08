@@ -22,9 +22,12 @@ export declare class URLT {
     /**
      * 添加查询参数
      * @param query
+     * @param objectHandle object数据处理器
      * @returns
      */
-    addQuery(query?: Record<string, string>): this;
+    addQuery(query?: Record<string, string>, objectHandle?: {
+        (any: any): string;
+    }): this;
     constructor(path: string, origin?: string);
     /**
      * 添加查询参数

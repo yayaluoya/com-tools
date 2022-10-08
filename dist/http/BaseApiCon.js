@@ -67,10 +67,15 @@ var BaseApiCon = /** @class */ (function (_super) {
     /**
      * 设置缓存
      * @param _key 缓存键
-     * @param _res 缓存响应
+     * @param _res 缓存响应，如果为空的话就删除这个缓存
      */
     BaseApiCon.prototype.setCache = function (_key, _res) {
-        this.cacheResList.set(_key, _res);
+        if (_res) {
+            this.cacheResList.set(_key, _res);
+        }
+        else {
+            return this.cacheResList.delete(_key);
+        }
     };
     /**
      * 获取缓存值
