@@ -3,6 +3,12 @@
  */
 export declare class ArrayUtils {
     /**
+     * 根据索引删除一个数据
+     * @param arr 源数组
+     * @param index 索引
+     */
+    static removeAt<T>(arr: T[], index: number): boolean;
+    /**
     * 填充指定数量的数据
     * @param {*} d
     * @param {*} length
@@ -26,7 +32,7 @@ export declare class ArrayUtils {
      * @param op
      */
     static has<T>(arr: T[], op: T | {
-        (_: T): boolean;
+        (_: T, index: number, obj: T[]): boolean;
     }): boolean;
     /**
      * 随机打乱数组
@@ -39,7 +45,7 @@ export declare class ArrayUtils {
      * @param _n 随机个数
      * @param _weight 权重列表
      */
-    static random<T>(_array: T[], _n?: number, _weight?: number[]): T[];
+    static random<T>(_array: T[], _n?: number, _weight?: Record<number, number>): T[];
     /**
      * 剔除掉数组指定内容
      * @param {*} array 原数组
@@ -56,5 +62,9 @@ export declare class ArrayUtils {
      * @returns
      */
     static arraify<T>(target: T | T[]): T[];
+    /**
+     * 是否有重复内容
+     */
+    static isRepeat(arr: any[]): boolean;
 }
 //# sourceMappingURL=ArrayUtils.d.ts.map

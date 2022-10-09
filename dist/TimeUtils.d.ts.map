@@ -1,0 +1,1 @@
+{"version":3,"file":"TimeUtils.d.ts","sourceRoot":"","sources":["../src/TimeUtils.ts"],"names":[],"mappings":"AAAA;;GAEG;AACH,qBAAa,SAAS;IAClB,MAAM,CAAC,QAAQ,EAAE,MAAM,CAAsB;IAC7C,MAAM,CAAC,OAAO,EAAE,MAAM,CAAgB;WACxB,kBAAkB,CAAC,IAAI,EAAE,MAAM,EAAE,SAAS,GAAE,MAAY,EAAE,IAAI,GAAE,OAAe,GAAG,MAAM;CAiEzG"}

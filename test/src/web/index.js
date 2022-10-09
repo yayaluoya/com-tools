@@ -1,4 +1,6 @@
 const { Clipboard } = require('yayaluoya-tool/dist/web/Clipboard');
+const { MathUtils } = require('yayaluoya-tool/dist/MathUtils');
+const { TimeUtils } = require('yayaluoya-tool/dist/TimeUtils');
 
 console.log('web端的测试');
 
@@ -13,3 +15,6 @@ require('./objT');
 require('./ArrayT');
 
 window.Clipboard = Clipboard;
+
+window.TimeUtils = TimeUtils;
+window.MathUtils = MathUtils;

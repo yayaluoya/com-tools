@@ -37,6 +37,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ArrayUtils = void 0;
+var MathUtils_1 = require("./MathUtils");
 var ObjectUtils_1 = require("./obj/ObjectUtils");
 /**
  * 数组工具
@@ -44,6 +45,20 @@ var ObjectUtils_1 = require("./obj/ObjectUtils");
 var ArrayUtils = /** @class */ (function () {
     function ArrayUtils() {
     }
+    /**
+     * 根据索引删除一个数据
+     * @param arr 源数组
+     * @param index 索引
+     */
+    ArrayUtils.removeAt = function (arr, index) {
+        if (index < 0) {
+            return false;
+        }
+        if (arr.length <= index)
+            return false;
+        arr.splice(index, 1);
+        return true;
+    };
     /**
     * 填充指定数量的数据
     * @param {*} d
@@ -121,7 +136,7 @@ var ArrayUtils = /** @class */ (function () {
     ArrayUtils.has = function (arr, op) {
         var index = -1;
         if (typeof op == 'function') {
-            index = arr.findIndex(function (_) { return op(_); });
+            index = arr.findIndex(op);
         }
         else {
             index = arr.indexOf(op);
@@ -133,7 +148,6 @@ var ArrayUtils = /** @class */ (function () {
      * @param _array 目标数组
      */
     ArrayUtils.upset = function (_array) {
-        //乱序
         return _array.sort(function () {
             return Math.random() - 0.5;
         });
@@ -146,34 +160,28 @@ var ArrayUtils = /** @class */ (function () {
      */
     ArrayUtils.random = function (_array, _n, _weight) {
         if (_n === void 0) { _n = 1; }
-        if (_weight === void 0) { _weight = _array.map(function (item) { return 1; }); }
-        if (_array.length <= 0 || _array.length < _n) {
+        if (_weight === void 0) { _weight = {}; }
+        if (!_array || _array.length <= 0) {
             return;
         }
-        var _newArray = [];
-        var _minWeight = Math.min.apply(Math, __spreadArray(__spreadArray([], __read(_weight), false), [1], false));
-        _weight = _weight.map(function (item) {
-            return Math.round((item !== null && item !== void 0 ? item : 0) / _minWeight);
-        });
+        //根据权重生成索引列表
         var _indexArray = _array.map(function (_, index) {
-            return ArrayUtils.fill(index, _weight[index]);
+            var _a;
+            return ArrayUtils.fill(index, (_a = _weight[index]) !== null && _a !== void 0 ? _a : 1);
         }).reduce(function (a, b) {
             a.push.apply(a, __spreadArray([], __read(b), false));
             return a;
         }, []);
-        var _index;
+        //
+        var _newArray = [];
         for (var _i = 0; _i < _n; _i++) {
             if (_indexArray.length <= 0) {
-                console.log(_indexArray);
                 break;
             }
-            _index = Math.round(Math.random() * (_indexArray.length - 1));
+            var _index = MathUtils_1.MathUtils.RandomInt(0, _indexArray.length - 1);
             _newArray.push(_array[_indexArray[_index]]);
-            _indexArray = _indexArray.filter(function (item) {
-                return item != _index;
-            });
+            ArrayUtils.eliminate(_indexArray, _indexArray[_index]);
         }
-        //
         return _newArray;
     };
     /**
@@ -218,6 +226,12 @@ var ArrayUtils = /** @class */ (function () {
      */
     ArrayUtils.arraify = function (target) {
         return Array.isArray(target) ? target : [target];
+    };
+    /**
+     * 是否有重复内容
+     */
+    ArrayUtils.isRepeat = function (arr) {
+        return arr.length != __spreadArray([], __read(new Set(arr)), false).length;
     };
     return ArrayUtils;
 }());

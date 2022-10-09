@@ -1,9 +1,22 @@
+import { MathUtils } from "./MathUtils";
 import { ObjectUtils } from "./obj/ObjectUtils";
 
 /**
  * 数组工具
  */
 export class ArrayUtils {
+    /**
+     * 根据索引删除一个数据
+     * @param arr 源数组
+     * @param index 索引
+     */
+    static removeAt<T>(arr: T[], index: number): boolean {
+        if (index < 0) { return false; }
+        if (arr.length <= index) return false;
+        arr.splice(index, 1);
+        return true;
+    }
+
     /**
     * 填充指定数量的数据
     * @param {*} d 
@@ -66,10 +79,10 @@ export class ArrayUtils {
      * @param arr 
      * @param op 
      */
-    public static has<T>(arr: T[], op: T | { (_: T): boolean }): boolean {
+    public static has<T>(arr: T[], op: T | { (_: T, index: number, obj: T[]): boolean }): boolean {
         let index = -1;
         if (typeof op == 'function') {
-            index = arr.findIndex((_) => (op as Function)(_));
+            index = arr.findIndex(op as any);
         } else {
             index = arr.indexOf(op);
         }
@@ -81,7 +94,6 @@ export class ArrayUtils {
      * @param _array 目标数组 
      */
     public static upset<T>(_array: T[]): T[] {
-        //乱序
         return _array.sort(() => {
             return Math.random() - 0.5;
         });
@@ -93,32 +105,27 @@ export class ArrayUtils {
      * @param _n 随机个数
      * @param _weight 权重列表
      */
-    public static random<T>(_array: T[], _n = 1, _weight: number[] = _array.map((item) => { return 1; })): T[] {
-        if (_array.length <= 0 || _array.length < _n) { return; }
-        let _newArray: T[] = [];
-        let _minWeight: number = Math.min(..._weight, 1);
-        _weight = _weight.map((item) => {
-            return Math.round((item ?? 0) / _minWeight);
-        });
+    public static random<T>(_array: T[], _n = 1, _weight: Record<number, number> = {}): T[] {
+        if (!_array || _array.length <= 0) {
+            return;
+        }
+        //根据权重生成索引列表
         let _indexArray: number[] = _array.map((_, index) => {
-            return ArrayUtils.fill(index, _weight[index]);
+            return ArrayUtils.fill(index, _weight[index] ?? 1);
         }).reduce((a, b) => {
             a.push(...b);
             return a;
         }, []);
-        let _index: number;
+        //
+        let _newArray: T[] = [];
         for (let _i = 0; _i < _n; _i++) {
             if (_indexArray.length <= 0) {
-                console.log(_indexArray);
                 break;
             }
-            _index = Math.round(Math.random() * (_indexArray.length - 1));
+            let _index = MathUtils.RandomInt(0, _indexArray.length - 1);
             _newArray.push(_array[_indexArray[_index]]);
-            _indexArray = _indexArray.filter((item) => {
-                return item != _index;
-            });
+            ArrayUtils.eliminate(_indexArray, _indexArray[_index]);
         }
-        //
         return _newArray;
     }
 
@@ -165,5 +172,12 @@ export class ArrayUtils {
      */
     static arraify<T>(target: T | T[]): T[] {
         return Array.isArray(target) ? target : [target]
+    }
+
+    /**
+     * 是否有重复内容
+     */
+    static isRepeat(arr: any[]): boolean {
+        return arr.length != [...new Set(arr)].length;
     }
 }
