@@ -1,4 +1,4 @@
-import { ArraifyT } from "../ArrayUtils";
+import { ArraifyT } from "../_d/ComType";
 /**
  * 对象工具类
  */
@@ -12,17 +12,16 @@ export declare class ObjectUtils {
         (i: string): boolean;
     } | RegExp): any;
     /**
-     * 克隆一个对象
+     * 克隆一个对象（普通）
      * 采用序列化和反序列化的方式，function不会被克隆
      * @param _O 该对象
      */
     static clone<T>(_data: T): T;
     /**
-     * 克隆一个对象
-     * 递归克隆
+     * 克隆一个对象（浅层次递归，不处理原型）
      * TODO 注意对于其他内置对象是不处理的
      */
-    static clone_<T>(data: T): T;
+    static clone2<T>(data: T): T;
     /**
      * 属性提取
      * @param {*} obj
@@ -31,6 +30,13 @@ export declare class ObjectUtils {
     static propGet(obj: any, props: ArraifyT<string | [string, string | number | {
         (i: string): boolean;
     } | RegExp]>): {};
+    /**
+     * 判断两个对象是否相同
+     * TODO 对比时用的是===
+     * @param a
+     * @param b
+     */
+    static same(a: any, b: any): boolean;
     /**
      * 在a对象上合并b对象的值
      * 类型以b对象上的为准

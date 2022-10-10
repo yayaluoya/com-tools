@@ -35,7 +35,7 @@ export abstract class BaseDataProxy<D = any> extends BaseEvent<'update' | 'set' 
     }
     /** 获取一份克隆数据 */
     get cloneData(): D {
-        return ObjectUtils.clone_(this._data);
+        return ObjectUtils.clone2(this._data);
     }
 
     //

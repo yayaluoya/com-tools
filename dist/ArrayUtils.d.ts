@@ -22,6 +22,7 @@ export declare class ArrayUtils {
     static at<T = any>(array: T[], _n: number): T;
     /**
      * 判断两个数组内容是否相同
+     * TODO 元素顺序不会产生影响
      * @param x x数组
      * @param y y数组
      */
@@ -67,8 +68,4 @@ export declare class ArrayUtils {
      */
     static isRepeat(arr: any[]): boolean;
 }
-/**
- * 类型数组化
- */
-export declare type ArraifyT<T> = T | T[];
 //# sourceMappingURL=ArrayUtils.d.ts.map

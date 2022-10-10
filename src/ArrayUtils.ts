@@ -26,7 +26,7 @@ export class ArrayUtils {
         return Array.from({
             length,
         }).map(() => {
-            return ObjectUtils.clone_(d);
+            return ObjectUtils.clone2(d);
         });
     }
 
@@ -49,6 +49,7 @@ export class ArrayUtils {
 
     /**
      * 判断两个数组内容是否相同
+     * TODO 元素顺序不会产生影响
      * @param x x数组
      * @param y y数组
      */
@@ -181,8 +182,3 @@ export class ArrayUtils {
         return arr.length != [...new Set(arr)].length;
     }
 }
-
-/** 
- * 类型数组化
- */
-export type ArraifyT<T> = T | T[];

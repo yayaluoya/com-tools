@@ -85,7 +85,7 @@ var BaseDataProxy = /** @class */ (function (_super) {
     Object.defineProperty(BaseDataProxy.prototype, "cloneData", {
         /** 获取一份克隆数据 */
         get: function () {
-            return ObjectUtils_1.ObjectUtils.clone_(this._data);
+            return ObjectUtils_1.ObjectUtils.clone2(this._data);
         },
         enumerable: false,
         configurable: true

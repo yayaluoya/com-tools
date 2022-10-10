@@ -37,7 +37,6 @@ var __values = (this && this.__values) || function(o) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ObjectUtils = void 0;
-var ArrayUtils_1 = require("../ArrayUtils");
 var is_1 = require("../is");
 /**
  * 对象工具类
@@ -75,7 +74,7 @@ var ObjectUtils = /** @class */ (function () {
         }
     };
     /**
-     * 克隆一个对象
+     * 克隆一个对象（普通）
      * 采用序列化和反序列化的方式，function不会被克隆
      * @param _O 该对象
      */
@@ -83,28 +82,27 @@ var ObjectUtils = /** @class */ (function () {
         return JSON.parse(JSON.stringify(_data));
     };
     /**
-     * 克隆一个对象
-     * 递归克隆
+     * 克隆一个对象（浅层次递归，不处理原型）
      * TODO 注意对于其他内置对象是不处理的
      */
-    ObjectUtils.clone_ = function (data) {
+    ObjectUtils.clone2 = function (data) {
         if ((0, is_1.isArray)(data)) {
             return data.map(function (_) {
-                return ObjectUtils.clone_(_);
+                return ObjectUtils.clone2(_);
             });
         }
         if ((0, is_1.isMap)(data)) {
-            return new Map(ObjectUtils.clone_(__spreadArray([], __read(data), false)));
+            return new Map(ObjectUtils.clone2(__spreadArray([], __read(data), false)));
+        }
+        if ((0, is_1.isDate)(data)) {
+            return new Date(data);
         }
         if ((0, is_1.isObject)(data)) {
             var _data = {};
             for (var i in data) {
-                _data[i] = ObjectUtils.clone_(data[i]);
+                _data[i] = ObjectUtils.clone2(data[i]);
             }
             return _data;
-        }
-        if ((0, is_1.isDate)(data)) {
-            return new Date(data);
         }
         return data;
     };
@@ -115,7 +113,7 @@ var ObjectUtils = /** @class */ (function () {
      */
     ObjectUtils.propGet = function (obj, props) {
         var e_1, _a;
-        props = ArrayUtils_1.ArrayUtils.arraify(props);
+        props = Array.isArray(props) ? props : [props];
         var o = {};
         try {
             for (var props_1 = __values(props), props_1_1 = props_1.next(); !props_1_1.done; props_1_1 = props_1.next()) {
@@ -136,6 +134,34 @@ var ObjectUtils = /** @class */ (function () {
             finally { if (e_1) throw e_1.error; }
         }
         return o;
+    };
+    /**
+     * 判断两个对象是否相同
+     * TODO 对比时用的是===
+     * @param a
+     * @param b
+     */
+    ObjectUtils.same = function (a, b) {
+        if (a === b) {
+            return true;
+        }
+        if (typeof a != typeof b) {
+            return a === b;
+        }
+        if (typeof a != 'object' || !a || !b) {
+            return a === b;
+        }
+        for (var i in a) {
+            if (!(i in b) || !ObjectUtils.same(a[i], b[i])) {
+                return false;
+            }
+        }
+        for (var i in b) {
+            if (!(i in a) || !ObjectUtils.same(a[i], b[i])) {
+                return false;
+            }
+        }
+        return true;
     };
     /**
      * 在a对象上合并b对象的值

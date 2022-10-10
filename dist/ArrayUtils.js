@@ -69,7 +69,7 @@ var ArrayUtils = /** @class */ (function () {
         return Array.from({
             length: length,
         }).map(function () {
-            return ObjectUtils_1.ObjectUtils.clone_(d);
+            return ObjectUtils_1.ObjectUtils.clone2(d);
         });
     };
     /**
@@ -91,6 +91,7 @@ var ArrayUtils = /** @class */ (function () {
     };
     /**
      * 判断两个数组内容是否相同
+     * TODO 元素顺序不会产生影响
      * @param x x数组
      * @param y y数组
      */
