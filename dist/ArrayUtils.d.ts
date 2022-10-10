@@ -67,4 +67,8 @@ export declare class ArrayUtils {
      */
     static isRepeat(arr: any[]): boolean;
 }
+/**
+ * 类型数组化
+ */
+export declare type ArraifyT<T> = T | T[];
 //# sourceMappingURL=ArrayUtils.d.ts.map

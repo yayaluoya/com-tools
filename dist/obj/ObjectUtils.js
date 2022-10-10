@@ -1,15 +1,4 @@
 "use strict";
-var __values = (this && this.__values) || function(o) {
-    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
-    if (m) return m.call(o);
-    if (o && typeof o.length === "number") return {
-        next: function () {
-            if (o && i >= o.length) o = void 0;
-            return { value: o && o[i++], done: !o };
-        }
-    };
-    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
-};
 var __read = (this && this.__read) || function (o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m) return o;
@@ -35,8 +24,20 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     }
     return to.concat(ar || Array.prototype.slice.call(from));
 };
+var __values = (this && this.__values) || function(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ObjectUtils = void 0;
+var ArrayUtils_1 = require("../ArrayUtils");
 var is_1 = require("../is");
 /**
  * 对象工具类
@@ -84,19 +85,26 @@ var ObjectUtils = /** @class */ (function () {
     /**
      * 克隆一个对象
      * 递归克隆
+     * TODO 注意对于其他内置对象是不处理的
      */
     ObjectUtils.clone_ = function (data) {
-        if (typeof data == 'object' && data) {
-            if (Array.isArray(data)) {
-                return data.map(function (_) {
-                    return ObjectUtils.clone_(_);
-                });
-            }
+        if ((0, is_1.isArray)(data)) {
+            return data.map(function (_) {
+                return ObjectUtils.clone_(_);
+            });
+        }
+        if ((0, is_1.isMap)(data)) {
+            return new Map(ObjectUtils.clone_(__spreadArray([], __read(data), false)));
+        }
+        if ((0, is_1.isObject)(data)) {
             var _data = {};
             for (var i in data) {
                 _data[i] = ObjectUtils.clone_(data[i]);
             }
             return _data;
+        }
+        if ((0, is_1.isDate)(data)) {
+            return new Date(data);
         }
         return data;
     };
@@ -107,14 +115,17 @@ var ObjectUtils = /** @class */ (function () {
      */
     ObjectUtils.propGet = function (obj, props) {
         var e_1, _a;
-        if (!Array.isArray(props)) {
-            props = [props];
-        }
+        props = ArrayUtils_1.ArrayUtils.arraify(props);
         var o = {};
         try {
             for (var props_1 = __values(props), props_1_1 = props_1.next(); !props_1_1.done; props_1_1 = props_1.next()) {
                 var key = props_1_1.value;
-                o[key] = obj[key];
+                if ((0, is_1.isArray)(key)) {
+                    o[key[0]] = ObjectUtils.getPro(obj, key[1]);
+                }
+                else {
+                    o[key] = obj[key];
+                }
             }
         }
         catch (e_1_1) { e_1 = { error: e_1_1 }; }
@@ -143,7 +154,7 @@ var ObjectUtils = /** @class */ (function () {
                 var b = bs_1_1.value;
                 for (var i in b) {
                     // 如果双方都是数组的话，直接合并
-                    if (Array.isArray(a[i]) && Array.isArray(b[i])) {
+                    if ((0, is_1.isArray)(a[i]) && (0, is_1.isArray)(b[i])) {
                         a[i] = __spreadArray(__spreadArray([], __read(a[i]), false), __read(b[i]), false);
                         continue;
                     }

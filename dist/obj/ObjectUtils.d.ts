@@ -1,3 +1,4 @@
+import { ArraifyT } from "../ArrayUtils";
 /**
  * 对象工具类
  */
@@ -19,6 +20,7 @@ export declare class ObjectUtils {
     /**
      * 克隆一个对象
      * 递归克隆
+     * TODO 注意对于其他内置对象是不处理的
      */
     static clone_<T>(data: T): T;
     /**
@@ -26,7 +28,9 @@ export declare class ObjectUtils {
      * @param {*} obj
      * @param {*} props
      */
-    static propGet(obj: any, props: any): {};
+    static propGet(obj: any, props: ArraifyT<string | [string, string | number | {
+        (i: string): boolean;
+    } | RegExp]>): {};
     /**
      * 在a对象上合并b对象的值
      * 类型以b对象上的为准

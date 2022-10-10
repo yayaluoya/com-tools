@@ -181,3 +181,8 @@ export class ArrayUtils {
         return arr.length != [...new Set(arr)].length;
     }
 }
+
+/** 
+ * 类型数组化
+ */
+export type ArraifyT<T> = T | T[];

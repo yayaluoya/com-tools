@@ -1,4 +1,5 @@
-import { isObject } from "../is";
+import { ArraifyT, ArrayUtils } from "../ArrayUtils";
+import { isArray, isObject, isMap, isDate } from "../is";
 
 /**
  * 对象工具类
@@ -44,19 +45,26 @@ export class ObjectUtils {
     /**
      * 克隆一个对象
      * 递归克隆
+     * TODO 注意对于其他内置对象是不处理的
      */
     static clone_<T>(data: T): T {
-        if (typeof data == 'object' && data) {
-            if (Array.isArray(data)) {
-                return data.map(_ => {
-                    return ObjectUtils.clone_(_)
-                }) as any;
-            }
+        if (isArray(data)) {
+            return data.map(_ => {
+                return ObjectUtils.clone_(_);
+            }) as any;
+        }
+        if (isMap(data)) {
+            return new Map(ObjectUtils.clone_([...data])) as any;
+        }
+        if (isObject(data)) {
             let _data: any = {};
             for (let i in data) {
                 _data[i] = ObjectUtils.clone_(data[i]);
             }
             return _data;
+        }
+        if (isDate(data)) {
+            return new Date(data) as any;
         }
         return data;
     }
@@ -66,13 +74,15 @@ export class ObjectUtils {
      * @param {*} obj 
      * @param {*} props 
      */
-    static propGet(obj, props) {
-        if (!Array.isArray(props)) {
-            props = [props];
-        }
+    static propGet(obj, props: ArraifyT<string | [string, string | number | { (i: string): boolean } | RegExp]>) {
+        props = ArrayUtils.arraify(props);
         let o = {};
         for (let key of props) {
-            o[key] = obj[key];
+            if (isArray(key)) {
+                o[key[0]] = ObjectUtils.getPro(obj, key[1]);
+            } else {
+                o[key] = obj[key];
+            }
         }
         return o;
     }
@@ -87,7 +97,7 @@ export class ObjectUtils {
         for (let b of bs) {
             for (let i in b) {
                 // 如果双方都是数组的话，直接合并
-                if (Array.isArray(a[i]) && Array.isArray(b[i])) {
+                if (isArray(a[i]) && isArray(b[i])) {
                     (a[i] as any) = [...(a[i] as any), ...(b[i] as any)];
                     continue;
                 }
