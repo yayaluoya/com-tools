@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FileT = void 0;
-var ArrayUtils_1 = require("./ArrayUtils");
+var ArrayUtils_1 = require("../ArrayUtils");
 /**
  * 文件处理工具
  */

@@ -1,6 +1,6 @@
 import { readFileSync, unlinkSync, writeFileSync } from "fs";
 import { join } from "path";
-import { DirTool } from "./DirTool";
+import { DirTool } from "../DirTool";
 /**
  * 本地数操作工具
  * 仿前端接口的一个同步文件数据管理工具

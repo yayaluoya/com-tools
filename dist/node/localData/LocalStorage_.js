@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.LocalStorage_ = void 0;
 var fs_1 = require("fs");
 var path_1 = require("path");
-var DirTool_1 = require("./DirTool");
+var DirTool_1 = require("../DirTool");
 /**
  * 本地数操作工具
  * 仿前端接口的一个同步文件数据管理工具

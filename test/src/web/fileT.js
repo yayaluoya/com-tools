@@ -1,4 +1,4 @@
-const { FileT } = require('yayaluoya-tool/dist/FileT');
+const { FileT } = require('yayaluoya-tool/dist/web/FileT');
 const { AliOSST } = require('yayaluoya-tool/dist/web/AliOSST');
 const { getFile } = require('yayaluoya-tool/dist/web/getFile');
 
