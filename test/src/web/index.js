@@ -14,6 +14,7 @@ require('./BaseEvent');
 require('./BaseWS');
 require('./objT');
 require('./ArrayT');
+require('./Crypto');
 
 window.Clipboard = Clipboard;
 
