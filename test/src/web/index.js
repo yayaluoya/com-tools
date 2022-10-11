@@ -15,6 +15,7 @@ require('./BaseWS');
 require('./objT');
 require('./ArrayT');
 require('./Crypto');
+require('./api');
 
 window.Clipboard = Clipboard;
 

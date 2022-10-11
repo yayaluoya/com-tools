@@ -5,8 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AliOSST = void 0;
 var ali_oss_1 = __importDefault(require("ali-oss"));
-var ResData_1 = require("../http/ResData");
-var URLT_1 = require("../http/URLT");
+var ResData_1 = require("../../http/ResData");
+var URLT_1 = require("../../http/URLT");
 /**
  * 阿里云oss工具
  */

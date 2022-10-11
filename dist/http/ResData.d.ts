@@ -19,5 +19,7 @@ export declare class ResData<D = any> {
      * @returns
      */
     fail(msg: string): this;
+    /** 转成字符串 */
+    toString(): string;
 }
 //# sourceMappingURL=ResData.d.ts.map

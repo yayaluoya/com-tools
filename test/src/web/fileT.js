@@ -1,5 +1,5 @@
 const { FileT } = require('yayaluoya-tool/dist/web/FileT');
-const { AliOSST } = require('yayaluoya-tool/dist/web/AliOSST');
+const { AliOSST } = require('../../../dist/web/AliYun/AliOSST');
 const { getFile } = require('yayaluoya-tool/dist/web/getFile');
 
 // 测试文件分片

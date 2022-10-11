@@ -33,4 +33,9 @@ export class ResData<D = any> {
         this.msg = msg;
         return this;
     }
+
+    /** 转成字符串 */
+    toString() {
+        return JSON.stringify(this);
+    }
 }

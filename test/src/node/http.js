@@ -8,17 +8,17 @@ class H extends BaseApiCon {
     }
     /** 请求拦截 */
     async request_(_config) {
-        console.log(_config);
+        console.log('请求拦截', _config);
         return _config;
     }
     /** 响应拦截 */
     async response_(_res) {
-        console.log(_res.status);
+        console.log('响应拦截', _res.status);
         return _res;
     }
     resData_(data, com) {
-        console.log(data, com);
-        throw data;
+        // console.log(data, com);
+        return data;
     }
 }
 

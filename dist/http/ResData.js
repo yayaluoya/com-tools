@@ -26,6 +26,10 @@ var ResData = /** @class */ (function () {
         this.msg = msg;
         return this;
     };
+    /** 转成字符串 */
+    ResData.prototype.toString = function () {
+        return JSON.stringify(this);
+    };
     return ResData;
 }());
 exports.ResData = ResData;

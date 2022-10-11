@@ -12,5 +12,5 @@ BaseWS.start('web');
 let ws = new BaseWS();
 
 ws.on('message', undefined, (d) => {
-    console.log('收到消息', d);
+    // console.log('收到消息', d);
 });

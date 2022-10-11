@@ -1,6 +1,6 @@
 import OSS from "ali-oss";
-import { ResData } from "../http/ResData";
-import { URLT } from "../http/URLT";
+import { ResData } from "../../http/ResData";
+import { URLT } from "../../http/URLT";
 
 /**
  * 阿里云oss工具
