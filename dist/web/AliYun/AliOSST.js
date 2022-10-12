@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AliOSST = void 0;
 var ali_oss_1 = __importDefault(require("ali-oss"));
 var ResData_1 = require("../../http/ResData");
-var URLT_1 = require("../../http/URLT");
 /**
  * 阿里云oss工具
  */
@@ -26,7 +25,7 @@ var AliOSST = /** @class */ (function () {
         return this.client.put(_url, file, {
             headers: headers,
         }).then(function () {
-            return "//".concat(_this.op.bucket, ".").concat(_this.op.region, ".aliyuncs.com").concat(new URLT_1.URLT(_url).path);
+            return "//".concat(_this.op.bucket, ".").concat(_this.op.region, ".aliyuncs.com").concat(_url);
         }).catch(function (e) {
             console.error('ali-oss上传文件失败', e);
             throw new ResData_1.ResData().fail('上传文件失败');
@@ -45,7 +44,7 @@ var AliOSST = /** @class */ (function () {
             headers: headers,
             progress: progress,
         }).then(function () {
-            return "//".concat(_this.op.bucket, ".").concat(_this.op.region, ".aliyuncs.com").concat(new URLT_1.URLT(_url).path);
+            return "//".concat(_this.op.bucket, ".").concat(_this.op.region, ".aliyuncs.com").concat(_url);
         }).catch(function (e) {
             console.error('ali-oss上传文件失败', e);
             throw new ResData_1.ResData().fail('上传文件失败');

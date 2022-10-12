@@ -16,7 +16,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AliOssT = void 0;
 var ali_oss_1 = __importDefault(require("ali-oss"));
-var URLT_1 = require("../../http/URLT");
 /**
  * oss工具
  */
@@ -38,7 +37,7 @@ var AliOssT = /** @class */ (function () {
                 //设置一年的缓存
                 "Cache-Control": "max-age=31536000" }, headers),
         }).then(function () {
-            return "//".concat(_this.op.bucket, ".").concat(_this.op.region, ".aliyuncs.com/").concat(_url.replace(/^\/+/, ''));
+            return "//".concat(_this.op.bucket, ".").concat(_this.op.region, ".aliyuncs.com/").concat(_url);
         });
     };
     /**
@@ -54,7 +53,7 @@ var AliOssT = /** @class */ (function () {
             headers: headers,
             progress: progress,
         }).then(function () {
-            return "//".concat(_this.op.bucket, ".").concat(_this.op.region, ".aliyuncs.com").concat(new URLT_1.URLT(_url).path);
+            return "//".concat(_this.op.bucket, ".").concat(_this.op.region, ".aliyuncs.com").concat(_url);
         });
     };
     return AliOssT;

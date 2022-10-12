@@ -27,7 +27,7 @@ export class AliOssT {
                 ...headers,
             },
         }).then(() => {
-            return `//${this.op.bucket}.${this.op.region}.aliyuncs.com/${_url.replace(/^\/+/, '')}`;
+            return `//${this.op.bucket}.${this.op.region}.aliyuncs.com/${_url}`;
         });
     }
 
@@ -43,7 +43,7 @@ export class AliOssT {
             headers,
             progress,
         }).then(() => {
-            return `//${this.op.bucket}.${this.op.region}.aliyuncs.com${new URLT(_url).path}`;
+            return `//${this.op.bucket}.${this.op.region}.aliyuncs.com${_url}`;
         });
     }
 }

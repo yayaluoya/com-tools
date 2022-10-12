@@ -1,6 +1,5 @@
 import OSS from "ali-oss";
 import { ResData } from "../../http/ResData";
-import { URLT } from "../../http/URLT";
 
 /**
  * 阿里云oss工具
@@ -24,7 +23,7 @@ export class AliOSST {
         return this.client.put(_url, file, {
             headers,
         }).then(() => {
-            return `//${this.op.bucket}.${this.op.region}.aliyuncs.com${new URLT(_url).path}`;
+            return `//${this.op.bucket}.${this.op.region}.aliyuncs.com${_url}`;
         }).catch((e) => {
             console.error('ali-oss上传文件失败', e);
             throw new ResData().fail('上传文件失败');
@@ -43,7 +42,7 @@ export class AliOSST {
             headers,
             progress,
         }).then(() => {
-            return `//${this.op.bucket}.${this.op.region}.aliyuncs.com${new URLT(_url).path}`;
+            return `//${this.op.bucket}.${this.op.region}.aliyuncs.com${_url}`;
         }).catch((e) => {
             console.error('ali-oss上传文件失败', e);
             throw new ResData().fail('上传文件失败');
