@@ -67,6 +67,10 @@ export class URLT {
     }
 
     constructor(path: string, origin?: string) {
+        // 如果路径没带协议的话，自动加上http协议
+        if (/^\/\//.test(path)) {
+            path = `http:${path}`;
+        }
         // 如果没加域的话自动加上域，不然会报错
         if (!/^(https?|wss?):\/\//.test(path) && !origin) {
             origin = 'http://localhost/';

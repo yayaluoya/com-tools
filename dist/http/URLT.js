@@ -19,6 +19,10 @@ var URLT = /** @class */ (function () {
     function URLT(path, origin) {
         /** 是否没有源 */
         this.ifNoOrigin = false;
+        // 如果路径没带协议的话，自动加上http协议
+        if (/^\/\//.test(path)) {
+            path = "http:".concat(path);
+        }
         // 如果没加域的话自动加上域，不然会报错
         if (!/^(https?|wss?):\/\//.test(path) && !origin) {
             origin = 'http://localhost/';
