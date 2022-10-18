@@ -80,6 +80,15 @@ var BaseApiCon = /** @class */ (function (_super) {
             return _this.resData_(res.data, true, res);
         });
     };
+    /**
+     * 响应数据获取
+     * 如果响应成功的话返回 ResData
+     * 如果响应失败的话抛出ResData的异常
+     * TODO 重写以重构ResData
+     */
+    BaseApiCon.prototype.resData_ = function (data, con, res) {
+        return data;
+    };
     return BaseApiCon;
 }(BaseApiCon_1.BaseApiCon));
 exports.BaseApiCon = BaseApiCon;

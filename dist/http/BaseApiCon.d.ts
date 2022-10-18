@@ -2,7 +2,7 @@ import { BaseEvent } from "../BaseEvent";
 /**
  * 基类Api控制器
  */
-export declare abstract class BaseApiCon extends BaseEvent {
+export declare abstract class BaseApiCon<C = any, R = any> extends BaseEvent {
     /** 缓存响应列表 */
     private cacheResList;
     /**
@@ -24,19 +24,22 @@ export declare abstract class BaseApiCon extends BaseEvent {
      * @param op 请求配置
      * @returns
      */
-    abstract request(op: any): any;
+    abstract request(op: C): any;
     /**
      * 直接获取请求中带有的数据
      * catch中的也是resData
      * @param _op
      */
-    abstract requestData(op: any): any;
-    /** 请求拦截 */
-    protected request_<C>(config: C): Promise<C>;
+    abstract requestData(op: C): any;
+    /**
+     * 请求拦截
+     * 主要处理配置文件
+     */
+    protected request_(config: C): Promise<C>;
     /**
      * 响应拦截
      * 失败的话抛出AxiosResponse的异常
      */
-    protected response_<R>(res: R): Promise<R>;
+    protected response_(res: R): Promise<R>;
 }
 //# sourceMappingURL=BaseApiCon.d.ts.map

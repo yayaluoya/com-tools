@@ -94,7 +94,10 @@ var BaseApiCon = /** @class */ (function (_super) {
         }
         return null;
     };
-    /** 请求拦截 */
+    /**
+     * 请求拦截
+     * 主要处理配置文件
+     */
     BaseApiCon.prototype.request_ = function (config) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {

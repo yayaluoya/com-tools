@@ -2,10 +2,11 @@ import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import { BaseApiCon as BaseApiCon_ } from "../http/BaseApiCon";
 import { ResData } from "../http/ResData";
 import { ObjectUtils } from "../obj/ObjectUtils";
+
 /**
  * 基类Api控制器
  */
-export abstract class BaseApiCon extends BaseApiCon_ {
+export abstract class BaseApiCon extends BaseApiCon_<AxiosRequestConfig, AxiosResponse> {
     /** axios实例 */
     axiosI: AxiosInstance;
 
@@ -61,6 +62,9 @@ export abstract class BaseApiCon extends BaseApiCon_ {
      * 响应数据获取
      * 如果响应成功的话返回 ResData
      * 如果响应失败的话抛出ResData的异常
+     * TODO 重写以重构ResData
      */
-    protected abstract resData_(data: any, con: boolean, res: AxiosResponse): ResData;
+    protected resData_(data: any, con: boolean, res: AxiosResponse): ResData {
+        return data;
+    }
 }
