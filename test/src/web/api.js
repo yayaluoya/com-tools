@@ -80,15 +80,6 @@ class BaseApiCon extends BaseApiCon_ {
             method: 'PATCH',
         });
     }
-
-    /** 
-     * 响应数据获取
-     * 如果响应成功的话返回 ResData
-     * 如果响应失败的话抛出ResData的异常
-     */
-    resData_(data, con, res) {
-        return data;
-    }
 }
 
 export class TestAC extends BaseApiCon {
