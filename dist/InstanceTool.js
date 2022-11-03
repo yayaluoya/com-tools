@@ -47,14 +47,14 @@ function instanceTool(name, passive) {
     }
     return function (_class) {
         var newF = function () {
-            return _class[instanceName] = new (_class.bind.apply(_class, __spreadArray([void 0], __read(arg), false)))();
+            return _class[instanceName] || (_class[instanceName] = new (_class.bind.apply(_class, __spreadArray([void 0], __read(arg), false)))());
         };
         passive || newF();
         Object.defineProperty(_class, name, {
             configurable: false,
             enumerable: false,
             get: function () {
-                return _class[instanceName] || newF();
+                return newF();
             },
         });
     };

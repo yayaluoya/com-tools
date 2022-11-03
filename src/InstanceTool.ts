@@ -11,17 +11,19 @@ const instanceName = Symbol();
  * @param {*} passive 是否被动，指的是被用到时才new
  * @param {*} arg new时带的参数
  */
-export function instanceTool(name = 'instance', passive = true, ...arg: []) {
-    return function (_class: any) {
+export function instanceTool<T extends {
+    new(...arg: any[])
+}>(name = 'instance', passive = true, ...arg: any[]) {
+    return function (_class: T) {
         let newF = () => {
-            return _class[instanceName] = new _class(...arg);
+            return _class[instanceName] || (_class[instanceName] = new _class(...arg));
         }
         passive || newF();
         Object.defineProperty(_class, name, {
             configurable: false,
             enumerable: false,
             get() {
-                return _class[instanceName] || newF();
+                return newF();
             },
         });
     }
