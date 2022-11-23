@@ -6,7 +6,7 @@ import { encode, decode, encodeURL } from 'js-base64';
 export class Base64 {
     /**
      * 将utf-8编码的字符串转换为Base64字符串。
-     * @param urlsafe 如果' true '则结果是url安全的
+     * @param urlsafe 如果 true 则结果是url安全的
      */
     static encode(src: string, urlsafe?: boolean): string {
         return encode(src, urlsafe);

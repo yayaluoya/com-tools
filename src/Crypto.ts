@@ -19,7 +19,7 @@ export class Crypto {
      * md5
      * @param _str 字符串
      */
-    md5(_str: string): string {
+    static md5(_str: string): string {
         let srcs = CryptoJS.enc.Utf8.parse(_str);
         return CryptoJS.MD5(srcs).toString();
     }

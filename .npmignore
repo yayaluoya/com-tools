@@ -5,6 +5,3 @@ package-lock.json
 
 #忽略所有的密钥
 .ssh
-
-# 忽略所有包文件
-dist
