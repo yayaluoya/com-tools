@@ -3,6 +3,7 @@ import { Server, WebSocket, WebSocketServer } from 'ws';
 import { URLT } from "./URLT";
 import { ArrayUtils } from "../ArrayUtils";
 import { HttpTool } from "../node/HttpTool";
+import { BaseEvent } from "../BaseEvent";
 
 /**
  * key 对比
@@ -16,7 +17,11 @@ function keyContrast(key: string, key2: string): boolean {
  * Socket管理器
  */
 @instanceTool()
-export class SocketManager {
+export class SocketManager extends BaseEvent<
+    'connection' |
+    'message' |
+    'close'
+> {
     /** 单例 */
     static instance: SocketManager;
 
@@ -66,13 +71,19 @@ export class SocketManager {
                 });
             }
             //有消息就更新时间戳
-            ws.addListener('message', () => {
+            ws.addListener('message', (data) => {
                 let wsItem = item.wss.find(_ => _.ws == ws);
                 wsItem.time = Date.now();
+                //
+                this.emit('message', ws, req, data);
             });
             ws.on('close', () => {
                 ArrayUtils.eliminate(item.wss, (_) => ws == _.ws);
+                //
+                this.emit('close');
             });
+            //
+            this.emit('connection', ws, req);
         });
         // 
         this.check(checkTime);

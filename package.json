@@ -23,5 +23,7 @@
     "js-base64": "^3.7.2",
     "ws": "^8.8.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/ws": "^8.5.3"
+  }
 }
