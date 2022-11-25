@@ -1,6 +1,9 @@
 const { FileT } = require('yayaluoya-tool/dist/web/FileT');
-const { AliOSST } = require('../../../dist/web/AliYun/AliOSST');
-const { getFile } = require('yayaluoya-tool/dist/web/getFile');
+const { AliOSST } = require('yayaluoya-tool/dist/web/AliYun/AliOSST');
+const { GetFileItem } = require('yayaluoya-tool/dist/web/GetFileItem');
+
+const fileSelect = new GetFileItem();
+const filesSelect = new GetFileItem('', 999);
 
 // 测试文件分片
 setTimeout(() => {
@@ -38,14 +41,16 @@ setTimeout(() => {
     let selectFile = document.getElementById('file_select');
     let selectFiles = document.getElementById('file_selects');
 
+    fileSelect.on('change', undefined, (file) => {
+        console.log(file);
+    });
     selectFile.addEventListener('click', () => {
-        getFile().then((e) => {
-            console.log(e);
-        });
+        fileSelect.select();
+    });
+    filesSelect.on('change', undefined, (file) => {
+        console.log(file);
     });
     selectFiles.addEventListener('click', () => {
-        getFile('', 2).then((e) => {
-            console.log(e);
-        });
+        filesSelect.select();
     });
 }, 0);
