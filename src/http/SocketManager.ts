@@ -50,8 +50,9 @@ export class SocketManager extends BaseEvent<
      * 开始服务
      * @param port 端口
      * @param checkTime 心跳监测时间
+     * @param log 是否打印访问地址
      */
-    start(port: number, checkTime: number = 30 * 60 * 1000) {
+    start(port: number, checkTime: number = 30 * 60 * 1000, log = true) {
         this.wss = new WebSocketServer({ port });
         this.wss.on('connection', (ws, req) => {
             let item = this.wsList.find(_ => URLT.contrast(req.url, _.key));
@@ -88,7 +89,7 @@ export class SocketManager extends BaseEvent<
         // 
         this.check(checkTime);
         //
-        console.log(`webSocket服务 ws://${HttpTool.hostname}:${port}`);
+        log && console.log(`webSocket服务 ws://${HttpTool.hostname}:${port}`);
     }
 
     /**
