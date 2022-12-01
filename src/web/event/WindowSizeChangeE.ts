@@ -5,9 +5,9 @@ import { instanceTool } from "../../instanceTool";
  * 窗口大小改变事件
  */
 @instanceTool()
-export class WindowSizeChangeE extends BaseEvent<'resize'> {
+export class WindowSizeChangeE<T extends string> extends BaseEvent<'resize' | T> {
     /** 单例 */
-    static instance: WindowSizeChangeE;
+    static instance: WindowSizeChangeE<'resize'>;
 
     constructor() {
         super();

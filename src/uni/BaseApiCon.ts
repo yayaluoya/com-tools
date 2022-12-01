@@ -1,11 +1,12 @@
 import { BaseApiCon as BaseApiCon_ } from "../http/BaseApiCon";
+import { IComApiResType } from "../http/IComApiResType";
 import { ResData } from "../http/ResData";
 import { ObjectUtils } from "../obj/ObjectUtils";
 
 /**
  * 基类Api控制器
  */
-export abstract class BaseApiCon extends BaseApiCon_<RequestOptions, RequestSuccessCallbackResult> {
+export abstract class BaseApiCon extends BaseApiCon_<RequestOptions, RequestSuccessCallbackResult> implements IComApiResType<RequestOptions> {
 
     /** 可配置选项 */
     protected get op(): Omit<RequestOptions, 'url' | 'data'> {
@@ -50,6 +51,35 @@ export abstract class BaseApiCon extends BaseApiCon_<RequestOptions, RequestSucc
             .then((res) => {
                 return this.resData_(res.data, true, res) as ResData<D>;
             });
+    }
+
+    requestDataData<D = any>(op: RequestOptions) {
+        return this.requestData<D>(op).then(({ data }) => data);
+    }
+
+    getData<D = any>(op: RequestOptions) {
+        return this.requestDataData<D>({
+            ...op,
+            method: 'GET',
+        });
+    }
+    postData<D = any>(op: RequestOptions) {
+        return this.requestDataData<D>({
+            ...op,
+            method: 'POST',
+        });
+    }
+    putData<D = any>(op: RequestOptions) {
+        return this.requestDataData<D>({
+            ...op,
+            method: 'PUT',
+        });
+    }
+    deleteData<D = any>(op: RequestOptions) {
+        return this.requestDataData<D>({
+            ...op,
+            method: 'DELETE',
+        });
     }
 
     /** 

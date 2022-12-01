@@ -1,12 +1,13 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import { BaseApiCon as BaseApiCon_ } from "../http/BaseApiCon";
+import { IComApiResType } from "../http/IComApiResType";
 import { ResData } from "../http/ResData";
 import { ObjectUtils } from "../obj/ObjectUtils";
 
 /**
  * 基类Api控制器
  */
-export abstract class BaseApiCon extends BaseApiCon_<AxiosRequestConfig, AxiosResponse> {
+export abstract class BaseApiCon extends BaseApiCon_<AxiosRequestConfig, AxiosResponse> implements IComApiResType<AxiosRequestConfig> {
     /** axios实例 */
     axiosI: AxiosInstance;
 
@@ -20,12 +21,6 @@ export abstract class BaseApiCon extends BaseApiCon_<AxiosRequestConfig, AxiosRe
         this.axiosI = axios.create();
     }
 
-    /**
-     * 发送请求
-     * 无论成功与否都返回的response
-     * @param op 请求配置
-     * @returns 
-     */
     request(op: AxiosRequestConfig) {
         //添加请求拦截器
         return this.request_(ObjectUtils.merge(this.op || {}, op))
@@ -43,12 +38,7 @@ export abstract class BaseApiCon extends BaseApiCon_<AxiosRequestConfig, AxiosRe
             });
     }
 
-    /**
-     * 直接获取请求中带有的数据
-     * catch中的也是resData
-     * @param _op 
-     */
-    requestData<D>(_op: AxiosRequestConfig) {
+    requestData<D = any>(_op: AxiosRequestConfig) {
         return this.request(_op)
             .catch((res) => {
                 throw this.resData_(res?.data, false, res);
@@ -56,6 +46,35 @@ export abstract class BaseApiCon extends BaseApiCon_<AxiosRequestConfig, AxiosRe
             .then((res) => {
                 return this.resData_(res.data, true, res) as ResData<D>;
             });
+    }
+
+    requestDataData<D = any>(op: AxiosRequestConfig) {
+        return this.requestData<D>(op).then(({ data }) => data);
+    }
+
+    getData<D = any>(op: AxiosRequestConfig) {
+        return this.requestDataData<D>({
+            ...op,
+            method: 'get',
+        });
+    }
+    postData<D = any>(op: AxiosRequestConfig) {
+        return this.requestDataData<D>({
+            ...op,
+            method: 'post',
+        });
+    }
+    putData<D = any>(op: AxiosRequestConfig) {
+        return this.requestDataData<D>({
+            ...op,
+            method: 'put',
+        });
+    }
+    deleteData<D = any>(op: AxiosRequestConfig) {
+        return this.requestDataData<D>({
+            ...op,
+            method: 'delete',
+        });
     }
 
     /** 
