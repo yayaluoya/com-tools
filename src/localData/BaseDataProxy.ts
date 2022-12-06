@@ -46,10 +46,9 @@ export abstract class BaseDataProxy<D = any> extends BaseEvent<'update' | 'set' 
 
     /**
      * 获取本地数据
-     * TODO 这里暴露给派生类是为了方便对该方法加以修饰，不要重写
      * @param _data 指定一个数据，如果不存在且本地没有数据的话则会调用获取数据的方法获取数据
      */
-    protected getLocalData(_data?: any) {
+    private getLocalData(_data?: any) {
         let data;
         if (_data) {
             cleanProxyObjCon(this._data);
@@ -67,12 +66,14 @@ export abstract class BaseDataProxy<D = any> extends BaseEvent<'update' | 'set' 
                 this.update(true);
             }
         }
-        //
-        this._data = createProxyObj(data, {
-            set: (...arg) => {
-                this.setBack(...arg);
-            },
-        });
+        //外部额外处理下
+        this._data = this.getLocalDataHandle(
+            createProxyObj(data, {
+                set: (...arg) => {
+                    this.setBack(...arg);
+                },
+            })
+        );
     }
 
     /** 数据修改回调 */
@@ -116,5 +117,9 @@ export abstract class BaseDataProxy<D = any> extends BaseEvent<'update' | 'set' 
     /** 数据处理，可以在数据被获取和设置前做加密解密操作 */
     protected dataHandle(str: string, type: 'get' | 'set'): string {
         return str;
+    }
+    /** 获取本地数据并代理后的回调处理 */
+    protected getLocalDataHandle(data: D): D {
+        return data;
     }
 }
