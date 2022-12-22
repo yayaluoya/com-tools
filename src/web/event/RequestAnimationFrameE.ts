@@ -11,10 +11,12 @@ export class RequestAnimationFrameE<T extends string> extends BaseEvent<'exec' |
 
     constructor() {
         super();
+        let time = Date.now();
         let f = () => {
-            this.emit('exec');
+            this.emit("exec", Date.now() - time);
+            time = Date.now();
             requestAnimationFrame(f);
-        }
-        f();
+        };
+        requestAnimationFrame(f);
     }
 }
