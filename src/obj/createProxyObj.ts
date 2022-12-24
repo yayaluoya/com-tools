@@ -85,59 +85,105 @@ export function createProxyObj<T extends Record<string | symbol, any> = any>(obj
         d: false,
     };
 
-    proxyObj = new Proxy(obj, {
-        deleteProperty: (target: T, p: string | symbol): boolean => {
-            let passValue = Reflect.get(target, p);
-            cleanProxyObjCon(obj_proxy_Map.get(passValue));
-            let setResult = Reflect.deleteProperty(target, p);
-            sign.d || sign.con?.set?.(
-                target,
-                p,
-                undefined,
-                passValue,
-                sign.key,
-            );
-            sign.d || ROSet({
-                key: p,
-                objKey: sign.key,
+    // 如果有Proxy接口的话
+    if (typeof Proxy != 'undefined') {
+        proxyObj = new Proxy(obj, {
+            deleteProperty: (target: T, p: string | symbol): boolean => {
+                let passValue = Reflect.get(target, p);
+                cleanProxyObjCon(obj_proxy_Map.get(passValue));
+                let setResult = Reflect.deleteProperty(target, p);
+                sign.d || sign.con?.set?.(
+                    target,
+                    p,
+                    undefined,
+                    passValue,
+                    sign.key,
+                );
+                sign.d || ROSet({
+                    key: p,
+                    objKey: sign.key,
+                });
+                return setResult;
+            },
+            get: (target: T, p: string | symbol, receiver: any): any => {
+                if (p == proxySignKey) {
+                    return sign;
+                }
+                let value = Reflect.get(target, p, receiver);
+                value = createProxyObj(value, sign.con, false);
+                sign.d || sign.con?.get?.(
+                    target,
+                    p,
+                    sign.key,
+                );
+                sign.d || ROGet({
+                    key: p,
+                    objKey: sign.key,
+                });
+                return value;
+            },
+            set: (target: T, p: string | symbol, value: any, receiver: any): boolean => {
+                let passValue = Reflect.get(target, p, receiver);
+                cleanProxyObjCon(obj_proxy_Map.get(passValue));
+                let setResult = Reflect.set(target, p, value, receiver);
+                sign.d || sign.con?.set?.(
+                    target,
+                    p,
+                    value,
+                    passValue,
+                    sign.key,
+                );
+                sign.d || ROSet({
+                    key: p,
+                    objKey: sign.key,
+                });
+                return setResult;
+            },
+        });
+    }
+    /**
+     * 用defineProperty实现
+     * TODO 只是单纯的对对象可迭代属性进行了代理，并没有重写一些会改变源对象的方法，比如Array.prototype.push等方法
+     */
+    else {
+        proxyObj = obj;
+        proxyObj[proxySignKey] = sign;
+        for (let p in obj) {
+            let rootValue = obj[p];
+            Object.defineProperty(proxyObj, p, {
+                configurable: true,
+                enumerable: true,
+                get() {
+                    sign.d || sign.con?.get?.(
+                        obj,
+                        p,
+                        sign.key,
+                    );
+                    sign.d || ROGet({
+                        key: p,
+                        objKey: sign.key,
+                    });
+                    return createProxyObj(rootValue, sign.con, false);
+                },
+                set(value) {
+                    let passValue = rootValue;
+                    cleanProxyObjCon(obj_proxy_Map.get(passValue));
+                    rootValue = value;
+                    sign.d || sign.con?.set?.(
+                        obj,
+                        p,
+                        value,
+                        passValue,
+                        sign.key,
+                    );
+                    sign.d || ROSet({
+                        key: p,
+                        objKey: sign.key,
+                    });
+                },
             });
-            return setResult;
-        },
-        get: (target: T, p: string | symbol, receiver: any): any => {
-            if (p == proxySignKey) {
-                return sign;
-            }
-            let value = Reflect.get(target, p, receiver);
-            value = createProxyObj(value, sign.con, false);
-            sign.d || sign.con?.get?.(
-                target,
-                p,
-                sign.key,
-            );
-            sign.d || ROGet({
-                key: p,
-                objKey: sign.key,
-            });
-            return value;
-        },
-        set: (target: T, p: string | symbol, value: any, receiver: any): boolean => {
-            let passValue = Reflect.get(target, p, receiver);
-            cleanProxyObjCon(obj_proxy_Map.get(passValue));
-            let setResult = Reflect.set(target, p, value, receiver);
-            sign.d || sign.con?.set?.(
-                target,
-                p,
-                value,
-                passValue,
-                sign.key,
-            );
-            sign.d || ROSet({
-                key: p,
-                objKey: sign.key,
-            });
-            return setResult;
-        },
-    });
+        }
+    }
 
     // 设置到缓存中
     obj_proxy_Map.set(obj, proxyObj);
