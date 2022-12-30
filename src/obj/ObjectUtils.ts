@@ -115,7 +115,7 @@ export class ObjectUtils {
 
     /**
      * 在a对象上合并b对象的值
-     * 类型以b对象上的为准
+     * 对于数组会合并
      * @param a 
      * @param bs
      */
@@ -130,6 +130,31 @@ export class ObjectUtils {
                 // 如果双方都是对象的话则递归
                 if (isObject(a[i]) && isObject(b[i])) {
                     ObjectUtils.merge(a[i], b[i]);
+                    continue;
+                }
+                //
+                a[i] = b[i];
+            }
+        }
+        return a;
+    }
+
+    /**
+     * 用b对象替换a对象的值
+     * @param a 
+     * @param bs
+     */
+    static replace<T>(a: T, ...bs: T[]): T {
+        for (let b of bs) {
+            for (let i in b) {
+                // 如果双方都是数组的话，直接合并
+                if (isArray(a[i]) && isArray(b[i])) {
+                    (a[i] as any) = [...(b[i] as any)];
+                    continue;
+                }
+                // 如果双方都是对象的话则递归
+                if (isObject(a[i]) && isObject(b[i])) {
+                    ObjectUtils.replace(a[i], b[i]);
                     continue;
                 }
                 //
