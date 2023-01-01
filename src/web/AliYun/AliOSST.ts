@@ -15,15 +15,20 @@ export class AliOSST {
 
     /**
      * 上传文件
+     * TODO 默认缓存一年
      * @param file 目标文件
      * @param _url 文件地址
      * @returns 
      */
     updateFile(file: File, _url: string, headers?: Record<string, string>) {
         return this.client.put(_url, file, {
-            headers,
+            headers: {
+                //设置一年的缓存
+                "Cache-Control": "max-age=31536000",
+                ...headers,
+            },
         }).then(() => {
-            return `//${this.op.bucket}.${this.op.region}.aliyuncs.com${_url}`;
+            return `//${this.op.bucket}.${this.op.region}.aliyuncs.com/${_url.replace(/^\/*/, '')}`;
         }).catch((e) => {
             console.error('ali-oss上传文件失败', e);
             throw new ResData().fail('上传文件失败');
@@ -42,7 +47,7 @@ export class AliOSST {
             headers,
             progress,
         }).then(() => {
-            return `//${this.op.bucket}.${this.op.region}.aliyuncs.com${_url}`;
+            return `//${this.op.bucket}.${this.op.region}.aliyuncs.com/${_url.replace(/^\/*/, '')}`;
         }).catch((e) => {
             console.error('ali-oss上传文件失败', e);
             throw new ResData().fail('上传文件失败');

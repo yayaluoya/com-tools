@@ -1,5 +1,4 @@
 import OSS from "ali-oss";
-import { URLT } from "../../http/URLT";
 
 /**
  * oss工具
@@ -15,6 +14,7 @@ export class AliOssT {
 
     /**
      * 上传文件
+     * TODO 默认缓存一年
      * @param file 目标文件
      * @param _url 文件地址
      * @returns 
@@ -27,7 +27,7 @@ export class AliOssT {
                 ...headers,
             },
         }).then(() => {
-            return `//${this.op.bucket}.${this.op.region}.aliyuncs.com/${_url}`;
+            return `//${this.op.bucket}.${this.op.region}.aliyuncs.com/${_url.replace(/^\/*/, '')}`;
         });
     }
 
@@ -43,7 +43,7 @@ export class AliOssT {
             headers,
             progress,
         }).then(() => {
-            return `//${this.op.bucket}.${this.op.region}.aliyuncs.com${_url}`;
+            return `//${this.op.bucket}.${this.op.region}.aliyuncs.com/${_url.replace(/^\/*/, '')}`;
         });
     }
 }
