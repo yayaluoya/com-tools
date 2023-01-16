@@ -4,7 +4,7 @@ import { ArrayUtils } from "./ArrayUtils";
  * loading工具
  */
 export class LoadingT {
-    /** 私有属性 加载列表 */
+    /** 加载列表 */
     private loadingList: any[] = [];
 
     /**
@@ -30,6 +30,15 @@ export class LoadingT {
         } else {
             ArrayUtils.eliminate(this.loadingList, _ => ArrayUtils.same(_, key));
         }
+    }
+
+    /** 设置加载 */
+    setLoading(...key: any[]) {
+        this.set(true, ...key);
+    }
+    /** 设置加载完成 */
+    setLoadComplete(...key: any[]) {
+        this.set(false, ...key);
     }
 
     /**

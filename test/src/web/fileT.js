@@ -24,18 +24,28 @@ setTimeout(() => {
             })
         )
 
-        //上传到阿里云
-        new AliOSST({
+        let aliyunItem = new AliOSST({
             accessKeyId: 'LTAI5t8rbt7HHXn3e5vGKdCC',
             accessKeySecret: 'w3XdtmQngG2HrqhRP9VcX8lNVNnB3Q',
             bucket: 'yayaluoya-test',
             region: 'oss-cn-hangzhou',
-        }).sliceUpdateFile(file, file.name, 1024 * 100, (n) => {
-            console.log('上传进度', n);
-        })
-            .then((url) => {
-                fileShowImg2El.src = url;
+        });
+        let p;
+        if (false) {
+            //上传到阿里云
+            p = aliyunItem.sliceUpdateFile(file.name, file, {
+                partSize: 1024 * 100,
+                progress: (n) => {
+                    console.log('上传进度', n);
+                }
             });
+        } else {
+            p = aliyunItem.updateFile(file.name, file);
+        }
+        p.then((url) => {
+            console.log(url);
+            fileShowImg2El.src = url;
+        });
     });
 
     let selectFile = document.getElementById('file_select');

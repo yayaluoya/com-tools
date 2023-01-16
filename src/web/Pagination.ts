@@ -41,7 +41,7 @@ export class Pagination {
      * @param query 
      * @returns 
      */
-    getPageOp(query = {}) {
+    getPageOp(query = {}): any {
         return {
             pageSize: this.pageSize,
             currentPage: this.currentPage,
@@ -51,10 +51,9 @@ export class Pagination {
 
     /**
      * 获取序号
-     * @param {*} index 索引 从0开始的这个
-     * @param {*} pagination 当前页面的分页信息
+     * @param {*} index 索引
      */
-    static getIndex(index: number, pagination: Pagination) {
-        return index + 1 + (pagination.currentPage - 1) * pagination.pageSize;
+    getIndex(index: number) {
+        return index + 1 + (this.currentPage - 1) * this.pageSize;
     }
 };

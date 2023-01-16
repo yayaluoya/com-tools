@@ -6,7 +6,7 @@ export class PlatformT {
      * 获取平台凭证
      * @returns 
      */
-    static userAgent(): 'android' | 'ios' | 'pc' {
+    static userAgent() {
         var u = navigator.userAgent;
         var isAndroid = u.indexOf("Android") > -1 || u.indexOf("Linux") > -1;
         var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端

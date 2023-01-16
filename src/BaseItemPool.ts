@@ -1,38 +1,32 @@
 /**
  * 基类对象池
+ * TODO 池子里的内容遵循先进先出的原则
  */
-export class BaseItemPool {
+export class BaseItemPool<D extends Record<string, any> = Record<string, any>> {
     /** 池子 */
-    private m_itemPool: {
-        [_key: string]: any[],
+    private _itemPool: {
+        [K in keyof D]?: (D[K])[];
     } = {};
 
-    /** 获取对象池 */
-    protected get itemPool(): {
-        [_key: string]: any[],
-    } {
-        return this.m_itemPool;
+    /** 对象池 */
+    protected get itemPool() {
+        return this._itemPool;
     }
 
     /**
-     * 对象池是否有内容
+     * 是否有内容
      * @param _key key
      */
-    public poolHasItem(_key: string): boolean {
-        return Boolean(this.m_itemPool[_key] && this.m_itemPool[_key].length > 0);
+    public has(_key: keyof D): boolean {
+        return (this._itemPool[_key]?.length || 0) > 0;
     }
 
     /**
-     * 从对象池中获取对象
+     * 获取内容
      * @param _key key
      */
-    public getItemByPool<T extends object>(_key: string): T | null {
-        //先判断是否有内容
-        if (this.poolHasItem(_key)) {
-            return this.m_itemPool[_key].pop() as T;
-        }
-        //
-        return null;
+    public get<K extends keyof D>(_key: K): D[K] | null {
+        return this._itemPool[_key]?.shift() || null;
     }
 
     /**
@@ -40,19 +34,24 @@ export class BaseItemPool {
      * @param _key key
      * @param _item 对象
      */
-    public addItemToPool(_key: string, _item: object) {
-        if (!this.m_itemPool[_key]) {
-            this.m_itemPool[_key] = [];
+    public add<K extends keyof D>(_key: K, _item: D[K]) {
+        if (!this._itemPool[_key]) {
+            this._itemPool[_key] = [];
         }
-        this.m_itemPool[_key].push(_item);
-        //去重
-        this.m_itemPool[_key] = [...new Set(this.m_itemPool[_key])];
+        this._itemPool[_key].push(_item);
     }
 
     /**
      * 清空对象池
      */
-    public emptyPool() {
-        this.m_itemPool = {};
+    public clean(key?: keyof D) {
+        if (key) {
+            this._itemPool[key] = [];
+        }
+        else {
+            for (let i in this._itemPool) {
+                this._itemPool[i] = [];
+            }
+        }
     }
 }
