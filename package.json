@@ -1,6 +1,6 @@
 {
   "name": "yayaluoya-tool",
-  "version": "1.7.10",
+  "version": "1.7.11",
   "description": "yayaluoya常用的一些工具",
   "main": "./dist/index.js",
   "scripts": {
@@ -11,6 +11,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/ali-oss": "^6.16.7",
+    "@types/node": "^18.11.18",
+    "@types/uni-app": "^1.4.4",
+    "@types/ws": "^8.5.4",
     "ali-oss": "^6.17.1",
     "axios": "^0.27.2",
     "chalk": "^4.1.2",
@@ -20,10 +24,5 @@
     "js-base64": "^3.7.2",
     "ws": "^8.8.1"
   },
-  "devDependencies": {
-    "@types/ali-oss": "^6.16.7",
-    "@types/node": "^18.11.18",
-    "@types/uni-app": "^1.4.4",
-    "@types/ws": "^8.5.3"
-  }
+  "devDependencies": {}
 }
