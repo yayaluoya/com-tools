@@ -19,7 +19,7 @@ export class AliOSST extends OSS {
      * @param file 目标文件
      * @returns 
      */
-    updateFile(url: string, file: File, op?: OSS.PutObjectOptions) {
+    updateFile(url: string, file: any, op?: OSS.PutObjectOptions) {
         return this.put(url, file, op).then((res) => {
             return this.generateObjectUrl(res.name).replace(/^https?:/, '');
         });
@@ -31,7 +31,7 @@ export class AliOSST extends OSS {
      * @param url 
      * @param file 
      */
-    sliceUpdateFile(url: string, file: File, op: OSS.MultipartUploadOptions) {
+    sliceUpdateFile(url: string, file: any, op: OSS.MultipartUploadOptions) {
         return this.multipartUpload(url, file, op).then((res) => {
             return this.generateObjectUrl(res.name).replace(/^https?:/, '');
         });
