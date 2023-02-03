@@ -6,6 +6,6 @@ import { LocalStorage_ } from "./LocalStorage_";
  */
 export abstract class BaseDataProxy<D = any> extends BaseDataProxy_<D> {
     get LocalStorage_() {
-        return LocalStorage_;
+        return new LocalStorage_();
     }
 }

@@ -1,4 +1,4 @@
-import { readFileSync, unlinkSync, writeFileSync, rmdirSync } from "fs";
+import { readFileSync, unlinkSync, writeFileSync, rmdirSync, mkdirSync } from "fs";
 import { join } from "path";
 
 /**
@@ -7,15 +7,21 @@ import { join } from "path";
  */
 export class LocalStorage_ {
     /** 
-     * 获取数据存储路径
+     * 数据获取路径
      * TODO 需要重写
      */
-    protected static get getPath(): string {
+    protected get getPath(): string {
         return join(process.cwd(), '_localData');
     }
 
+    constructor() {
+        mkdirSync(this.getPath, {
+            recursive: true,
+        });
+    }
+
     /** 获取数据存储路径 */
-    private static getDataPath(key: string): string {
+    private getDataPath(key: string): string {
         return join(this.getPath, `/${key}.json`);
     }
 
@@ -25,7 +31,7 @@ export class LocalStorage_ {
      * @param value 值
      * @param _f 设置前处理
      */
-    static setItem(key: string, value: any, _f?: (s: string) => string) {
+    setItem(key: string, value: any, _f?: (s: string) => string) {
         value = _f ? _f(JSON.stringify(value)) : JSON.stringify(value);
         //直接写入文件
         writeFileSync(this.getDataPath(key), value);
@@ -36,7 +42,7 @@ export class LocalStorage_ {
      * @param key 名字
      * @param _f 获取前处理
      */
-    static getItem<D = any>(key: string, _f?: (s: string) => string): D | null {
+    getItem<D = any>(key: string, _f?: (s: string) => string): D | null {
         try {
             let s = readFileSync(this.getDataPath(key)).toString();
             //从本地数据存储文件夹中找到目标文件并读取获取出来并序列化成目标类型的数据
@@ -52,7 +58,7 @@ export class LocalStorage_ {
      * 删除数据
      * @param key 名字
      */
-    static removeItem(key: string) {
+    removeItem(key: string) {
         try {
             unlinkSync(this.getDataPath(key));
         } catch { };
@@ -61,7 +67,7 @@ export class LocalStorage_ {
     /**
      * 清理本地的全部数据
      */
-    static clear() {
+    clear() {
         rmdirSync(this.getPath, {
             recursive: true,
         });

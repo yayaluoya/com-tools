@@ -32,11 +32,16 @@ export class LoadingT {
         }
     }
 
-    /** 设置加载 */
+    /** 
+     * 设置加载
+     */
     setLoading(...key: any[]) {
         this.set(true, ...key);
     }
-    /** 设置加载完成 */
+
+    /** 
+     * 设置加载完成
+     */
     setLoadComplete(...key: any[]) {
         this.set(false, ...key);
     }
