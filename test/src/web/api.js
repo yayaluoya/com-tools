@@ -6,79 +6,15 @@ class BaseApiCon extends BaseApiCon_ {
         return {
             baseURL: 'http://localhost:1423',
             timeout: 1000 * 60 * 5,
+            // timeout: 1,
         }
     };
 
-    /** 获取数据中的数据 */
-    requestDataData(op) {
-        return this.requestData(op).then(({ data }) => data);
-    }
-
-
-    /**
-     * get请求获取数据
-     * @param _op 请求配置 
-     * @param data 
-     * @param headers 
-     * @returns 
-     */
-    getData(_op) {
-        return this.requestDataData({
-            ..._op,
-            method: 'get',
-        });
-    }
-    /**
-     * post请求获取数据
-     * @param _op 请求配置 
-     * @param data 
-     * @param headers 
-     * @returns 
-     */
-    postData(_op) {
-        return this.requestDataData({
-            ..._op,
-            method: 'post',
-        });
-    }
-    /**
-     * put请求获取数据
-     * @param _op 请求配置 
-     * @param data 
-     * @param headers 
-     * @returns 
-     */
-    putData(_op) {
-        return this.requestDataData({
-            ..._op,
-            method: 'put',
-        });
-    }
-    /**
-     * delete请求获取数据
-     * @param _op 请求配置 
-     * @param data 
-     * @param headers 
-     * @returns 
-     */
-    deleteData(_op) {
-        return this.requestDataData({
-            ..._op,
-            method: 'delete',
-        });
-    }
-    /**
-     * patch请求获取数据
-     * @param _op 请求配置 
-     * @param data 
-     * @param headers 
-     * @returns 
-     */
-    patchData(_op) {
-        return this.requestDataData({
-            ..._op,
-            method: 'PATCH',
-        });
+    resData_(con, res, data) {
+        if (!res) {
+            throw new ResData(data, 408, '请求超时');
+        }
+        return new ResData(data, res.status);
     }
 }
 
@@ -114,13 +50,13 @@ setTimeout(() => {
         // TestAC.I.testGet().then((d) => {
         //     console.log('testGet', d);
         // });
-        // TestAC.I.testPost().then((d) => {
-        //     console.log('testPost', d);
-        // });
-        TestAC.I.stsGet().then((d) => {
-            console.log('stsGet', d);
-        }).catch(() => {
-            console.log('请求失败');
+        TestAC.I.testPost().then((d) => {
+            console.log('testPost', d);
         });
+        // TestAC.I.stsGet().then((d) => {
+        //     console.log('stsGet', d);
+        // }).catch(() => {
+        //     console.log('请求失败');
+        // });
     });
 }, 1000);

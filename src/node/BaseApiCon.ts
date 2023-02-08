@@ -22,29 +22,28 @@ export abstract class BaseApiCon extends BaseApiCon_<AxiosRequestConfig, AxiosRe
     }
 
     request(op: AxiosRequestConfig) {
-        //添加请求拦截器
-        return this.request_(ObjectUtils.merge(this.op || {}, op))
+        return this.request_(
+            ObjectUtils.merge(this.op || {}, op)
+        )
             .then((config) => {
                 return this.axiosI(config)
-                    //先把异常中的res提取出来
                     .catch(({ response }) => {
                         //
                         throw response;
                     })
                     .then(res => {
-                        //添加响应拦截
                         return this.response_(res);
                     });
             });
     }
 
-    requestData<D = any>(_op: AxiosRequestConfig) {
-        return this.request(_op)
+    requestData<D = any>(op: AxiosRequestConfig) {
+        return this.request(op)
             .catch((res) => {
-                throw this.resData_(res?.data, false, res);
+                throw this.resData_(false, res, res?.data);
             })
             .then((res) => {
-                return this.resData_(res.data, true, res) as ResData<D>;
+                return this.resData_(true, res, res?.data) as ResData<D>;
             });
     }
 
@@ -77,13 +76,14 @@ export abstract class BaseApiCon extends BaseApiCon_<AxiosRequestConfig, AxiosRe
         });
     }
 
-    /** 
+    /**
      * 响应数据获取
-     * 如果响应成功的话返回 ResData
-     * 如果响应失败的话抛出ResData的异常
-     * TODO 重写以重构ResData
+     * @param con 请求是否成功
+     * @param res response
+     * @param data response中的数据
+     * @returns 
      */
-    protected resData_(data: any, con: boolean, res: AxiosResponse): ResData {
-        return data;
+    protected resData_(con: boolean, res?: AxiosResponse, data?: any): ResData {
+        return new ResData(data, res?.status, '', undefined, res);
     }
 }

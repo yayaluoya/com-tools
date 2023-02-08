@@ -5,7 +5,7 @@ import { ResData } from "./ResData";
  */
 export interface IComApiResType<Config> {
     /**
-     * 获取请求中的数据
+     * 获取请求中数据中的数据
      * @param op 
      */
     requestDataData<D = any>(op: Config): Promise<ResData<D>>;

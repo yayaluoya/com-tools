@@ -46,10 +46,10 @@ export abstract class BaseApiCon extends BaseApiCon_<RequestOptions, RequestSucc
     requestData<D>(_op: RequestOptions) {
         return this.request(_op)
             .catch((res) => {
-                throw this.resData_(res?.data, false, res);
+                throw this.resData_(false, res, res?.data);
             })
             .then((res) => {
-                return this.resData_(res.data, true, res) as ResData<D>;
+                return this.resData_(true, res, res?.data) as ResData<D>;
             });
     }
 
@@ -82,13 +82,14 @@ export abstract class BaseApiCon extends BaseApiCon_<RequestOptions, RequestSucc
         });
     }
 
-    /** 
+    /**
      * 响应数据获取
-     * 如果响应成功的话返回 ResData
-     * 如果响应失败的话抛出ResData的异常
-     * TODO 重写以重构ResData
+     * @param con 请求是否成功
+     * @param res response
+     * @param data response中的数据
+     * @returns 
      */
-    protected resData_(data: any, con: boolean, res: RequestSuccessCallbackResult): ResData {
+    protected resData_(con: boolean, res?: RequestSuccessCallbackResult, data?: any): ResData {
         return data;
     }
 }

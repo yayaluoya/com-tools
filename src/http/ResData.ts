@@ -3,7 +3,7 @@ import { HttpStatus } from "./HttpStatus";
 /**
  * 响应数据
  */
-export class ResData<D = any> {
+export class ResData<D = any, R = any> {
     /** 状态码 */
     status: number;
     /** 消息 */
@@ -12,15 +12,18 @@ export class ResData<D = any> {
     timeStamp: number;
     /** 真实数据 */
     data: D;
+    /** 原始res */
+    res?: R;
 
     /** 其它数据 */
     [key: string]: any;
 
-    constructor(d: D = null, status: number = HttpStatus.OK, mes: string = '', timeStamp: number = Date.now()) {
-        this.data = d;
+    constructor(data: D = null, status: number = HttpStatus.OK, mes: string = '', timeStamp: number = Date.now(), res?: R) {
+        this.data = data;
         this.msg = mes;
         this.status = status;
         this.timeStamp = timeStamp;
+        this.res = res;
     }
 
     /**
@@ -28,7 +31,7 @@ export class ResData<D = any> {
      * @param msg 
      * @returns 
      */
-    fail(msg: string): this {
+    fail(msg: string = '请求失败'): this {
         this.status = HttpStatus.INTERNAL_SERVER_ERROR;
         this.msg = msg;
         return this;
