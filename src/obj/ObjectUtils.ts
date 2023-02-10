@@ -1,5 +1,4 @@
 import { isArray, isObject, isMap, isDate } from "../is";
-import { ArraifyT } from "../_d/ComType";
 
 /**
  * 对象工具类

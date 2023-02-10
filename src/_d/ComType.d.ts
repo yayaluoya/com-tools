@@ -1,7 +1,7 @@
 /** 
  * 类型数组化
  */
-export type ArraifyT<T> = T | T[];
+type ArraifyT<T = any> = T | T[];
 
 /**
  * 带约束的挑选类型部分key
