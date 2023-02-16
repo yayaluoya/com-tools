@@ -17,6 +17,7 @@ require('./ArrayT');
 require('./Crypto');
 require('./api');
 require('./baseItemTool');
+require('./msg');
 
 window.Clipboard = Clipboard;
 
