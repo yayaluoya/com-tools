@@ -1,9 +1,29 @@
+import moment from "moment";
+
 /**
  * 时间工具
  */
 export class TimeUtils {
     static ONE_YEAR: number = 60 * 60 * 24 * 365;
     static ONE_DAY: number = 60 * 60 * 24;
+
+    /**
+     * 格式
+     * TODO 可重写
+     */
+    static get format() {
+        return 'YYYY-MM-DD HH:mm:ss';
+    }
+
+    /**
+     * 获取时间
+     * @param op 
+     * @returns 
+     */
+    static getTime(op: moment.MomentInput) {
+        return moment(op).format(this.format);
+    }
+
     public static makeTimeLeftString(time: number, separator: string = ":", flag: Boolean = false): string {
         var ret: string = "";
         var hour: number;
