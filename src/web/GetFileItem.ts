@@ -39,7 +39,7 @@ export class GetFileItem extends BaseEvent<'change'> {
         input.addEventListener('change', (event) => {
             let files: File[] = [...(event.target as any).files];
             if (files && files.length > 0) {
-                length > 1 ? this.emit('change', files) : this.emit('change', files[0]);
+                this.length > 1 ? this.emit('change', files) : this.emit('change', files[0]);
             }
             input.value = null;
         });
