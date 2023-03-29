@@ -1,0 +1,2 @@
+#忽略所有node的包文件
+/**/node_modules
