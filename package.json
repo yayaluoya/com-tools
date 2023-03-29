@@ -3,13 +3,17 @@
   "version": "1.7.15",
   "description": "yayaluoya常用的一些工具",
   "types": "./src/_d/index.d.ts",
+  "author": "yayaluoya <yayaluoya@sina.com>",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yayaluoya/com-tools.git"
+  },
   "scripts": {
     "rm-dist": "node ./.node/clearDist.js",
     "tsc-w": "tsc -w",
     "npm-publish": "npm publish"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@types/ali-oss": "^6.16.7",
     "@types/node": "^18.11.18",
