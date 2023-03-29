@@ -9,7 +9,10 @@ export class FileT {
      * @param {*} url 地址
      * @param {*} name 文件名字
      */
-    static download(url: string, name: string) {
+    static download(url: string, name?: string) {
+        if (!name) {
+            name = new URL(url).pathname.match(/[^/]+$/)?.[0] || '';
+        }
         let a = document.createElement('a');
         a.href = url;
         a.download = name;
