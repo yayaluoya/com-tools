@@ -9,13 +9,6 @@ class BaseApiCon extends BaseApiCon_ {
             // timeout: 1,
         }
     };
-
-    resData_(con, res, data) {
-        if (!res) {
-            throw new ResData(data, 408, '请求超时');
-        }
-        return new ResData(data, res.status);
-    }
 }
 
 export class TestAC extends BaseApiCon {

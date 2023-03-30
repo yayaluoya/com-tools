@@ -41,4 +41,17 @@ export class ResData<D = any, R = any> {
     toString() {
         return JSON.stringify(this);
     }
+
+    /**
+     * 融合另一个res
+     * @param res 
+     */
+    mix(resD: ResData): this {
+        this.data = resD.data;
+        this.msg = resD.msg;
+        this.status = resD.status;
+        this.timeStamp = resD.timeStamp;
+        this.res = resD.res;
+        return this;
+    }
 }

@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import { BaseEvent } from "../BaseEvent";
 
 /**
@@ -44,7 +45,6 @@ export abstract class BaseApiCon<
 
     /**
      * 发送请求
-     * 无论成功与否都返回的response，失败的话将会抛出异常response
      * @param op 请求配置
      * @returns 
      */
@@ -52,14 +52,14 @@ export abstract class BaseApiCon<
 
     /**
      * 发送请求并获取该请求返回的数据
-     * catch中的也是resData
+     * catch中的也是 ResData 的实例
      * @param _op 
      */
     abstract requestData(op: C);
 
     /**
      * 请求拦截
-     * 主要处理配置文件
+     * 主要处理配置选项
      * @param config 
      * @returns 
      */
@@ -69,7 +69,7 @@ export abstract class BaseApiCon<
 
     /**
      * 响应拦截
-     * 失败的话抛出AxiosResponse的异常
+     * 失败的话必须抛出AxiosError异常
      * @param res 
      * @returns 
      */

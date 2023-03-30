@@ -1,4 +1,5 @@
 import { BaseApiCon as BaseApiCon_ } from "../http/BaseApiCon";
+import { HttpStatus } from "../http/HttpStatus";
 import { IComApiResType } from "../http/IComApiResType";
 import { ResData } from "../http/ResData";
 import { ObjectUtils } from "../obj/ObjectUtils";
@@ -38,45 +39,36 @@ export abstract class BaseApiCon extends BaseApiCon_<RequestOptions, RequestSucc
             });
     }
 
-    /**
-     * 直接获取请求中带有的数据
-     * catch中的也是resData
-     * @param _op 
-     */
     requestData<D>(_op: RequestOptions) {
         return this.request(_op)
-            .catch((res) => {
-                throw this.resData_(false, res, res?.data);
+            .catch((error: GeneralCallbackResult) => {
+                throw this.resDataError_(error);
             })
             .then((res) => {
-                return this.resData_(true, res, res?.data) as ResData<D>;
+                return this.resData_(res) as ResData<D>;
             });
     }
 
-    requestDataData<D = any>(op: RequestOptions) {
-        return this.requestData<D>(op).then(({ data }) => data);
-    }
-
     getData<D = any>(op: RequestOptions) {
-        return this.requestDataData<D>({
+        return this.requestData<D>({
             ...op,
             method: 'GET',
         });
     }
     postData<D = any>(op: RequestOptions) {
-        return this.requestDataData<D>({
+        return this.requestData<D>({
             ...op,
             method: 'POST',
         });
     }
     putData<D = any>(op: RequestOptions) {
-        return this.requestDataData<D>({
+        return this.requestData<D>({
             ...op,
             method: 'PUT',
         });
     }
     deleteData<D = any>(op: RequestOptions) {
-        return this.requestDataData<D>({
+        return this.requestData<D>({
             ...op,
             method: 'DELETE',
         });
@@ -84,12 +76,18 @@ export abstract class BaseApiCon extends BaseApiCon_<RequestOptions, RequestSucc
 
     /**
      * 响应数据获取
-     * @param con 请求是否成功
-     * @param res response
-     * @param data response中的数据
+     * @param res
      * @returns 
      */
-    protected resData_(con: boolean, res?: RequestSuccessCallbackResult, data?: any): ResData {
-        return data;
+    protected resData_(res: RequestSuccessCallbackResult) {
+        return new ResData().mix(res.data as any);
+    }
+
+    /**
+     * 响应数据失败处理
+     * @param error 
+     */
+    protected resDataError_(error: GeneralCallbackResult) {
+        throw new ResData(null, HttpStatus.BAD_REQUEST, error.errMsg || '', Date.now());
     }
 }

@@ -24,12 +24,12 @@ app.all("*", function (req, res, next) {
 
 app.get('/test', (req, res) => {
     setTimeout(() => {
-        res.send(new ResData(req.query));
+        res.send(new ResData(req.query, undefined, 'get请求成功，返回query'));
     }, 500);
 })
 app.post('/test', (req, res) => {
     setTimeout(() => {
-        res.send(new ResData(req.body));
+        res.send(new ResData(req.body, undefined, 'post请求成功，返回body'));
     }, 500);
 });
 app.get('/sts', (req, res) => {

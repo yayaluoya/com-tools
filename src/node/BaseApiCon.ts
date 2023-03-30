@@ -1,5 +1,6 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import { BaseApiCon as BaseApiCon_ } from "../http/BaseApiCon";
+import { HttpStatus } from "../http/HttpStatus";
 import { IComApiResType } from "../http/IComApiResType";
 import { ResData } from "../http/ResData";
 import { ObjectUtils } from "../obj/ObjectUtils";
@@ -27,10 +28,6 @@ export abstract class BaseApiCon extends BaseApiCon_<AxiosRequestConfig, AxiosRe
         )
             .then((config) => {
                 return this.axiosI(config)
-                    .catch(({ response }) => {
-                        //
-                        throw response;
-                    })
                     .then(res => {
                         return this.response_(res);
                     });
@@ -39,38 +36,34 @@ export abstract class BaseApiCon extends BaseApiCon_<AxiosRequestConfig, AxiosRe
 
     requestData<D = any>(op: AxiosRequestConfig) {
         return this.request(op)
-            .catch((res) => {
-                throw this.resData_(false, res, res?.data);
+            .catch((error: AxiosError) => {
+                throw this.resDataError_(error);
             })
             .then((res) => {
-                return this.resData_(true, res, res?.data) as ResData<D>;
+                return this.resData_(res) as ResData<D>;
             });
     }
 
-    requestDataData<D = any>(op: AxiosRequestConfig) {
-        return this.requestData<D>(op).then(({ data }) => data);
-    }
-
     getData<D = any>(op: AxiosRequestConfig) {
-        return this.requestDataData<D>({
+        return this.requestData<D>({
             ...op,
             method: 'get',
         });
     }
     postData<D = any>(op: AxiosRequestConfig) {
-        return this.requestDataData<D>({
+        return this.requestData<D>({
             ...op,
             method: 'post',
         });
     }
     putData<D = any>(op: AxiosRequestConfig) {
-        return this.requestDataData<D>({
+        return this.requestData<D>({
             ...op,
             method: 'put',
         });
     }
     deleteData<D = any>(op: AxiosRequestConfig) {
-        return this.requestDataData<D>({
+        return this.requestData<D>({
             ...op,
             method: 'delete',
         });
@@ -78,12 +71,18 @@ export abstract class BaseApiCon extends BaseApiCon_<AxiosRequestConfig, AxiosRe
 
     /**
      * 响应数据获取
-     * @param con 请求是否成功
-     * @param res response
-     * @param data response中的数据
+     * @param res
      * @returns 
      */
-    protected resData_(con: boolean, res?: AxiosResponse, data?: any): ResData {
-        return new ResData(data, res?.status, '', undefined, res);
+    protected resData_(res: AxiosResponse) {
+        return new ResData().mix(res.data);
+    }
+
+    /**
+     * 响应数据失败处理
+     * @param error 
+     */
+    protected resDataError_(error: AxiosError) {
+        throw new ResData(null, HttpStatus.BAD_REQUEST, error.message || '', Date.now(), error.response);
     }
 }
