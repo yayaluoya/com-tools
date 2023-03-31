@@ -7,6 +7,7 @@ import { ObjectUtils } from "../obj/ObjectUtils";
 
 /**
  * 基类Api控制器
+ * TODO node.js和浏览器端都可以用
  */
 export abstract class BaseApiCon extends BaseApiCon_<AxiosRequestConfig, AxiosResponse> implements IComApiResType<AxiosRequestConfig> {
     /** axios实例 */
@@ -71,7 +72,7 @@ export abstract class BaseApiCon extends BaseApiCon_<AxiosRequestConfig, AxiosRe
 
     /**
      * 响应数据获取
-     * TODO 重新处理resData中的状态码问题
+     * TODO 重新处理resData中的状态码问题，如果错误请抛出ResData类型异常
      * @param res
      * @returns 
      */
