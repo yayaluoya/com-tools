@@ -18,9 +18,13 @@ export abstract class BaseApiCon extends BaseApiCon_<AxiosRequestConfig, AxiosRe
         return {}
     };
 
-    constructor() {
+    /**
+     * 实例化
+     * @param axios_ axios实例，如果没传则用axios.create()获取
+     */
+    constructor(axios_?: AxiosInstance) {
         super();
-        this.axiosI = axios.create();
+        this.axiosI = axios_ ? axios_ : axios.create();
     }
 
     request(op: AxiosRequestConfig) {

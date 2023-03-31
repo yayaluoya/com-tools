@@ -1,15 +1,17 @@
-import { AxiosError } from "axios";
 import { BaseEvent } from "../BaseEvent";
 
 /**
  * 基类Api控制器
  * @ C 请求参数泛型
  * @ R 响应对象泛型
+ * @ E 事件类型
  */
 export abstract class BaseApiCon<
     C = any,
-    R = any
-> extends BaseEvent {
+    R = any,
+    E extends string | symbol = string | symbol
+> extends BaseEvent<E> {
+
     /** 缓存响应列表 */
     private cacheResList: Map<string, Promise<any>> = new Map();
 
