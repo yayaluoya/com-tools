@@ -71,6 +71,7 @@ export abstract class BaseApiCon extends BaseApiCon_<AxiosRequestConfig, AxiosRe
 
     /**
      * 响应数据获取
+     * TODO 重新处理resData中的状态码问题
      * @param res
      * @returns 
      */
@@ -83,6 +84,6 @@ export abstract class BaseApiCon extends BaseApiCon_<AxiosRequestConfig, AxiosRe
      * @param error 
      */
     protected resDataError_(error: AxiosError) {
-        throw new ResData(null, HttpStatus.BAD_REQUEST, error.message || '', Date.now(), error.response);
+        throw new ResData(null, error.response?.status || HttpStatus.BAD_REQUEST, error.message || '', Date.now(), error.response);
     }
 }
