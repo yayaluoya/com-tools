@@ -10,7 +10,7 @@ export class ResData<D = any, R = any> {
     msg: string;
     /** 时间戳 */
     timeStamp: number;
-    /** 真实数据 */
+    /** 数据 */
     data: D;
     /** 原始res */
     res?: R;
@@ -18,6 +18,27 @@ export class ResData<D = any, R = any> {
     /** 其它数据 */
     [key: string]: any;
 
+    /** 状态码 */
+    get s() {
+        return this.status;
+    }
+    /** 响应消息 */
+    get m() {
+        return this.msg;
+    }
+    /** 数据 */
+    get d() {
+        return this.data;
+    }
+
+    /**
+     * 初始化
+     * @param data 
+     * @param status 
+     * @param mes 
+     * @param timeStamp 
+     * @param res 
+     */
     constructor(data: D = null, status: number = HttpStatus.OK, mes: string = '', timeStamp: number = Date.now(), res?: R) {
         this.data = data;
         this.msg = mes;
@@ -31,9 +52,9 @@ export class ResData<D = any, R = any> {
      * @param msg 
      * @returns 
      */
-    fail(msg: string = '请求失败'): this {
-        this.status = HttpStatus.INTERNAL_SERVER_ERROR;
+    fail(msg: string = '请求失败', status = HttpStatus.INTERNAL_SERVER_ERROR): this {
         this.msg = msg;
+        this.status = status;
         return this;
     }
 
@@ -43,7 +64,7 @@ export class ResData<D = any, R = any> {
     }
 
     /**
-     * 融合另一个res
+     * 混入另一个res
      * @param res 
      */
     mix(resD: ResData): this {
@@ -53,5 +74,12 @@ export class ResData<D = any, R = any> {
         this.timeStamp = resD.timeStamp;
         this.res = resD.res;
         return this;
+    }
+
+    /**
+     * 返回一个克隆的resData
+     */
+    clone() {
+        return new ResData().mix(this);
     }
 }
