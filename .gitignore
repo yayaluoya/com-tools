@@ -1,7 +1,7 @@
 #忽略所有node的包文件
-node_modules
+node_modules/
 
 package-lock.json
 
 # 忽略所有包文件和包目录
-dist*
+dist*/
