@@ -7,5 +7,6 @@ import { instanceTool } from "../../instanceTool";
 @instanceTool()
 export class GlobalE<T extends string> extends BaseEvent<T> {
     /** 单例 */
-    static instance: GlobalE<string>;
+    static readonly instance: GlobalE<string>;
+    static readonly I: GlobalE<string>;
 }

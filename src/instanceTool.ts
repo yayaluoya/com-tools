@@ -1,30 +1,32 @@
+import { ArrayUtils } from "./ArrayUtils";
+
 /** 
  * 单例隐藏字段名
- * TODO 就是单纯感觉比放闭包里面好
  */
 const instanceName = Symbol();
 
 /**
- * 单例装饰器
- * ! 被装饰的类的构造方法最好不要是public类型的
- * @param {*} name 单例字段名称
- * @param {*} passive 是否被动，指的是被用到时才new
+ * 单例工具，一般当装饰器使用
+ * TODO 被装饰的类的构造方法最好不要是public类型的
+ * @param {*} names 单例字段名称，可以是多个
+ * @param {*} passive 是否被动，指的是单例字段被get时才new
  * @param {*} arg new时带的参数
  */
-export function instanceTool<T extends {
-    new(...arg: any[])
-}>(name = 'instance', passive = true, ...arg: any[]) {
-    return function (_class: T) {
+export function instanceTool<T extends new (...arg: any[]) => any
+>(names: ArraifyT<string> = ['instance', 'I'], passive = true, ...arg: ConstructorParameters<T>) {
+    return function (class_: T) {
         let newF = () => {
-            return _class[instanceName] || (_class[instanceName] = new _class(...arg));
+            return class_[instanceName] || (class_[instanceName] = new class_(...arg));
         }
         passive || newF();
-        Object.defineProperty(_class, name, {
-            configurable: false,
-            enumerable: false,
-            get() {
-                return newF();
-            },
-        });
+        for (let name of ArrayUtils.arraify(names)) {
+            Object.defineProperty(class_, name, {
+                configurable: false,
+                enumerable: true,
+                get() {
+                    return newF();
+                },
+            });
+        }
     }
 }

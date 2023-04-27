@@ -5,9 +5,10 @@ import { instanceTool } from "../../instanceTool";
  * RequestAnimationFrame事件
  */
 @instanceTool()
-export class RequestAnimationFrameE<T extends string> extends BaseEvent<'exec' | T> {
+export class RequestAnimationFrameE<T extends string = string> extends BaseEvent<'exec' | T> {
     /** 单例 */
-    static instance: RequestAnimationFrameE<'exec'>;
+    static readonly instance: RequestAnimationFrameE;
+    static readonly I: RequestAnimationFrameE;
 
     constructor() {
         super();

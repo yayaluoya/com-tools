@@ -1,6 +1,6 @@
 {
   "name": "yayaluoya-tool",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "yayaluoya常用的一些工具",
   "types": "./src/_d/index.d.ts",
   "author": "yayaluoya <yayaluoya@sina.com>",

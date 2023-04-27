@@ -6,9 +6,10 @@ import { createThrottleFun } from "../../throttleAntiShake";
  * 屏幕滚动事件管理器
  */
 @instanceTool()
-export class ScrollE extends BaseEvent<'scroll'> {
+export class ScrollE<T extends string = string> extends BaseEvent<'scroll' | T> {
     /** 单例 */
     static readonly instance: ScrollE;
+    static readonly I: ScrollE;
 
     constructor() {
         super();
