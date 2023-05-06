@@ -24,9 +24,13 @@ export class BaseEvent<E extends string | symbol = string | symbol> {
     /**
      * 监听事件
      * @param key 唯一key
+     * @param _this
+     * @param f
      */
     on(key: E | _keyType, _this: any, f: Function) {
-        if (!key) { return; }
+        if (!key) {
+            return;
+        }
         //
         this.eventList.push({
             key,
@@ -38,9 +42,13 @@ export class BaseEvent<E extends string | symbol = string | symbol> {
     /**
      * 监听一次事件
      * @param key 唯一key
+     * @param _this
+     * @param f
      */
     onOnce(key: E | _keyType, _this: any, f: Function) {
-        if (!key) { return; }
+        if (!key) {
+            return;
+        }
         let _that = this;
         //重新包装下该函数
         let _f = function (this: any, ...arg: any[]) {
@@ -60,9 +68,9 @@ export class BaseEvent<E extends string | symbol = string | symbol> {
     /**
      * 取消监听
      * 这些参数可以不传，传了就表示要对该参数做判断
-     * @param key 
-     * @param _this 
-     * @param f 
+     * @param key
+     * @param _this
+     * @param f
      */
     off(key?: E | _keyType, _this?: any, f?: Function) {
         this.eventList = this.eventList.filter((item) => {

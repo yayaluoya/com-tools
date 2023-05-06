@@ -1,4 +1,4 @@
-import { ArrayUtils } from "./ArrayUtils";
+import {ArrayUtils} from "./ArrayUtils";
 
 /**
  * loading工具
@@ -32,14 +32,14 @@ export class LoadingT {
         }
     }
 
-    /** 
+    /**
      * 设置加载
      */
     setLoading(...key: any[]) {
         this.set(true, ...key);
     }
 
-    /** 
+    /**
      * 设置加载完成
      */
     setLoadComplete(...key: any[]) {
@@ -48,7 +48,7 @@ export class LoadingT {
 
     /**
      * 获取是否loading
-     * @param  {*} key 
+     * @param  {*} key
      */
     get(...key: any[]) {
         return this.loadingList.some(_ => ArrayUtils.same(_, key));

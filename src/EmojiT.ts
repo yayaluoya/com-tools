@@ -4,8 +4,8 @@
 export class EmojiT {
     /**
      * 表情转码
-     * @param str 
-     * @returns 
+     * @param str
+     * @returns
      */
     static utf16toEntities(str: string) {
         const patt = /[\ud800-\udbff][\udc00-\udfff]/g; // 检测utf16字符正则
@@ -32,8 +32,8 @@ export class EmojiT {
 
     /**
      * 表情解码
-     * @param strObj 
-     * @returns 
+     * @param strObj
+     * @returns
      */
     static entitiestoUtf16(strObj: string) {
         const patt = /&#\d+;/g;

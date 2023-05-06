@@ -1,4 +1,4 @@
-/** 
+/**
  * 二维向量
  */
 export class Vector2 {
@@ -35,7 +35,7 @@ export class Vector2 {
         this.y = _y;
     }
 
-    /** 
+    /**
      * 设置值
      */
     setValue(_x = this.x, _y = this.y): this {
@@ -52,7 +52,7 @@ export class Vector2 {
         this.y = 0;
     }
 
-    /** 
+    /**
      * 返回一个克隆的向量
      */
     clone(): Vector2 {
@@ -61,14 +61,14 @@ export class Vector2 {
 
     /**
      * 克隆到另一个向量
-     * @param v2 
+     * @param v2
      */
     cloneTo(v2: Vector2) {
         v2.x = this.x;
         v2.y = this.y;
     }
 
-    /** 
+    /**
      * 向量相加
      */
     static add(a: Vector2, b: Vector2, _v?: Vector2): Vector2 {
@@ -80,7 +80,7 @@ export class Vector2 {
         return _v;
     }
 
-    /** 
+    /**
      * 向量相减
      */
     static subtract(a: Vector2, b: Vector2, _v?: Vector2): Vector2 {
@@ -92,7 +92,7 @@ export class Vector2 {
         return _v;
     }
 
-    /** 
+    /**
      * 缩放
      */
     static scale(a: Vector2, b: number, out?: Vector2): Vector2 {
@@ -121,8 +121,8 @@ export class Vector2 {
      * @param out 输出向量。
      */
     static normalize(s: Vector2, out: Vector2): void {
-        var x = s.x, y = s.y;
-        var len = x * x + y * y;
+        const x = s.x, y = s.y;
+        let len = x * x + y * y;
         if (len > 0) {
             len = 1 / Math.sqrt(len);
             out.x = x * len;
@@ -136,7 +136,7 @@ export class Vector2 {
      * @return 标量长度。
      */
     static scalarLength(a: Vector2): number {
-        var x = a.x, y = a.y;
+        const x = a.x, y = a.y;
         return Math.sqrt(x * x + y * y);
     }
 }

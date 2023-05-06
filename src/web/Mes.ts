@@ -1,4 +1,4 @@
-import { ResData } from "../http/ResData";
+import {ResData} from "../http/ResData";
 
 type TypeT = 'success' | 'warning' | 'info' | 'error';
 
@@ -14,7 +14,7 @@ export class Mes {
     /** 计时器 */
     static time;
 
-    /** 
+    /**
      * 间隔时间
      * TODO 可重写
      */
@@ -22,9 +22,9 @@ export class Mes {
 
     /**
      * 添加消息
-     * @param {*} str 
-     * @param {*} type 
-     * @returns 
+     * @param {*} str
+     * @param {*} type
+     * @returns
      */
     static addMsg(str: string, type: TypeT) {
         return new Promise<void>((r, e) => {
@@ -63,7 +63,7 @@ export class Mes {
 
     /**
      * 成功提示
-     * @param str 
+     * @param str
      */
     static success(str: string) {
         Mes.ifMes && this.addMsg(str, 'success');
@@ -71,7 +71,7 @@ export class Mes {
 
     /**
      * 警告提示
-     * @param str 
+     * @param str
      */
     static warning(str: string) {
         Mes.ifMes && this.addMsg(str, 'warning');
@@ -79,7 +79,7 @@ export class Mes {
 
     /**
      * info提示
-     * @param str 
+     * @param str
      */
     static info(str: string) {
         Mes.ifMes && this.addMsg(str, 'info');
@@ -87,7 +87,7 @@ export class Mes {
 
     /**
      * 异常提示
-     * @param str 
+     * @param str
      */
     static error(str: string) {
         Mes.ifMes && this.addMsg(str, 'error');
@@ -97,14 +97,17 @@ export class Mes {
     static success_(str: string) {
         console.log('success:', str);
     }
+
     /** TODO 可重写 */
     static warning_(str: string) {
         console.log('warning:', str);
     }
+
     /** TODO 可重写 */
     static info_(str: string) {
         console.log('info:', str);
     }
+
     /** TODO 可重写 */
     static error_(str: string) {
         console.log('error:', str);
@@ -132,7 +135,7 @@ export class Mes {
 
     /**
      * 处理表单验证失败的错误
-     * @param {*} e 
+     * @param {*} e
      */
     static handleFormCatch(e) {
         console.warn('表单验证失败', e);

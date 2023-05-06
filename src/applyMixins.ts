@@ -17,26 +17,26 @@ export function applyMixins(...baseCtors: any[]) {
 //使用方法
 
 /**
-class _A {
+ class _A {
     _a() {
         console.log('_A类');
     }
 }
 
-class A {
+ class A {
     a() {
         console.log('A类');
     }
 }
 
-class B {
+ class B {
     b() {
         console.log('B类');
     }
 }
 
-@applyMixins(A, B)
-class C implements A, B {
+ @applyMixins(A, B)
+ class C implements A, B {
     a(): void { }
     b(): void { }
     c() {
@@ -44,11 +44,11 @@ class C implements A, B {
     }
 }
 
-let c: C = new C();
+ let c: C = new C();
 
-//
-c.a();
-c.b();
-c.c();
-//
-*/
+ //
+ c.a();
+ c.b();
+ c.c();
+ //
+ */

@@ -1,12 +1,12 @@
-import { readFileSync, unlinkSync, writeFileSync, rmdirSync, mkdirSync } from "fs";
-import { join } from "path";
+import {readFileSync, unlinkSync, writeFileSync, rmdirSync, mkdirSync} from "fs";
+import {join} from "path";
 
 /**
  * 本地数操作工具
  * 仿前端接口的一个同步文件数据管理工具
  */
 export class LocalStorage_ {
-    /** 
+    /**
      * 数据获取路径
      * TODO 需要重写
      */
@@ -61,7 +61,8 @@ export class LocalStorage_ {
     removeItem(key: string) {
         try {
             unlinkSync(this.getDataPath(key));
-        } catch { };
+        } catch {
+        }
     }
 
     /**

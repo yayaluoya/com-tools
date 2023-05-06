@@ -7,8 +7,8 @@ export class SingleDependence {
 
     /**
      * 添加
-     * @param key 
-     * @param value 
+     * @param key
+     * @param value
      */
     static add(key: any, value: any) {
         this.mapping.set(key, value);
@@ -16,8 +16,8 @@ export class SingleDependence {
 
     /**
      * 获取
-     * @param key 
-     * @returns 
+     * @param key
+     * @returns
      */
     static get<T>(key: any): T {
         return this.mapping.get(key);

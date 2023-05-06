@@ -4,26 +4,26 @@
  * @param {*} _time 延迟执行时间
  */
 export function createThrottleFun(_fun: Function, _time: number) {
-  let _setTimeOutId: any;
-  return function (this: any,...arg: any[]) {
-    clearTimeout(_setTimeOutId);
-    _setTimeOutId = setTimeout(() => {
-      _fun.call(this, ...arg);
-    }, _time);
-  }
+    let _setTimeOutId: any;
+    return function (this: any, ...arg: any[]) {
+        clearTimeout(_setTimeOutId);
+        _setTimeOutId = setTimeout(() => {
+            _fun.call(this, ...arg);
+        }, _time);
+    }
 }
 
 /**
-* 创建一个防抖函数
-* @param {*} _fun 源函数
-* @param {*} _time 间隔时间
-*/
+ * 创建一个防抖函数
+ * @param {*} _fun 源函数
+ * @param {*} _time 间隔时间
+ */
 export function createAntiShakeFun(_fun: Function, _time: number) {
-  let _onTime = Date.now();
-  return function (this: any,...arg: any[]) {
-    if (Date.now() - _onTime >= _time) {
-      _fun.call(this, ...arg);
-      _onTime = Date.now();
+    let _onTime = Date.now();
+    return function (this: any, ...arg: any[]) {
+        if (Date.now() - _onTime >= _time) {
+            _fun.call(this, ...arg);
+            _onTime = Date.now();
+        }
     }
-  }
 }

@@ -167,6 +167,7 @@ export interface IHttpHeard {
     'X-Content-Type-Options'?: string;
     /** X-Frame-Options HTTP 响应头是用来给浏览器指示允许一个页面可否在 <frame>、<iframe>、<embed> 或者 <object> 中展现的标记。 */
     'X-Frame-Options'?: string;
+
     //
     [key: string]: string;
 }

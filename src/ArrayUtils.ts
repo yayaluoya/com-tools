@@ -1,5 +1,5 @@
-import { MathUtils } from "./MathUtils";
-import { ObjectUtils } from "./obj/ObjectUtils";
+import {MathUtils} from "./MathUtils";
+import {ObjectUtils} from "./obj/ObjectUtils";
 
 /**
  * 数组工具
@@ -11,17 +11,19 @@ export class ArrayUtils {
      * @param index 索引
      */
     static removeAt<T>(arr: T[], index: number): boolean {
-        if (index < 0) { return false; }
+        if (index < 0) {
+            return false;
+        }
         if (arr.length <= index) return false;
         arr.splice(index, 1);
         return true;
     }
 
     /**
-    * 填充指定数量的数据
-    * @param {*} d 
-    * @param {*} length 
-    */
+     * 填充指定数量的数据
+     * @param {*} d
+     * @param {*} length
+     */
     static fill<T>(d: T, length: number = 0): T[] {
         return Array.from({
             length,
@@ -32,7 +34,7 @@ export class ArrayUtils {
 
     /**
      * 获取数组的某个元素
-     * @param array 
+     * @param array
      * @param _n 索引，可以是负数
      */
     public static at<T = any>(array: T[], _n: number): T {
@@ -77,8 +79,8 @@ export class ArrayUtils {
 
     /**
      * 数组是否包含某个数据
-     * @param arr 
-     * @param op 
+     * @param arr
+     * @param op
      */
     public static has<T>(arr: T[], op: T | { (_: T, index: number, obj: T[]): boolean }): boolean {
         let index = -1;
@@ -92,7 +94,7 @@ export class ArrayUtils {
 
     /**
      * 随机打乱数组
-     * @param _array 目标数组 
+     * @param _array 目标数组
      */
     public static upset<T>(_array: T[]): T[] {
         return _array.sort(() => {
@@ -135,7 +137,9 @@ export class ArrayUtils {
      * @param {*} array 原数组
      * @param {*} v 验证方式 可以是方法和正则，如果都不是的话采用==来验证，这些条件都可以是数组
      */
-    static eliminate<T = any>(array: Array<T>, v: (RegExp | { (_: T, i: number): boolean } | T) | Array<RegExp | { (_: T, i: number): boolean } | T>) {
+    static eliminate<T = any>(array: Array<T>, v: (RegExp | { (_: T, i: number): boolean } | T) | Array<RegExp | {
+        (_: T, i: number): boolean
+    } | T>) {
         if (!Array.isArray(v)) {
             v = [v];
         }
@@ -168,8 +172,8 @@ export class ArrayUtils {
 
     /**
      * 数组化
-     * @param target 
-     * @returns 
+     * @param target
+     * @returns
      */
     static arraify<T>(target: T | T[]): T[] {
         return Array.isArray(target) ? target : [target]

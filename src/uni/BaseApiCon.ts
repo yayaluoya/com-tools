@@ -1,8 +1,8 @@
-import { BaseApiCon as BaseApiCon_ } from "../http/BaseApiCon";
-import { HttpStatus } from "../http/HttpStatus";
-import { IComApiResType } from "../http/IComApiResType";
-import { ResData } from "../http/ResData";
-import { ObjectUtils } from "../obj/ObjectUtils";
+import {BaseApiCon as BaseApiCon_} from "../http/BaseApiCon";
+import {HttpStatus} from "../http/HttpStatus";
+import {IComApiResType} from "../http/IComApiResType";
+import {ResData} from "../http/ResData";
+import {ObjectUtils} from "../obj/ObjectUtils";
 
 /**
  * 基类Api控制器
@@ -18,20 +18,20 @@ export abstract class BaseApiCon extends BaseApiCon_<RequestOptions, RequestSucc
      * 发送请求
      * 无论成功与否都返回的response
      * @param op 请求配置
-     * @returns 
+     * @returns
      */
     request(op: RequestOptions) {
         //添加请求拦截器
         return this.request_(ObjectUtils.merge(this.op || {}, op))
             .then((config) => {
-                return new Promise<RequestSuccessCallbackResult>((r, e) => {
-                    uni.request({
-                        ...config,
-                        success: r,
-                        fail: e,
+                    return new Promise<RequestSuccessCallbackResult>((r, e) => {
+                        uni.request({
+                            ...config,
+                            success: r,
+                            fail: e,
+                        });
                     });
-                });
-            }
+                }
             )
             .then(res => {
                 //添加响应拦截
@@ -55,18 +55,21 @@ export abstract class BaseApiCon extends BaseApiCon_<RequestOptions, RequestSucc
             method: 'GET',
         });
     }
+
     postData<D = any>(op: RequestOptions) {
         return this.requestData<D>({
             ...op,
             method: 'POST',
         });
     }
+
     putData<D = any>(op: RequestOptions) {
         return this.requestData<D>({
             ...op,
             method: 'PUT',
         });
     }
+
     deleteData<D = any>(op: RequestOptions) {
         return this.requestData<D>({
             ...op,
@@ -77,7 +80,7 @@ export abstract class BaseApiCon extends BaseApiCon_<RequestOptions, RequestSucc
     /**
      * 响应数据获取
      * @param res
-     * @returns 
+     * @returns
      */
     protected resData_(res: RequestSuccessCallbackResult) {
         return new ResData().mix(res.data as any);
@@ -85,7 +88,7 @@ export abstract class BaseApiCon extends BaseApiCon_<RequestOptions, RequestSucc
 
     /**
      * 响应数据失败处理
-     * @param error 
+     * @param error
      */
     protected resDataError_(error: GeneralCallbackResult) {
         throw new ResData(null, HttpStatus.BAD_REQUEST, error.errMsg || '', Date.now());

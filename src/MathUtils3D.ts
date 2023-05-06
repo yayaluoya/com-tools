@@ -22,11 +22,12 @@ export class MathUtils3D {
     static isZero(v) {
         return Math.abs(v) < MathUtils3D.zeroTolerance;
     }
+
     static nearEqual(n1, n2) {
-        if (MathUtils3D.isZero(n1 - n2))
-            return true;
-        return false;
+        return MathUtils3D.isZero(n1 - n2);
+
     }
+
     static fastInvSqrt(value) {
         if (MathUtils3D.isZero(value))
             return value;

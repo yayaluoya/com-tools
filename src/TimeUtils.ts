@@ -17,16 +17,19 @@ export class TimeUtils {
 
     /**
      * 获取时间
-     * @param op 
-     * @returns 
+     * @param op
+     * @returns
      */
     static getTime(op: moment.MomentInput) {
         return moment(op).format(this.format);
     }
 
     public static makeTimeLeftString(time: number, separator: string = ":", flag: Boolean = false): string {
-        var ret: string = "";
-        var hour: number;
+        let second: number;
+        let minute: number;
+        let day: number;
+        let ret: string = "";
+        let hour: number;
         if (time <= 0) {
             ret = ret + "00:00";
             return ret;
@@ -37,23 +40,23 @@ export class TimeUtils {
         }
         if (flag) {
             if (time > this.ONE_DAY) {
-                var day: number = Math.floor(time / this.ONE_DAY);
+                day = Math.floor(time / this.ONE_DAY);
                 ret = day + "天";
             } else if (time >= 3600) {
                 hour = Math.floor(time / 3600);
                 ret = hour + "小时";
             } else {
-                var minute: number = Math.floor(time / 60);
+                minute = Math.floor(time / 60);
                 if (minute < 10) ret += "0";
                 ret += minute.toString() + separator;
-                var second: number = time % 60;
+                second = time % 60;
                 if (second < 10) ret += "0";
                 ret += second.toString();
             }
             return ret;
         }
         if (time > this.ONE_DAY) {
-            var day: number = Math.floor(time / this.ONE_DAY);
+            day = Math.floor(time / this.ONE_DAY);
             ret = day + "天";
             time = time - day * this.ONE_DAY;
             if (flag) {
@@ -77,14 +80,14 @@ export class TimeUtils {
                 ret += hour.toString() + separator;
             }
         }
-        var minute: number = Math.floor((time - hour * 3600) / 60);
+        minute = Math.floor((time - hour * 3600) / 60);
         if ((minute > 0) || (hour > 0)) {
             if (minute < 10) ret += "0";
             ret += minute.toString() + separator;
         } else {
             ret += "00" + separator;
         }
-        var second: number = time % 60;
+        second = time % 60;
         if (second < 10) ret += "0";
         ret += second.toString();
         return ret;

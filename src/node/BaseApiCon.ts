@@ -1,9 +1,9 @@
-import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
-import { BaseApiCon as BaseApiCon_ } from "../http/BaseApiCon";
-import { HttpStatus } from "../http/HttpStatus";
-import { IComApiResType } from "../http/IComApiResType";
-import { ResData } from "../http/ResData";
-import { ObjectUtils } from "../obj/ObjectUtils";
+import axios, {AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse} from "axios";
+import {BaseApiCon as BaseApiCon_} from "../http/BaseApiCon";
+import {HttpStatus} from "../http/HttpStatus";
+import {IComApiResType} from "../http/IComApiResType";
+import {ResData} from "../http/ResData";
+import {ObjectUtils} from "../obj/ObjectUtils";
 
 /**
  * 基类Api控制器
@@ -22,7 +22,7 @@ export abstract class BaseApiCon extends BaseApiCon_<AxiosRequestConfig, AxiosRe
      * 实例化
      * @param axios_ axios实例，如果没传则用axios.create()获取
      */
-    constructor(axios_?: AxiosInstance) {
+    protected constructor(axios_?: AxiosInstance) {
         super();
         this.axiosI = axios_ ? axios_ : axios.create();
     }
@@ -55,18 +55,21 @@ export abstract class BaseApiCon extends BaseApiCon_<AxiosRequestConfig, AxiosRe
             method: 'get',
         });
     }
+
     postData<D = any>(op: AxiosRequestConfig) {
         return this.requestData<D>({
             ...op,
             method: 'post',
         });
     }
+
     putData<D = any>(op: AxiosRequestConfig) {
         return this.requestData<D>({
             ...op,
             method: 'put',
         });
     }
+
     deleteData<D = any>(op: AxiosRequestConfig) {
         return this.requestData<D>({
             ...op,
@@ -78,7 +81,7 @@ export abstract class BaseApiCon extends BaseApiCon_<AxiosRequestConfig, AxiosRe
      * 响应数据获取
      * TODO 重新处理resData中的状态码问题，如果错误请抛出ResData类型异常
      * @param res
-     * @returns 
+     * @returns
      */
     protected resData_(res: AxiosResponse) {
         return new ResData().mix(res.data);
@@ -86,7 +89,7 @@ export abstract class BaseApiCon extends BaseApiCon_<AxiosRequestConfig, AxiosRe
 
     /**
      * 响应数据失败处理
-     * @param error 
+     * @param error
      */
     protected resDataError_(error: AxiosError) {
         throw new ResData(null, error.response?.status || HttpStatus.BAD_REQUEST, error.message || '', Date.now(), error.response);

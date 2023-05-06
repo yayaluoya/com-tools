@@ -1,5 +1,5 @@
-import { BaseEvent } from "../BaseEvent";
-import { IWS } from "../http/BaseWS";
+import {BaseEvent} from "../BaseEvent";
+import {IWS} from "../http/BaseWS";
 
 /**
  * WebSocket的包装体

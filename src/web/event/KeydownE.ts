@@ -1,9 +1,9 @@
-import { BaseEvent } from "../../BaseEvent";
-import { instanceTool } from "../../instanceTool";
+import {BaseEvent} from "../../BaseEvent";
+import {instanceTool} from "../../instanceTool";
 
 /**
  * 案件按下事件管理器
-*/
+ */
 @instanceTool()
 export class KeydownE<T extends string = string> extends BaseEvent<'keydown' | T> {
     /** 单例 */

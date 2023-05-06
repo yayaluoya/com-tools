@@ -1,15 +1,15 @@
-import { ArrayUtils } from "../ArrayUtils";
+import {ArrayUtils} from "../ArrayUtils";
 
-/** 
+/**
  * 代理对象控制器类型
  */
 export type proxyConType = {
-    /** 
+    /**
      * 数据被设置的回调
      * TODO 注意这个objKey是对象独有的
      */
     set?: (target, p: string | symbol, newValue, value, objKey: symbol) => void;
-    /** 
+    /**
      * 数据被获取时的回调
      * TODO 注意这个objKey是对象独有的
      */
@@ -18,17 +18,18 @@ export type proxyConType = {
 
 /** 对象->代理对象映射 */
 const obj_proxy_Map = new WeakMap<any, any>();
+
 // const obj_proxy_Map = new Map<any, any>();
 
 /**
  * 获取对象代理映射
- * @returns 
+ * @returns
  */
 export function getobjProxyMap() {
     return obj_proxy_Map;
 }
 
-/** 
+/**
  * 代理对象的标识key，可以通过这个key获取和设置代理对象的标识对象
  * TODO 这个key也是判断代理对象的关键
  */
@@ -46,8 +47,8 @@ type proxyObjSignType = {
 
 /**
  * 是否是一个对象
- * @param obj 
- * @returns 
+ * @param obj
+ * @returns
  */
 function isObject(obj: any): boolean {
     return typeof obj == 'object' && obj;
@@ -63,7 +64,9 @@ function isObject(obj: any): boolean {
  * @param resSetD 重置禁用状态
  */
 export function createProxyObj<T extends Record<string | symbol, any> = any>(obj: T, con?: proxyConType, resSetD = true): T {
-    if (!isObject(obj)) { return obj; }
+    if (!isObject(obj)) {
+        return obj;
+    }
 
     // 先在缓存中找
     let proxyObj;
@@ -193,11 +196,13 @@ export function createProxyObj<T extends Record<string | symbol, any> = any>(obj
 
 /**
  * 清除对象的代理
- * @param obj 
- * @returns 
+ * @param obj
+ * @returns
  */
 export function cleanProxyObjCon<T extends Record<string | symbol, any> = any>(obj: T): T {
-    if (!isObject(obj)) { return obj; }
+    if (!isObject(obj)) {
+        return obj;
+    }
     let sign = obj[proxySignKey] as proxyObjSignType;
     if (sign) {
         sign.d = true;
@@ -210,10 +215,10 @@ export function cleanProxyObjCon<T extends Record<string | symbol, any> = any>(o
 }
 
 /**
- * 
+ *
  * TODO 以下是依赖收集和触发的内容
  * RO rely on 依赖 的缩写
- * 
+ *
  */
 
 /**
@@ -237,7 +242,7 @@ const watchRNList: {
 /**
  * 触发依赖
  * TODO 由createProxyObj模块驱动
- * @param key  
+ * @param key
  */
 function ROSet(key: ROKType) {
     watchRNList.forEach((item) => {
@@ -247,10 +252,11 @@ function ROSet(key: ROKType) {
         }
     });
 }
+
 /**
  * 依赖收集
  * TODO 由createProxyObj模块驱动
- * @param key 
+ * @param key
  */
 function ROGet(key: ROKType) {
     //收集依赖
@@ -261,7 +267,7 @@ function ROGet(key: ROKType) {
 
 /**
  * 收集依赖
- * @param f 
+ * @param f
  */
 export function ROCollect(f: Function): ROKType[] {
     let list: ROKType[] = [];
@@ -290,8 +296,8 @@ export function RORemove(f: Function): boolean {
 
 /**
  * 自动执行某个带有依赖的方法
- * @param f 
- * @param getROF 
+ * @param f
+ * @param getROF
  */
 export function autoROF(f: Function, getROF?: Function) {
     let _ROF = getROF || f;
@@ -306,8 +312,8 @@ export function autoROF(f: Function, getROF?: Function) {
 
 /**
  * 自动执行一次某个带有依赖的方法
- * @param f 
- * @param getROF 
+ * @param f
+ * @param getROF
  */
 export function autoOneROF(f: Function, getROF?: Function) {
     autoROF(f, getROF);

@@ -1,4 +1,4 @@
-import { isArray, isObject, isMap, isDate } from "../is";
+import {isArray, isObject, isMap, isDate} from "../is";
 
 /**
  * 对象工具类
@@ -10,7 +10,9 @@ export class ObjectUtils {
      * @param key 目标属性，可以是方法，正则表达式，其它的采用==号匹配
      */
     static getPro(obj: object, key: string | number | { (i: string): boolean } | RegExp): any {
-        if (typeof obj != 'object') { return; }
+        if (typeof obj != 'object') {
+            return;
+        }
         let is;
         for (let i in obj) {
             is = false;
@@ -35,7 +37,7 @@ export class ObjectUtils {
     /**
      * 克隆一个对象（普通）
      * 采用序列化和反序列化的方式，function不会被克隆
-     * @param _O 该对象
+     * @param _data
      */
     public static clone<T>(_data: T): T {
         return JSON.parse(JSON.stringify(_data)) as T;
@@ -69,8 +71,8 @@ export class ObjectUtils {
 
     /**
      * 属性提取
-     * @param {*} obj 
-     * @param {*} props 
+     * @param {*} obj
+     * @param {*} props
      */
     static propGet(obj, props: ArraifyT<string | [string, string | number | { (i: string): boolean } | RegExp]>) {
         props = Array.isArray(props) ? props : [props];
@@ -88,14 +90,16 @@ export class ObjectUtils {
     /**
      * 判断两个对象是否相同
      * TODO 对比时用的是===
-     * @param a 
-     * @param b 
+     * @param a
+     * @param b
      */
     static same(a: any, b: any): boolean {
         if (a === b) {
             return true;
         }
-        if (typeof a != typeof b) { return a === b; }
+        if (typeof a != typeof b) {
+            return a === b;
+        }
         if (typeof a != 'object' || !a || !b) {
             return a === b;
         }
@@ -115,7 +119,7 @@ export class ObjectUtils {
     /**
      * 在a对象上合并b对象的值
      * 对于数组会合并
-     * @param a 
+     * @param a
      * @param bs
      */
     static merge<T>(a: T, ...bs: T[]): T {
@@ -140,7 +144,7 @@ export class ObjectUtils {
 
     /**
      * 用b对象替换a对象的值
-     * @param a 
+     * @param a
      * @param bs
      */
     static replace<T>(a: T, ...bs: T[]): T {

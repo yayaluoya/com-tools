@@ -1,4 +1,4 @@
-import { MathUtils3D } from "./MathUtils3D";
+import {MathUtils3D} from "./MathUtils3D";
 
 /**
  * 三维向量
@@ -65,7 +65,7 @@ export class Vector3 {
      * @param offset 数组偏移。
      */
     fromArray(array: any[], offset?: number): void {
-        this.x = array[offset + 0];
+        this.x = array[offset];
         this.y = array[offset + 1];
         this.z = array[offset + 2];
     }
@@ -75,7 +75,7 @@ export class Vector3 {
      * @param destObject 克隆源。
      */
     cloneTo(destObject: any): void {
-        var destVector3 = destObject;
+        const destVector3 = destObject;
         destVector3.x = this.x;
         destVector3.y = this.y;
         destVector3.z = this.z;
@@ -86,7 +86,7 @@ export class Vector3 {
      * @return 克隆副本。
      */
     clone(): any {
-        var destVector3 = new Vector3();
+        const destVector3 = new Vector3();
         this.cloneTo(destVector3);
         return destVector3;
     }
@@ -104,9 +104,9 @@ export class Vector3 {
      * @return 距离的平方。
      */
     static distanceSquared(value1: Vector3, value2: Vector3): number {
-        var x = value1.x - value2.x;
-        var y = value1.y - value2.y;
-        var z = value1.z - value2.z;
+        const x = value1.x - value2.x;
+        const y = value1.y - value2.y;
+        const z = value1.z - value2.z;
         return (x * x) + (y * y) + (z * z);
     }
 
@@ -117,9 +117,9 @@ export class Vector3 {
      * @return 距离。
      */
     static distance(value1: Vector3, value2: Vector3): number {
-        var x = value1.x - value2.x;
-        var y = value1.y - value2.y;
-        var z = value1.z - value2.z;
+        const x = value1.x - value2.x;
+        const y = value1.y - value2.y;
+        const z = value1.z - value2.z;
         return Math.sqrt((x * x) + (y * y) + (z * z));
     }
 
@@ -153,7 +153,7 @@ export class Vector3 {
      * @return 标量长度。
      */
     static scalarLength(a: Vector3): number {
-        var x = a.x, y = a.y, z = a.z;
+        const x = a.x, y = a.y, z = a.z;
         return Math.sqrt(x * x + y * y + z * z);
     }
 
@@ -163,7 +163,7 @@ export class Vector3 {
      * @return 标量长度的平方。
      */
     static scalarLengthSquared(a: Vector3): number {
-        var x = a.x, y = a.y, z = a.z;
+        const x = a.x, y = a.y, z = a.z;
         return x * x + y * y + z * z;
     }
 
@@ -173,8 +173,8 @@ export class Vector3 {
      * @param out 输出三维向量。
      */
     static normalize(s: Vector3, out: Vector3): void {
-        var x = s.x, y = s.y, z = s.z;
-        var len = x * x + y * y + z * z;
+        const x = s.x, y = s.y, z = s.z;
+        let len = x * x + y * y + z * z;
         if (len > 0) {
             len = 1 / Math.sqrt(len);
             out.x = x * len;
@@ -215,7 +215,7 @@ export class Vector3 {
      * @param out 输出向量。
      */
     static lerp(a: Vector3, b: Vector3, t: number, out: Vector3): void {
-        var ax = a.x, ay = a.y, az = a.z;
+        const ax = a.x, ay = a.y, az = a.z;
         out.x = ax + t * (b.x - ax);
         out.y = ay + t * (b.y - ay);
         out.z = az + t * (b.z - az);
@@ -229,15 +229,15 @@ export class Vector3 {
      * @param out 输出向量
      */
     static Clamp(value: Vector3, min: Vector3, max: Vector3, out: Vector3): void {
-        var x = value.x;
-        var y = value.y;
-        var z = value.z;
-        var mineX = min.x;
-        var mineY = min.y;
-        var mineZ = min.z;
-        var maxeX = max.x;
-        var maxeY = max.y;
-        var maxeZ = max.z;
+        let x = value.x;
+        let y = value.y;
+        let z = value.z;
+        const mineX = min.x;
+        const mineY = min.y;
+        const mineZ = min.z;
+        const maxeX = max.x;
+        const maxeY = max.y;
+        const maxeZ = max.z;
         x = (x > maxeX) ? maxeX : x;
         x = (x < mineX) ? mineX : x;
         y = (y > maxeY) ? maxeY : y;
@@ -280,7 +280,7 @@ export class Vector3 {
      * @param o 输出向量。
      */
     static cross(a: Vector3, b: Vector3, o: Vector3): void {
-        var ax = a.x, ay = a.y, az = a.z, bx = b.x, by = b.y, bz = b.z;
+        const ax = a.x, ay = a.y, az = a.z, bx = b.x, by = b.y, bz = b.z;
         o.x = ay * bz - az * by;
         o.y = az * bx - ax * bz;
         o.z = ax * by - ay * bx;

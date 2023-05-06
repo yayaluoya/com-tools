@@ -1,4 +1,4 @@
-import { HttpStatus } from "./HttpStatus";
+import {HttpStatus} from "./HttpStatus";
 
 /**
  * 响应数据
@@ -22,10 +22,12 @@ export class ResData<D = any, R = any> {
     get s() {
         return this.status;
     }
+
     /** 响应消息 */
     get m() {
         return this.msg;
     }
+
     /** 数据 */
     get d() {
         return this.data;
@@ -33,11 +35,11 @@ export class ResData<D = any, R = any> {
 
     /**
      * 初始化
-     * @param data 
-     * @param status 
-     * @param mes 
-     * @param timeStamp 
-     * @param res 
+     * @param data
+     * @param status
+     * @param mes
+     * @param timeStamp
+     * @param res
      */
     constructor(data: D = null, status: number = HttpStatus.OK, mes: string = '', timeStamp: number = Date.now(), res?: R) {
         this.data = data;
@@ -49,8 +51,9 @@ export class ResData<D = any, R = any> {
 
     /**
      * 失败
-     * @param msg 
-     * @returns 
+     * @param msg
+     * @param status
+     * @returns
      */
     fail(msg: string = '请求失败', status = HttpStatus.INTERNAL_SERVER_ERROR): this {
         this.msg = msg;
@@ -65,7 +68,7 @@ export class ResData<D = any, R = any> {
 
     /**
      * 混入另一个res
-     * @param res 
+     * @param resD
      */
     mix(resD: ResData): this {
         this.data = resD.data;

@@ -1,4 +1,4 @@
-import { ArrayUtils } from "../ArrayUtils";
+import {ArrayUtils} from "../ArrayUtils";
 
 /**
  * 文件处理工具

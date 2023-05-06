@@ -17,7 +17,8 @@ export class AliOSST extends OSS {
      * TODO 该地址不包含协议
      * @param url 文件地址
      * @param file 目标文件
-     * @returns 
+     * @param op
+     * @returns
      */
     updateFile(url: string, file: any, op?: OSS.PutObjectOptions) {
         return this.put(url, file, op).then((res) => {
@@ -28,8 +29,9 @@ export class AliOSST extends OSS {
     /**
      * 分片上传文件并直接获取地址
      * TODO 该地址不包含协议
-     * @param url 
-     * @param file 
+     * @param url
+     * @param file
+     * @param op
      */
     sliceUpdateFile(url: string, file: any, op: OSS.MultipartUploadOptions) {
         return this.multipartUpload(url, file, op).then((res) => {

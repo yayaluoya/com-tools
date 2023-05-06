@@ -16,6 +16,7 @@ export class Pagination {
         return this.total <=
             this.currentPage * this.pageSize;
     }
+
     /** 最大页 */
     get maxPage() {
         return Math.ceil(this.total / this.pageSize);
@@ -28,7 +29,7 @@ export class Pagination {
 
     /**
      * 分页递增
-     * @param n 
+     * @param n
      */
     add(n = 1) {
         n = this.currentPage + n;
@@ -38,8 +39,8 @@ export class Pagination {
     /**
      * 获取分页op，主要是调接口时用的到
      * TODO 根据后端习惯重写此接口
-     * @param query 
-     * @returns 
+     * @param query
+     * @returns
      */
     getPageOp(query = {}): any {
         return {
@@ -56,4 +57,4 @@ export class Pagination {
     getIndex(index: number) {
         return index + 1 + (this.currentPage - 1) * this.pageSize;
     }
-};
+}

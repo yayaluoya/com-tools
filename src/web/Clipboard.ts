@@ -4,7 +4,7 @@
 export class Clipboard {
     /**
      * 设置一段字符串到剪切板
-     * @param _str 需要复制的字符串 
+     * @param _str 需要复制的字符串
      */
     static set(_str: string): Promise<boolean> {
         return new Promise((r, e) => {

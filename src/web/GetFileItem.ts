@@ -1,4 +1,4 @@
-import { BaseEvent } from "../BaseEvent";
+import {BaseEvent} from "../BaseEvent";
 
 /**
  * 获取文件项
@@ -12,14 +12,17 @@ export class GetFileItem extends BaseEvent<'change'> {
     get length() {
         return this._length;
     }
+
     set length(v) {
         this.inputEl.multiple = v > 1;
         this._length = v;
     }
+
     /** 选择文件类型 */
     get accept() {
         return this._accept;
     }
+
     set accept(v) {
         this.inputEl.accept = v;
         this._accept = v;

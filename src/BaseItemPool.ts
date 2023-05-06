@@ -47,8 +47,7 @@ export class BaseItemPool<D extends Record<string, any> = Record<string, any>> {
     public clean(key?: keyof D) {
         if (key) {
             this._itemPool[key] = [];
-        }
-        else {
+        } else {
             for (let i in this._itemPool) {
                 this._itemPool[i] = [];
             }

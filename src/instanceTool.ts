@@ -1,6 +1,6 @@
-import { ArrayUtils } from "./ArrayUtils";
+import {ArrayUtils} from "./ArrayUtils";
 
-/** 
+/**
  * 单例隐藏字段名
  */
 const instanceName = Symbol();
@@ -15,7 +15,7 @@ const instanceName = Symbol();
 export function instanceTool<
     T extends new (...arg: any[]) => any
 >
-    (names: ArraifyT<string> = ['instance', 'I'], passive = true, ...arg: ConstructorParameters<T>) {
+(names: ArraifyT<string> = ['instance', 'I'], passive = true, ...arg: ConstructorParameters<T>) {
     return function (class_: T) {
         let newF = () => {
             return class_[instanceName] || (class_[instanceName] = new class_(...arg));

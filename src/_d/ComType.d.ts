@@ -1,4 +1,4 @@
-/** 
+/**
  * 类型数组化
  */
 type ArraifyT<T = any> = T | T[];

@@ -1,7 +1,7 @@
-import { BaseEvent } from "../BaseEvent";
-import { cleanProxyObjCon, createProxyObj } from "../obj/createProxyObj";
-import { ObjectUtils } from "../obj/ObjectUtils";
-import { ILocalStorage_ } from "./ILocalStorage_";
+import {BaseEvent} from "../BaseEvent";
+import {cleanProxyObjCon, createProxyObj} from "../obj/createProxyObj";
+import {ObjectUtils} from "../obj/ObjectUtils";
+import {ILocalStorage_} from "./ILocalStorage_";
 
 /**
  * 基类本地数据代理
@@ -27,19 +27,20 @@ export abstract class BaseDataProxy<D = any> extends BaseEvent<'update' | 'set' 
     get data(): D {
         return this._data;
     }
+
     /** 设置数据，要注意之前加的监听将会失去意义 */
     set data(_d: D) {
         if (this._data !== _d) {
             this.getLocalData(_d);
         }
     }
+
     /** 获取一份克隆数据 */
     get cloneData(): D {
         return ObjectUtils.clone2(this._data);
     }
-
-    //
-    constructor() {
+    
+    protected constructor() {
         super();
         this.getLocalData();
     }
@@ -90,14 +91,18 @@ export abstract class BaseDataProxy<D = any> extends BaseEvent<'update' | 'set' 
             this.stateCode++;
             this._ifEdit = false;
         }
-        if (this._ifEdit) { return; }
+        if (this._ifEdit) {
+            return;
+        }
         this.emit('update');
         this._ifEdit = true;
         let _stateCode: number = this.stateCode;
         //用微任务来执行保存方法
         Promise.resolve().then(() => {
             /** 状态码不一样了的话说明根数据发生了变化，此时就不用在保存之前的数据了 */
-            if (_stateCode != this.stateCode) { return; }
+            if (_stateCode != this.stateCode) {
+                return;
+            }
             this._ifEdit = false;
             //
             this.save();
@@ -114,10 +119,12 @@ export abstract class BaseDataProxy<D = any> extends BaseEvent<'update' | 'set' 
 
     /** 获取一份新数据 */
     protected abstract getNewData(): D | null;
+
     /** 数据处理，可以在数据被获取和设置前做加密解密操作 */
     protected dataHandle(str: string, type: 'get' | 'set'): string {
         return str;
     }
+
     /** 获取本地数据并代理后的回调处理 */
     protected getLocalDataHandle(data: D): D {
         return data;

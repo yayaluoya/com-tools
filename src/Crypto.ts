@@ -4,8 +4,8 @@ import * as CryptoJS from 'crypto-js';
  * 加解密工具
  */
 export class Crypto {
-    private key;
-    private iv;
+    private readonly key;
+    private readonly iv;
 
     /**
      * 实例化

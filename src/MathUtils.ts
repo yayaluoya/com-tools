@@ -9,24 +9,24 @@ export class MathUtils {
     /**
      * 进制转换
      * 十进制(Decimal)：
-        取值数字 0-9；不用前缀。
+     取值数字 0-9；不用前缀。
 
-        二进制(Binary)：
-        取值数字 0 和 1 ；前缀 0b 或 0B。
+     二进制(Binary)：
+     取值数字 0 和 1 ；前缀 0b 或 0B。
 
-        十六进制(Hexadecimal)：
-        取值数字 0-9 和 a-f ；前缀 0x 或 0X。
+     十六进制(Hexadecimal)：
+     取值数字 0-9 和 a-f ；前缀 0x 或 0X。
 
-        八进制(Octal)：
-        取值数字 0-7 ；前缀 0o 或 0O (ES6规定)。
+     八进制(Octal)：
+     取值数字 0-7 ；前缀 0o 或 0O (ES6规定)。
 
-        需要注意的是，非严格模式下浏览器支持：
-            如果有前缀0并且后面只用到 0-7 八个数字的数值时，该数值视为八进制；
-            但如果前缀0后面跟随的数字中有8或者9，则视为十进制。
-        严格模式下报错
+     需要注意的是，非严格模式下浏览器支持：
+     如果有前缀0并且后面只用到 0-7 八个数字的数值时，该数值视为八进制；
+     但如果前缀0后面跟随的数字中有8或者9，则视为十进制。
+     严格模式下报错
      * @param num 源数值
      * @param radix 进制基数 2-36
-     * @returns 
+     * @returns
      */
     public static scaleTransform(num: number, radix = 10): string {
         return num.toString(radix);
@@ -36,13 +36,13 @@ export class MathUtils {
         if (numArr == null || numArr.length == 0) {
             return null;
         }
-        var totalWeight = 0;
-        for (var weight of weightArr) {
+        let totalWeight = 0;
+        for (const weight of weightArr) {
             totalWeight += weight;
         }
-        var randomWeight = MathUtils.Random(0, totalWeight);
-        var currentWeight = 0;
-        for (var i = 0; i < numArr.length; ++i) {
+        const randomWeight = MathUtils.Random(0, totalWeight);
+        let currentWeight = 0;
+        for (let i = 0; i < numArr.length; ++i) {
             currentWeight += weightArr[i];
             if (randomWeight < currentWeight) {
                 return numArr[i];
@@ -53,9 +53,9 @@ export class MathUtils {
 
     /**
      * 获取min~max之间的一个整数
-     * @param min 
-     * @param max 
-     * @returns 
+     * @param min
+     * @param max
+     * @returns
      */
     public static RandomInt(min: number, max: number): number {
         return Math.round(this.Random(min, max));
@@ -63,12 +63,14 @@ export class MathUtils {
 
     /**
      * 获取一个随机数min~max之间的一个随机数
-     * @param min 
-     * @param max 
-     * @returns 
+     * @param min
+     * @param max
+     * @returns
      */
     public static Random(min: number, max: number): number {
-        if (min == max) { return min; }
+        if (min == max) {
+            return min;
+        }
         return (max - min) * Math.random() + min;
     }
 
@@ -87,10 +89,8 @@ export class MathUtils {
      */
     public static RandomRatio(ratio: number): boolean {
         let v = MathUtils.RandomInt(0, 10000) * 0.01;
-        if (ratio > v) {
-            return true;
-        }
-        return false;
+        return ratio > v;
+
     }
 
     public static Clamp(value: number, min: number, max: number): number {
@@ -105,8 +105,8 @@ export class MathUtils {
 
     /**
      * 获取符号
-     * @param value 
-     * @returns 
+     * @param value
+     * @returns
      */
     public static Sign(value: number): number {
         if (value == 0) return 1;
@@ -114,8 +114,8 @@ export class MathUtils {
     }
 
     public static GetNumCount(num: number): number {
-        var numberCount = 0;
-        var newNumber = num;
+        let numberCount = 0;
+        let newNumber = num;
         while (newNumber / 10 > 0) {
             newNumber = Math.floor(newNumber / 10);
             numberCount++;
@@ -128,7 +128,7 @@ export class MathUtils {
     }
 
     public static MoveTowardsAngle(current: number, target: number, maxDelta: number) {
-        var num = MathUtils.DeltaAngle(current, target);
+        const num = MathUtils.DeltaAngle(current, target);
         if (0 - maxDelta < num && num < maxDelta) {
             return target;
         }
@@ -144,7 +144,7 @@ export class MathUtils {
     }
 
     public static DeltaAngle(current: number, target: number): number {
-        var num = MathUtils.Repeat(target - current, 360);
+        let num = MathUtils.Repeat(target - current, 360);
         if (num > 180) {
             num -= 360;
         }

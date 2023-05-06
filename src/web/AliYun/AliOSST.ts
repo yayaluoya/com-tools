@@ -1,5 +1,5 @@
-import { ResData } from "../../http/ResData";
-import { AliOSST as AliOSST_ } from "../../http/AliYun/AliOSST";
+import {ResData} from "../../http/ResData";
+import {AliOSST as AliOSST_} from "../../http/AliYun/AliOSST";
 
 /**
  * 阿里云oss工具

@@ -1,5 +1,5 @@
-import { BaseDataProxy as BaseDataProxy_ } from "../../localData/BaseDataProxy";
-import { LocalStorage_ } from "./LocalStorage_";
+import {BaseDataProxy as BaseDataProxy_} from "../../localData/BaseDataProxy";
+import {LocalStorage_} from "./LocalStorage_";
 
 /**
  * 基类本地数据代理

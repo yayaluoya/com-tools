@@ -4,8 +4,8 @@
 export class PromiseT {
     /**
      * 以函数的方式获取一个promise
-     * @param arg 
-     * @returns 
+     * @returns
+     * @param executor
      */
     static getP<T = void>(executor: (resolve: (value: T | PromiseLike<T>) => void, reject: (reason?: any) => void) => void) {
         return new Promise(executor);
@@ -13,7 +13,7 @@ export class PromiseT {
 
     /**
      * 延时
-     * @param t 
+     * @param t
      */
     static delay(t = 0) {
         return new Promise<void>((r) => {

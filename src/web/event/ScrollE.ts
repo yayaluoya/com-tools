@@ -1,6 +1,6 @@
-import { BaseEvent } from "../../BaseEvent";
-import { instanceTool } from "../../instanceTool";
-import { createThrottleFun } from "../../throttleAntiShake";
+import {BaseEvent} from "../../BaseEvent";
+import {instanceTool} from "../../instanceTool";
+import {createThrottleFun} from "../../throttleAntiShake";
 
 /**
  * 屏幕滚动事件管理器

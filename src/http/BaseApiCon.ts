@@ -1,4 +1,4 @@
-import { BaseEvent } from "../BaseEvent";
+import {BaseEvent} from "../BaseEvent";
 
 /**
  * 基类Api控制器
@@ -30,9 +30,9 @@ export abstract class BaseApiCon<
 
     /**
      * 获取缓存值
-     * @param key 
-     * @param getRes 获取默认值的函数，如果没有找到缓存就调用这个函数并缓存它的返回值
-     * @returns 
+     * @param key
+     * @param _getRes
+     * @returns
      */
     protected getChche<T = any>(key: string, _getRes?: () => Promise<T>): Promise<T> | null {
         if (this.cacheResList.has(key)) {
@@ -48,22 +48,22 @@ export abstract class BaseApiCon<
     /**
      * 发送请求
      * @param op 请求配置
-     * @returns 
+     * @returns
      */
     abstract request(op: C);
 
     /**
      * 发送请求并获取该请求返回的数据
      * catch中的也是 ResData 的实例
-     * @param _op 
+     * @param op
      */
     abstract requestData(op: C);
 
     /**
      * 请求拦截
      * 主要处理配置选项
-     * @param config 
-     * @returns 
+     * @param config
+     * @returns
      */
     protected async request_(config: C) {
         return config;
@@ -72,8 +72,8 @@ export abstract class BaseApiCon<
     /**
      * 响应拦截
      * 失败的话必须抛出AxiosError异常
-     * @param res 
-     * @returns 
+     * @param res
+     * @returns
      */
     protected async response_(res: R) {
         return res;

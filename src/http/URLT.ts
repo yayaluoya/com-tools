@@ -4,13 +4,16 @@
 export class URLT {
     url: URL;
     /** 是否没有源 */
-    private ifNoOrigin: boolean = false;
+    private readonly ifNoOrigin: boolean = false;
 
     /** 获取源 */
     get origin() {
-        if (this.ifNoOrigin) { return ''; }
+        if (this.ifNoOrigin) {
+            return '';
+        }
         return this.url.origin;
     }
+
     /** 完整路径 */
     get href() {
         if (this.ifNoOrigin) {
@@ -19,6 +22,7 @@ export class URLT {
         }
         return this.url.href;
     }
+
     /** 路径 */
     set path(path: string) {
         this.url.pathname = path
@@ -29,6 +33,7 @@ export class URLT {
             // 去掉末尾的路径分隔符
             .replace(/\/$/, '');
     }
+
     get path(): string {
         return this.url.pathname;
     }
@@ -55,9 +60,9 @@ export class URLT {
 
     /**
      * 添加查询参数
-     * @param query 
+     * @param query
      * @param objectHandle object数据处理器
-     * @returns 
+     * @returns
      */
     addQuery(query: Record<string, string> = {}, objectHandle: { (any): string } = JSON.stringify): this {
         for (let i in query) {
@@ -84,7 +89,7 @@ export class URLT {
     /**
      * 添加查询参数
      * @param url 原url
-     * @param _query 查询参数
+     * @param query 查询参数
      */
     static addQuery(url: string, query: Record<string, string> = {}): string {
         return new URLT(url).addQuery(query).href;
@@ -99,7 +104,7 @@ export class URLT {
 
     /**
      * 拼接url
-     * @param arg 
+     * @param arg
      */
     static join(...arg: string[]): string {
         let urls = arg.map(_ => new URLT(_));
@@ -112,8 +117,8 @@ export class URLT {
 
     /**
      * 路径对比
-     * @param a 
-     * @param b 
+     * @param a
+     * @param b
      */
     static contrast(a: string, b: string): boolean {
         return a == b || new URLT(a).href == new URLT(b).href;

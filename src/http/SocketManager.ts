@@ -1,9 +1,9 @@
-import { instanceTool } from "../instanceTool";
-import { Server, WebSocket, WebSocketServer } from 'ws';
-import { URLT } from "./URLT";
-import { ArrayUtils } from "../ArrayUtils";
-import { HttpTool } from "../node/HttpTool";
-import { BaseEvent } from "../BaseEvent";
+import {instanceTool} from "../instanceTool";
+import {Server, WebSocket, WebSocketServer} from 'ws';
+import {URLT} from "./URLT";
+import {ArrayUtils} from "../ArrayUtils";
+import {HttpTool} from "../node/HttpTool";
+import {BaseEvent} from "../BaseEvent";
 
 /**
  * key 对比
@@ -54,7 +54,7 @@ export class SocketManager extends BaseEvent<
      * @param log 是否打印访问地址
      */
     start(port: number, checkTime: number = 30 * 60 * 1000, log = true) {
-        this.wss = new WebSocketServer({ port });
+        this.wss = new WebSocketServer({port});
         this.wss.on('connection', (ws, req) => {
             let item = this.wsList.find(_ => URLT.contrast(req.url, _.key));
             if (!item) {
@@ -114,8 +114,8 @@ export class SocketManager extends BaseEvent<
     /** 心跳监测 */
     protected check(time) {
         setTimeout(() => {
-            this.wsList.forEach(({ wss }) => {
-                wss.forEach(({ ws, time }) => {
+            this.wsList.forEach(({wss}) => {
+                wss.forEach(({ws, time}) => {
                     if (Math.abs(time - Date.now()) >= time) {
                         ws.close();
                     }

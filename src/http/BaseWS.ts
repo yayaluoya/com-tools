@@ -1,4 +1,4 @@
-import { BaseEvent } from "../BaseEvent";
+import {BaseEvent} from "../BaseEvent";
 
 /**
  * 基类WS
@@ -9,14 +9,14 @@ export abstract class BaseWS extends BaseEvent {
     static iList = [];
     static key;
 
-    constructor() {
+    protected constructor() {
         super();
         BaseWS.iList.push(this);
     }
 
     /**
      * 开始
-     * @param {*} key 
+     * @param {*} key
      */
     static start(key) {
         this.key = key;
@@ -42,6 +42,7 @@ export abstract class BaseWS extends BaseEvent {
     }
 
     static palpitateTime;
+
     /** 发送心跳包 */
     static palpitate() {
         let op = this.getPalpitateOp();
@@ -69,7 +70,7 @@ export abstract class BaseWS extends BaseEvent {
 
     /**
      * 发送消息
-     * @param {*} data 
+     * @param {*} data
      */
     static send(data) {
         return this.wsp
@@ -103,7 +104,7 @@ export abstract class BaseWS extends BaseEvent {
     /**
      * 获取发送心跳包的时间和数据
      * TODO 必要时重写
-     * @returns 
+     * @returns
      */
     protected static getPalpitateOp(): {
         data: any,
@@ -118,8 +119,8 @@ export abstract class BaseWS extends BaseEvent {
     /**
      * 获取 WS 的方法
      * TODO 必须重写
-     * @param url 
-     * @returns 
+     * @param key 一个唯一标识符
+     * @returns
      */
     protected static getWS(key: string): IWS {
         return null;
@@ -132,6 +133,7 @@ export abstract class BaseWS extends BaseEvent {
 export interface IWS extends BaseEvent {
     /** 关闭 */
     close(): void;
+
     /** 发送消息 */
     send(data: any | ArrayBuffer): void;
 }
