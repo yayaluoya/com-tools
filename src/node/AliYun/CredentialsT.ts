@@ -1,4 +1,4 @@
-import OSS, {STSOptions} from "ali-oss";
+import OSS, { STSOptions } from 'ali-oss';
 
 /**
  * 凭证管理

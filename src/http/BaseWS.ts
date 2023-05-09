@@ -1,4 +1,4 @@
-import {BaseEvent} from "../BaseEvent";
+import { BaseEvent } from '../BaseEvent';
 
 /**
  * 基类WS
@@ -20,7 +20,7 @@ export abstract class BaseWS extends BaseEvent {
      */
     static start(key) {
         this.key = key;
-        let ws = this.getWS(key)
+        let ws = this.getWS(key);
         this.wsp = new Promise((r, e) => {
             let t = setTimeout(() => {
                 e();
@@ -47,25 +47,23 @@ export abstract class BaseWS extends BaseEvent {
     static palpitate() {
         let op = this.getPalpitateOp();
         this.palpitateTime = setTimeout(() => {
-            this.send(op.data)
-                .finally(() => {
-                    this.palpitate();
-                });
+            this.send(op.data).finally(() => {
+                this.palpitate();
+            });
         }, op.time);
     }
 
     /** 关闭 */
     static close() {
         clearTimeout(this.palpitateTime);
-        return this.wsp
-            .then((ws) => {
-                return new Promise<void>((r, e) => {
-                    ws.on('close', undefined, () => {
-                        r();
-                    });
-                    ws.close();
+        return this.wsp.then((ws) => {
+            return new Promise<void>((r, e) => {
+                ws.on('close', undefined, () => {
+                    r();
                 });
+                ws.close();
             });
+        });
     }
 
     /**
@@ -73,32 +71,30 @@ export abstract class BaseWS extends BaseEvent {
      * @param {*} data
      */
     static send(data) {
-        return this.wsp
-            .then((ws) => {
-                ws.send(JSON.stringify(data));
-            });
+        return this.wsp.then((ws) => {
+            ws.send(JSON.stringify(data));
+        });
     }
 
     /**
      * 处理消息
      */
     static handMessage() {
-        this.wsp
-            .then((ws) => {
-                ws.on('message', undefined, (res) => {
-                    let data = res.data;
-                    try {
-                        data = JSON.parse(data);
-                    } catch (e) {
-                        console.error('解析消息失败', e);
-                        return;
-                    }
-                    //
-                    BaseWS.iList.forEach(_ => {
-                        _.emit('message', data);
-                    });
+        this.wsp.then((ws) => {
+            ws.on('message', undefined, (res) => {
+                let data = res.data;
+                try {
+                    data = JSON.parse(data);
+                } catch (e) {
+                    console.error('解析消息失败', e);
+                    return;
+                }
+                //
+                BaseWS.iList.forEach((_) => {
+                    _.emit('message', data);
                 });
             });
+        });
     }
 
     /**
@@ -107,7 +103,7 @@ export abstract class BaseWS extends BaseEvent {
      * @returns
      */
     protected static getPalpitateOp(): {
-        data: any,
+        data: any;
         time: number;
     } {
         return {

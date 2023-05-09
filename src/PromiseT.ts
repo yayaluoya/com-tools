@@ -7,7 +7,9 @@ export class PromiseT {
      * @returns
      * @param executor
      */
-    static getP<T = void>(executor: (resolve: (value: T | PromiseLike<T>) => void, reject: (reason?: any) => void) => void) {
+    static getP<T = void>(
+        executor: (resolve: (value: T | PromiseLike<T>) => void, reject: (reason?: any) => void) => void,
+    ) {
         return new Promise(executor);
     }
 

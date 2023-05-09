@@ -1,18 +1,20 @@
-import {BaseApiCon as BaseApiCon_} from "../http/BaseApiCon";
-import {HttpStatus} from "../http/HttpStatus";
-import {IComApiResType} from "../http/IComApiResType";
-import {ResData} from "../http/ResData";
-import {ObjectUtils} from "../obj/ObjectUtils";
+import { BaseApiCon as BaseApiCon_ } from '../http/BaseApiCon';
+import { HttpStatus } from '../http/HttpStatus';
+import { IComApiResType } from '../http/IComApiResType';
+import { ResData } from '../http/ResData';
+import { ObjectUtils } from '../obj/ObjectUtils';
 
 /**
  * 基类Api控制器
  */
-export abstract class BaseApiCon extends BaseApiCon_<RequestOptions, RequestSuccessCallbackResult> implements IComApiResType<RequestOptions> {
-
+export abstract class BaseApiCon
+    extends BaseApiCon_<RequestOptions, RequestSuccessCallbackResult>
+    implements IComApiResType<RequestOptions>
+{
     /** 可配置选项 */
     protected get op(): Omit<RequestOptions, 'url' | 'data'> {
-        return {}
-    };
+        return {};
+    }
 
     /**
      * 发送请求
@@ -24,16 +26,15 @@ export abstract class BaseApiCon extends BaseApiCon_<RequestOptions, RequestSucc
         //添加请求拦截器
         return this.request_(ObjectUtils.merge(this.op || {}, op))
             .then((config) => {
-                    return new Promise<RequestSuccessCallbackResult>((r, e) => {
-                        uni.request({
-                            ...config,
-                            success: r,
-                            fail: e,
-                        });
+                return new Promise<RequestSuccessCallbackResult>((r, e) => {
+                    uni.request({
+                        ...config,
+                        success: r,
+                        fail: e,
                     });
-                }
-            )
-            .then(res => {
+                });
+            })
+            .then((res) => {
                 //添加响应拦截
                 return this.response_(res);
             });

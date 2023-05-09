@@ -1,11 +1,11 @@
-import {Command} from 'commander';
+import { Command } from 'commander';
 
 /**
  * 命令行选项
  */
 export interface IOp {
     /** 查看版本 */
-    version: boolean
+    version: boolean;
 }
 
 /**

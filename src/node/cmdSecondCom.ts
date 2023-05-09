@@ -1,5 +1,5 @@
-import chalk from "chalk";
-import readline from "readline";
+import chalk from 'chalk';
+import readline from 'readline';
 
 /**
  * * readline 简介
@@ -15,7 +15,7 @@ export function cmdSecondCom(title) {
     return new Promise<string>((r, e) => {
         const rl = readline.createInterface({
             input: process.stdin,
-            output: process.stdout
+            output: process.stdout,
         });
         //
         rl.question(chalk.cyan(title), (input) => {

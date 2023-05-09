@@ -9,11 +9,14 @@ export class Clipboard {
     static set(_str: string): Promise<boolean> {
         return new Promise((r, e) => {
             if (navigator.clipboard) {
-                navigator.clipboard.writeText(_str).then(() => {
-                    r(true);
-                }).then(() => {
-                    r(false);
-                });
+                navigator.clipboard
+                    .writeText(_str)
+                    .then(() => {
+                        r(true);
+                    })
+                    .then(() => {
+                        r(false);
+                    });
             } else {
                 try {
                     let input = document.createElement('input');
@@ -36,11 +39,14 @@ export class Clipboard {
     static get(): Promise<string> {
         return new Promise((r, e) => {
             if (navigator.clipboard) {
-                navigator.clipboard.readText().then((value) => {
-                    r(value);
-                }).then(() => {
-                    r('');
-                });
+                navigator.clipboard
+                    .readText()
+                    .then((value) => {
+                        r(value);
+                    })
+                    .then(() => {
+                        r('');
+                    });
             } else {
                 r('');
             }

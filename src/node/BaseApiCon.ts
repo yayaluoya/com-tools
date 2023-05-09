@@ -1,22 +1,25 @@
-import axios, {AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse} from "axios";
-import {BaseApiCon as BaseApiCon_} from "../http/BaseApiCon";
-import {HttpStatus} from "../http/HttpStatus";
-import {IComApiResType} from "../http/IComApiResType";
-import {ResData} from "../http/ResData";
-import {ObjectUtils} from "../obj/ObjectUtils";
+import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { BaseApiCon as BaseApiCon_ } from '../http/BaseApiCon';
+import { HttpStatus } from '../http/HttpStatus';
+import { IComApiResType } from '../http/IComApiResType';
+import { ResData } from '../http/ResData';
+import { ObjectUtils } from '../obj/ObjectUtils';
 
 /**
  * 基类Api控制器
  * TODO node.js和浏览器端都可以用
  */
-export abstract class BaseApiCon extends BaseApiCon_<AxiosRequestConfig, AxiosResponse> implements IComApiResType<AxiosRequestConfig> {
+export abstract class BaseApiCon
+    extends BaseApiCon_<AxiosRequestConfig, AxiosResponse>
+    implements IComApiResType<AxiosRequestConfig>
+{
     /** axios实例 */
     axiosI: AxiosInstance;
 
     /** 可配置选项 */
     protected get op(): AxiosRequestConfig {
-        return {}
-    };
+        return {};
+    }
 
     /**
      * 实例化
@@ -28,15 +31,11 @@ export abstract class BaseApiCon extends BaseApiCon_<AxiosRequestConfig, AxiosRe
     }
 
     request(op: AxiosRequestConfig) {
-        return this.request_(
-            ObjectUtils.merge(this.op || {}, op)
-        )
-            .then((config) => {
-                return this.axiosI(config)
-                    .then(res => {
-                        return this.response_(res);
-                    });
+        return this.request_(ObjectUtils.merge(this.op || {}, op)).then((config) => {
+            return this.axiosI(config).then((res) => {
+                return this.response_(res);
             });
+        });
     }
 
     requestData<D = any>(op: AxiosRequestConfig) {
@@ -92,6 +91,12 @@ export abstract class BaseApiCon extends BaseApiCon_<AxiosRequestConfig, AxiosRe
      * @param error
      */
     protected resDataError_(error: AxiosError) {
-        throw new ResData(null, error.response?.status || HttpStatus.BAD_REQUEST, error.message || '', Date.now(), error.response);
+        throw new ResData(
+            null,
+            error.response?.status || HttpStatus.BAD_REQUEST,
+            error.message || '',
+            Date.now(),
+            error.response,
+        );
     }
 }

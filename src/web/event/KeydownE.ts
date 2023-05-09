@@ -1,5 +1,5 @@
-import {BaseEvent} from "../../BaseEvent";
-import {instanceTool} from "../../instanceTool";
+import { BaseEvent } from '../../BaseEvent';
+import { instanceTool } from '../../instanceTool';
 
 /**
  * 案件按下事件管理器

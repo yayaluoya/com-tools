@@ -1,7 +1,7 @@
-import {BaseEvent} from "../BaseEvent";
-import {cleanProxyObjCon, createProxyObj} from "../obj/createProxyObj";
-import {ObjectUtils} from "../obj/ObjectUtils";
-import {ILocalStorage_} from "./ILocalStorage_";
+import { BaseEvent } from '../BaseEvent';
+import { cleanProxyObjCon, createProxyObj } from '../obj/createProxyObj';
+import { ObjectUtils } from '../obj/ObjectUtils';
+import { ILocalStorage_ } from './ILocalStorage_';
 
 /**
  * 基类本地数据代理
@@ -39,7 +39,7 @@ export abstract class BaseDataProxy<D = any> extends BaseEvent<'update' | 'set' 
     get cloneData(): D {
         return ObjectUtils.clone2(this._data);
     }
-    
+
     protected constructor() {
         super();
         this.getLocalData();
@@ -73,12 +73,18 @@ export abstract class BaseDataProxy<D = any> extends BaseEvent<'update' | 'set' 
                 set: (...arg) => {
                     this.setBack(...arg);
                 },
-            })
+            }),
         );
     }
 
     /** 数据修改回调 */
-    private setBack(target: any = null, p: string | symbol = '', newValue: any = null, value: any = null, objKey: symbol) {
+    private setBack(
+        target: any = null,
+        p: string | symbol = '',
+        newValue: any = null,
+        value: any = null,
+        objKey: symbol,
+    ) {
         //触发事件
         this.emit('set', target, p, newValue, value, objKey);
         //

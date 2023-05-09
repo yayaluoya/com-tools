@@ -1,4 +1,4 @@
-import {ResData} from "./ResData";
+import { ResData } from './ResData';
 
 /**
  * 常用api请求类型
@@ -31,5 +31,4 @@ export interface IComApiResType<Config> {
      * @returns
      */
     deleteData<D = any>(op: Config): Promise<ResData<D>>;
-
 }

@@ -1,4 +1,4 @@
-import {isArray, isObject, isMap, isDate} from "../is";
+import { isArray, isObject, isMap, isDate } from '../is';
 
 /**
  * 对象工具类
@@ -49,7 +49,7 @@ export class ObjectUtils {
      */
     static clone2<T>(data: T): T {
         if (isArray(data)) {
-            return data.map(_ => {
+            return data.map((_) => {
                 return ObjectUtils.clone2(_);
             }) as any;
         }

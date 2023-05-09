@@ -1,5 +1,5 @@
-import {BaseEvent} from "../../BaseEvent";
-import {instanceTool} from "../../instanceTool";
+import { BaseEvent } from '../../BaseEvent';
+import { instanceTool } from '../../instanceTool';
 
 /**
  * RequestAnimationFrame事件
@@ -14,7 +14,7 @@ export class RequestAnimationFrameE<T extends string = string> extends BaseEvent
         super();
         let time = Date.now();
         let f = () => {
-            this.emit("exec", Date.now() - time);
+            this.emit('exec', Date.now() - time);
             time = Date.now();
             requestAnimationFrame(f);
         };

@@ -5,7 +5,7 @@
 export class BaseItemPool<D extends Record<string, any> = Record<string, any>> {
     /** 池子 */
     private _itemPool: {
-        [K in keyof D]?: (D[K])[];
+        [K in keyof D]?: D[K][];
     } = {};
 
     /** 对象池 */

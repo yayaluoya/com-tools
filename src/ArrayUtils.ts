@@ -1,5 +1,5 @@
-import {MathUtils} from "./MathUtils";
-import {ObjectUtils} from "./obj/ObjectUtils";
+import { MathUtils } from './MathUtils';
+import { ObjectUtils } from './obj/ObjectUtils';
 
 /**
  * 数组工具
@@ -56,7 +56,7 @@ export class ArrayUtils {
      * @param y y数组
      */
     public static same(x: any[], y: any[]): boolean {
-        if (!(x) || !(y)) return false;
+        if (!x || !y) return false;
         if (x.length != y.length) return false;
         //方法： 用一个mop来统计x数组各个元素出现的次数，再用y数组来递减各元素出现的次数，如果最终结果为0则两个数组相同
         let m: Map<any, number> = new Map();
@@ -113,12 +113,14 @@ export class ArrayUtils {
             return;
         }
         //根据权重生成索引列表
-        let _indexArray: number[] = _array.map((_, index) => {
-            return ArrayUtils.fill(index, _weight[index] ?? 1);
-        }).reduce((a, b) => {
-            a.push(...b);
-            return a;
-        }, []);
+        let _indexArray: number[] = _array
+            .map((_, index) => {
+                return ArrayUtils.fill(index, _weight[index] ?? 1);
+            })
+            .reduce((a, b) => {
+                a.push(...b);
+                return a;
+            }, []);
         //
         let _newArray: T[] = [];
         for (let _i = 0; _i < _n; _i++) {
@@ -137,9 +139,18 @@ export class ArrayUtils {
      * @param {*} array 原数组
      * @param {*} v 验证方式 可以是方法和正则，如果都不是的话采用==来验证，这些条件都可以是数组
      */
-    static eliminate<T = any>(array: Array<T>, v: (RegExp | { (_: T, i: number): boolean } | T) | Array<RegExp | {
-        (_: T, i: number): boolean
-    } | T>) {
+    static eliminate<T = any>(
+        array: Array<T>,
+        v:
+            | (RegExp | { (_: T, i: number): boolean } | T)
+            | Array<
+                  | RegExp
+                  | {
+                        (_: T, i: number): boolean;
+                    }
+                  | T
+              >,
+    ) {
         if (!Array.isArray(v)) {
             v = [v];
         }
@@ -153,12 +164,11 @@ export class ArrayUtils {
                         index = array.findIndex(v as any);
                         break;
                     case v instanceof RegExp:
-                        index = array.findIndex(_ => (v as RegExp).test(_ as any));
+                        index = array.findIndex((_) => (v as RegExp).test(_ as any));
                         break;
                     default:
-                        index = array.findIndex(_ => _ == v);
+                        index = array.findIndex((_) => _ == v);
                         break;
-
                 }
                 if (index == -1) {
                     _if = false;
@@ -176,7 +186,7 @@ export class ArrayUtils {
      * @returns
      */
     static arraify<T>(target: T | T[]): T[] {
-        return Array.isArray(target) ? target : [target]
+        return Array.isArray(target) ? target : [target];
     }
 
     /**

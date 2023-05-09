@@ -1,4 +1,4 @@
-import {ArrayUtils} from "./ArrayUtils";
+import { ArrayUtils } from './ArrayUtils';
 
 /**
  * loading工具
@@ -28,7 +28,7 @@ export class LoadingT {
         if (state) {
             this.loadingList.push(key);
         } else {
-            ArrayUtils.eliminate(this.loadingList, _ => ArrayUtils.same(_, key));
+            ArrayUtils.eliminate(this.loadingList, (_) => ArrayUtils.same(_, key));
         }
     }
 
@@ -51,6 +51,6 @@ export class LoadingT {
      * @param  {*} key
      */
     get(...key: any[]) {
-        return this.loadingList.some(_ => ArrayUtils.same(_, key));
+        return this.loadingList.some((_) => ArrayUtils.same(_, key));
     }
 }

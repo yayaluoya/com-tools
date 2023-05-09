@@ -1,4 +1,4 @@
-import {encode, decode, encodeURL} from 'js-base64';
+import { encode, decode, encodeURL } from 'js-base64';
 
 /**
  * Base64 工具

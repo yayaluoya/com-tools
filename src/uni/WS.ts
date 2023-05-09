@@ -1,16 +1,10 @@
-import {BaseEvent} from "../BaseEvent";
-import {IWS} from "../http/BaseWS";
+import { BaseEvent } from '../BaseEvent';
+import { IWS } from '../http/BaseWS';
 
 /**
  * WebSocket的包装体
  */
-export class WS extends BaseEvent<
-    'close' |
-    'error' |
-    'message' |
-    'open'
-> implements IWS {
-
+export class WS extends BaseEvent<'close' | 'error' | 'message' | 'open'> implements IWS {
     constructor(url) {
         super();
 

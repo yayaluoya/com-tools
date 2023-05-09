@@ -112,5 +112,5 @@ export enum HttpStatus {
     /** Gateway Timeout/网关超时 */
     GATEWAY_TIMEOUT = 504,
     /** HTTP Version Not Supported/不支持的 HTTP 版本 */
-    HTTP_VERSION_NOT_SUPPORTED = 505
+    HTTP_VERSION_NOT_SUPPORTED = 505,
 }

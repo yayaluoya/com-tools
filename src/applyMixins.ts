@@ -5,13 +5,13 @@
  * @param baseCtors 需要混入的对象
  */
 export function applyMixins(...baseCtors: any[]) {
-    return function (target: { new(): any }) {
-        baseCtors.forEach(baseCtor => {
-            Object.getOwnPropertyNames(baseCtor.prototype).forEach(name => {
+    return function (target: { new (): any }) {
+        baseCtors.forEach((baseCtor) => {
+            Object.getOwnPropertyNames(baseCtor.prototype).forEach((name) => {
                 target.prototype[name] = baseCtor.prototype[name];
-            })
+            });
         });
-    }
+    };
 }
 
 //使用方法

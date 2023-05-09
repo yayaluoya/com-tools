@@ -13,8 +13,7 @@ export class Pagination {
 
     /** 是否是最后一页 */
     get lastPage() {
-        return this.total <=
-            this.currentPage * this.pageSize;
+        return this.total <= this.currentPage * this.pageSize;
     }
 
     /** 最大页 */

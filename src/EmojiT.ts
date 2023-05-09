@@ -18,7 +18,7 @@ export class EmojiT {
             if (char.length === 2) {
                 H = char.charCodeAt(0); // 取出高位
                 L = char.charCodeAt(1); // 取出低位
-                code = (H - 0xD800) * 0x400 + 0x10000 + L - 0xDC00; // 转换算法
+                code = (H - 0xd800) * 0x400 + 0x10000 + L - 0xdc00; // 转换算法
                 s = `&#${code};`;
             } else {
                 s = char;
@@ -47,9 +47,9 @@ export class EmojiT {
             code = arr[i];
             code = code.replace('&#', '').replace(';', '');
             // 高位
-            H = Math.floor((code - 0x10000) / 0x400) + 0xD800;
+            H = Math.floor((code - 0x10000) / 0x400) + 0xd800;
             // 低位
-            L = ((code - 0x10000) % 0x400) + 0xDC00;
+            L = ((code - 0x10000) % 0x400) + 0xdc00;
             code = `&#${code};`;
             const s = String.fromCharCode(H, L);
             strObj = strObj.replace(code, s);

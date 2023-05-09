@@ -1,4 +1,4 @@
-import {HttpStatus} from "./HttpStatus";
+import { HttpStatus } from './HttpStatus';
 
 /**
  * 响应数据
@@ -41,7 +41,13 @@ export class ResData<D = any, R = any> {
      * @param timeStamp
      * @param res
      */
-    constructor(data: D = null, status: number = HttpStatus.OK, mes: string = '', timeStamp: number = Date.now(), res?: R) {
+    constructor(
+        data: D = null,
+        status: number = HttpStatus.OK,
+        mes: string = '',
+        timeStamp: number = Date.now(),
+        res?: R,
+    ) {
         this.data = data;
         this.msg = mes;
         this.status = status;

@@ -1,5 +1,5 @@
-import {BaseEvent} from "../../BaseEvent";
-import {instanceTool} from "../../instanceTool";
+import { BaseEvent } from '../../BaseEvent';
+import { instanceTool } from '../../instanceTool';
 
 /**
  * 全局事件

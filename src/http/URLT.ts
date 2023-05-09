@@ -107,7 +107,7 @@ export class URLT {
      * @param arg
      */
     static join(...arg: string[]): string {
-        let urls = arg.map(_ => new URLT(_));
+        let urls = arg.map((_) => new URLT(_));
         let oneUrl = urls.splice(0, 1)[0];
         return urls.reduce((a, b) => {
             a.join(b.path);

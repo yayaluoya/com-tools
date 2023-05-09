@@ -8,12 +8,12 @@ export class PlatformT {
      */
     static userAgent() {
         const u = navigator.userAgent;
-        const isAndroid = u.indexOf("Android") > -1 || u.indexOf("Linux") > -1;
+        const isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1;
         const isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
         if (isAndroid) {
-            return 'android'
+            return 'android';
         } else if (isiOS) {
-            return 'ios'
+            return 'ios';
         } else {
             return 'pc';
         }

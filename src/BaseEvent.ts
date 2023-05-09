@@ -11,11 +11,11 @@ export class BaseEvent<E extends string | symbol = string | symbol> {
     /** 事件执行列表 */
     private eventList: {
         /** 唯一key */
-        key: E | _keyType,
+        key: E | _keyType;
         /** 执行域 */
-        _this: any,
+        _this: any;
         /** 执行方法 */
-        f: Function,
+        f: Function;
     }[] = [];
 
     /** 延迟触发事件列表 */
@@ -56,7 +56,7 @@ export class BaseEvent<E extends string | symbol = string | symbol> {
             _that.off(key, _this, _f);
             //
             f.call(this, ...arg);
-        }
+        };
         //
         this.eventList.push({
             key,
@@ -90,7 +90,7 @@ export class BaseEvent<E extends string | symbol = string | symbol> {
     emit(key: E | _keyType, ...arg: any[]) {
         this.eventList.forEach((item) => {
             if (
-                (item.key === key) ||
+                item.key === key ||
                 (typeof key == 'string' && item.key instanceof RegExp && item.key.test(key)) ||
                 (typeof item.key == 'string' && key instanceof RegExp && key.test(item.key)) ||
                 (typeof key == 'function' && (key as Function)(item.key)) ||

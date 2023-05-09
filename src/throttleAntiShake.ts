@@ -10,7 +10,7 @@ export function createThrottleFun(_fun: Function, _time: number) {
         _setTimeOutId = setTimeout(() => {
             _fun.call(this, ...arg);
         }, _time);
-    }
+    };
 }
 
 /**
@@ -25,5 +25,5 @@ export function createAntiShakeFun(_fun: Function, _time: number) {
             _fun.call(this, ...arg);
             _onTime = Date.now();
         }
-    }
+    };
 }

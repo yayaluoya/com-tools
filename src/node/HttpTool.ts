@@ -1,4 +1,4 @@
-import internalIp from "internal-ip";
+import internalIp from 'internal-ip';
 
 /**
  * http工具

@@ -111,7 +111,7 @@ export class Vector2 {
      * @return 点积。
      */
     static dot(a: Vector2, b: Vector2): number {
-        return (a.x * b.x) + (a.y * b.y);
+        return a.x * b.x + a.y * b.y;
     }
 
     /**
@@ -121,7 +121,8 @@ export class Vector2 {
      * @param out 输出向量。
      */
     static normalize(s: Vector2, out: Vector2): void {
-        const x = s.x, y = s.y;
+        const x = s.x,
+            y = s.y;
         let len = x * x + y * y;
         if (len > 0) {
             len = 1 / Math.sqrt(len);
@@ -136,7 +137,8 @@ export class Vector2 {
      * @return 标量长度。
      */
     static scalarLength(a: Vector2): number {
-        const x = a.x, y = a.y;
+        const x = a.x,
+            y = a.y;
         return Math.sqrt(x * x + y * y);
     }
 }

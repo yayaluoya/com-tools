@@ -1,4 +1,4 @@
-import {MathUtils3D} from "./MathUtils3D";
+import { MathUtils3D } from './MathUtils3D';
 
 /**
  * 三维向量
@@ -107,7 +107,7 @@ export class Vector3 {
         const x = value1.x - value2.x;
         const y = value1.y - value2.y;
         const z = value1.z - value2.z;
-        return (x * x) + (y * y) + (z * z);
+        return x * x + y * y + z * z;
     }
 
     /**
@@ -120,7 +120,7 @@ export class Vector3 {
         const x = value1.x - value2.x;
         const y = value1.y - value2.y;
         const z = value1.z - value2.z;
-        return Math.sqrt((x * x) + (y * y) + (z * z));
+        return Math.sqrt(x * x + y * y + z * z);
     }
 
     /**
@@ -153,7 +153,9 @@ export class Vector3 {
      * @return 标量长度。
      */
     static scalarLength(a: Vector3): number {
-        const x = a.x, y = a.y, z = a.z;
+        const x = a.x,
+            y = a.y,
+            z = a.z;
         return Math.sqrt(x * x + y * y + z * z);
     }
 
@@ -163,7 +165,9 @@ export class Vector3 {
      * @return 标量长度的平方。
      */
     static scalarLengthSquared(a: Vector3): number {
-        const x = a.x, y = a.y, z = a.z;
+        const x = a.x,
+            y = a.y,
+            z = a.z;
         return x * x + y * y + z * z;
     }
 
@@ -173,7 +177,9 @@ export class Vector3 {
      * @param out 输出三维向量。
      */
     static normalize(s: Vector3, out: Vector3): void {
-        const x = s.x, y = s.y, z = s.z;
+        const x = s.x,
+            y = s.y,
+            z = s.z;
         let len = x * x + y * y + z * z;
         if (len > 0) {
             len = 1 / Math.sqrt(len);
@@ -215,7 +221,9 @@ export class Vector3 {
      * @param out 输出向量。
      */
     static lerp(a: Vector3, b: Vector3, t: number, out: Vector3): void {
-        const ax = a.x, ay = a.y, az = a.z;
+        const ax = a.x,
+            ay = a.y,
+            az = a.z;
         out.x = ax + t * (b.x - ax);
         out.y = ay + t * (b.y - ay);
         out.z = az + t * (b.z - az);
@@ -238,12 +246,12 @@ export class Vector3 {
         const maxeX = max.x;
         const maxeY = max.y;
         const maxeZ = max.z;
-        x = (x > maxeX) ? maxeX : x;
-        x = (x < mineX) ? mineX : x;
-        y = (y > maxeY) ? maxeY : y;
-        y = (y < mineY) ? mineY : y;
-        z = (z > maxeZ) ? maxeZ : z;
-        z = (z < mineZ) ? mineZ : z;
+        x = x > maxeX ? maxeX : x;
+        x = x < mineX ? mineX : x;
+        y = y > maxeY ? maxeY : y;
+        y = y < mineY ? mineY : y;
+        z = z > maxeZ ? maxeZ : z;
+        z = z < mineZ ? mineZ : z;
         out.x = x;
         out.y = y;
         out.z = z;
@@ -280,7 +288,12 @@ export class Vector3 {
      * @param o 输出向量。
      */
     static cross(a: Vector3, b: Vector3, o: Vector3): void {
-        const ax = a.x, ay = a.y, az = a.z, bx = b.x, by = b.y, bz = b.z;
+        const ax = a.x,
+            ay = a.y,
+            az = a.z,
+            bx = b.x,
+            by = b.y,
+            bz = b.z;
         o.x = ay * bz - az * by;
         o.y = az * bx - ax * bz;
         o.z = ax * by - ay * bx;
@@ -293,7 +306,7 @@ export class Vector3 {
      * @return 点积。
      */
     static dot(a: Vector3, b: Vector3): number {
-        return (a.x * b.x) + (a.y * b.y) + (a.z * b.z);
+        return a.x * b.x + a.y * b.y + a.z * b.z;
     }
 
     /**
@@ -306,4 +319,3 @@ export class Vector3 {
         return MathUtils3D.nearEqual(a.x, b.x) && MathUtils3D.nearEqual(a.y, b.y) && MathUtils3D.nearEqual(a.z, b.z);
     }
 }
-

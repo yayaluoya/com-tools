@@ -1,4 +1,4 @@
-import {ResData} from "../http/ResData";
+import { ResData } from '../http/ResData';
 
 type TypeT = 'success' | 'warning' | 'info' | 'error';
 
@@ -32,7 +32,7 @@ export class Mes {
                 r();
                 return;
             }
-            let item = Mes.msgList.find(_ => _.type === type && _.str === str);
+            let item = Mes.msgList.find((_) => _.type === type && _.str === str);
             if (item) {
                 item.rs.push(r);
             } else {
@@ -45,9 +45,9 @@ export class Mes {
             //
             clearTimeout(Mes.time);
             Mes.time = setTimeout(() => {
-                Mes.msgList.forEach(item => {
+                Mes.msgList.forEach((item) => {
                     this[item.type + '_'](item.str);
-                    item.rs.forEach(_ => {
+                    item.rs.forEach((_) => {
                         _();
                     });
                 });

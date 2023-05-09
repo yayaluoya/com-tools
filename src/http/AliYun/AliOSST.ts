@@ -1,4 +1,4 @@
-import OSS from "ali-oss";
+import OSS from 'ali-oss';
 
 /**
  * 阿里云oss工具

@@ -3,7 +3,7 @@ type vf = {
     vf: () => string;
     /** 子字段验证方法 */
     child: Record<string, vf>;
-}
+};
 
 /**
  * 表单工具

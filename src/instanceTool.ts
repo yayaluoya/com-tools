@@ -1,4 +1,4 @@
-import {ArrayUtils} from "./ArrayUtils";
+import { ArrayUtils } from './ArrayUtils';
 
 /**
  * 单例隐藏字段名
@@ -12,14 +12,15 @@ const instanceName = Symbol();
  * @param {*} passive 是否被动，指的是单例字段被get时才new
  * @param {*} arg new时带的参数
  */
-export function instanceTool<
-    T extends new (...arg: any[]) => any
->
-(names: ArraifyT<string> = ['instance', 'I'], passive = true, ...arg: ConstructorParameters<T>) {
+export function instanceTool<T extends new (...arg: any[]) => any>(
+    names: ArraifyT<string> = ['instance', 'I'],
+    passive = true,
+    ...arg: ConstructorParameters<T>
+) {
     return function (class_: T) {
         let newF = () => {
             return class_[instanceName] || (class_[instanceName] = new class_(...arg));
-        }
+        };
         passive || newF();
         for (let name of ArrayUtils.arraify(names)) {
             Object.defineProperty(class_, name, {
@@ -30,5 +31,5 @@ export function instanceTool<
                 },
             });
         }
-    }
+    };
 }

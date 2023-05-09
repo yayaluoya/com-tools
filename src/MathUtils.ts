@@ -2,7 +2,6 @@
  * 数学函数扩展
  */
 export class MathUtils {
-
     public static Deg2Rad = 0.0175;
     public static Rad2Deg = 57.2958;
 
@@ -90,7 +89,6 @@ export class MathUtils {
     public static RandomRatio(ratio: number): boolean {
         let v = MathUtils.RandomInt(0, 10000) * 0.01;
         return ratio > v;
-
     }
 
     public static Clamp(value: number, min: number, max: number): number {

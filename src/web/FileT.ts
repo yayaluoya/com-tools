@@ -1,4 +1,4 @@
-import {ArrayUtils} from "../ArrayUtils";
+import { ArrayUtils } from '../ArrayUtils';
 
 /**
  * 文件处理工具
@@ -30,11 +30,8 @@ export class FileT {
     static slice(file: File, partSize: number) {
         let fileParts: Blob[] = [];
         for (let i = 0; i <= Math.floor(file.size / partSize); i++) {
-            fileParts.push(file.slice(
-                i * partSize,
-                Math.min(partSize * (i + 1), file.size)
-            ));
+            fileParts.push(file.slice(i * partSize, Math.min(partSize * (i + 1), file.size)));
         }
-        return ArrayUtils.eliminate(fileParts, _ => _.size <= 0);
+        return ArrayUtils.eliminate(fileParts, (_) => _.size <= 0);
     }
 }

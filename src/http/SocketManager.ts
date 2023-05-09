@@ -1,9 +1,9 @@
-import {instanceTool} from "../instanceTool";
-import {Server, WebSocket, WebSocketServer} from 'ws';
-import {URLT} from "./URLT";
-import {ArrayUtils} from "../ArrayUtils";
-import {HttpTool} from "../node/HttpTool";
-import {BaseEvent} from "../BaseEvent";
+import { instanceTool } from '../instanceTool';
+import { Server, WebSocket, WebSocketServer } from 'ws';
+import { URLT } from './URLT';
+import { ArrayUtils } from '../ArrayUtils';
+import { HttpTool } from '../node/HttpTool';
+import { BaseEvent } from '../BaseEvent';
 
 /**
  * key 对比
@@ -17,11 +17,7 @@ function keyContrast(key: string, key2: string): boolean {
  * Socket管理器
  */
 @instanceTool()
-export class SocketManager extends BaseEvent<
-    'connection' |
-    'message' |
-    'close'
-> {
+export class SocketManager extends BaseEvent<'connection' | 'message' | 'close'> {
     /** 单例 */
     static readonly instance: SocketManager;
     static readonly I: SocketManager;
@@ -34,10 +30,10 @@ export class SocketManager extends BaseEvent<
         wss: {
             ws: WebSocket;
             /** 时间戳，用来保持长连接的 */
-            time: number,
-        }[],
+            time: number;
+        }[];
         /** 连接时带的key */
-        key: string,
+        key: string;
     }[] = [];
 
     /** 所有的连接数 */
@@ -54,15 +50,17 @@ export class SocketManager extends BaseEvent<
      * @param log 是否打印访问地址
      */
     start(port: number, checkTime: number = 30 * 60 * 1000, log = true) {
-        this.wss = new WebSocketServer({port});
+        this.wss = new WebSocketServer({ port });
         this.wss.on('connection', (ws, req) => {
-            let item = this.wsList.find(_ => URLT.contrast(req.url, _.key));
+            let item = this.wsList.find((_) => URLT.contrast(req.url, _.key));
             if (!item) {
                 item = {
-                    wss: [{
-                        ws,
-                        time: Date.now(),
-                    }],
+                    wss: [
+                        {
+                            ws,
+                            time: Date.now(),
+                        },
+                    ],
                     key: req.url,
                 };
                 this.wsList.push(item);
@@ -74,7 +72,7 @@ export class SocketManager extends BaseEvent<
             }
             //有消息就更新时间戳
             ws.addListener('message', (data) => {
-                let wsItem = item.wss.find(_ => _.ws == ws);
+                let wsItem = item.wss.find((_) => _.ws == ws);
                 wsItem.time = Date.now();
                 //
                 this.emit('message', ws, req, data);
@@ -87,7 +85,7 @@ export class SocketManager extends BaseEvent<
             //
             this.emit('connection', ws, req);
         });
-        // 
+        //
         this.check(checkTime);
         //
         log && console.log(`webSocket服务 ws://${HttpTool.hostname}:${port}`);
@@ -100,9 +98,9 @@ export class SocketManager extends BaseEvent<
      */
     sendMsg(key: string, data: any): number {
         let n = 0;
-        this.wsList.forEach(_ => {
+        this.wsList.forEach((_) => {
             if (keyContrast(key, _.key)) {
-                _.wss.forEach(_ => {
+                _.wss.forEach((_) => {
                     n++;
                     _.ws.send(data);
                 });
@@ -114,12 +112,12 @@ export class SocketManager extends BaseEvent<
     /** 心跳监测 */
     protected check(time) {
         setTimeout(() => {
-            this.wsList.forEach(({wss}) => {
-                wss.forEach(({ws, time}) => {
+            this.wsList.forEach(({ wss }) => {
+                wss.forEach(({ ws, time }) => {
                     if (Math.abs(time - Date.now()) >= time) {
                         ws.close();
                     }
-                })
+                });
             });
             this.check(time);
         }, time);
