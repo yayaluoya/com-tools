@@ -1,16 +1,22 @@
 <script lang="ts">
-import { ref, reactive } from "vue";
-export default {
-  components: {},
-  props: {},
-  setup(props, ctx) {
-    return {};
-  },
-};
+import { ref, reactive, defineComponent } from 'vue';
+
+export default defineComponent({
+    components: {},
+    props: {},
+    setup(props, ctx) {
+        const a = reactive<{
+            a: string;
+        }>({
+            a: '',
+        });
+        return {};
+    },
+});
 </script>
 
 <template>
-  <div class="test">hhh</div>
+    <div class="test">hhh</div>
 </template>
 
 <style scoped lang="scss">
