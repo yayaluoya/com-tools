@@ -8,7 +8,7 @@ export class PrettierrcT {
      * 获取配置
      * @returns
      */
-    static getConfig(op: Options): Options {
+    static getConfig(op?: Options): Options {
         return {
             printWidth: 90,
             tabWidth: 4,
