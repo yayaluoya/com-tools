@@ -17,6 +17,7 @@
   "dependencies": {
     "@types/ali-oss": "^6.16.7",
     "@types/node": "^18.11.18",
+    "@types/prettier": "^2.7.2",
     "@types/uni-app": "^1.4.4",
     "@types/ws": "^8.5.4",
     "ali-oss": "^6.17.1",
