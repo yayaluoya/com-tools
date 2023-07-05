@@ -34,17 +34,18 @@ export class BaseItemPool<D extends Record<string, any> = Record<string, any>> {
      * @param _key key
      * @param _item 对象
      */
-    public add<K extends keyof D>(_key: K, _item: D[K]) {
+    public add<K extends keyof D>(_key: K, _item: D[K]): this {
         if (!this._itemPool[_key]) {
             this._itemPool[_key] = [];
         }
         this._itemPool[_key].push(_item);
+        return this;
     }
 
     /**
      * 清空对象池
      */
-    public clean(key?: keyof D) {
+    public clean(key?: keyof D): this {
         if (key) {
             this._itemPool[key] = [];
         } else {
@@ -52,5 +53,6 @@ export class BaseItemPool<D extends Record<string, any> = Record<string, any>> {
                 this._itemPool[i] = [];
             }
         }
+        return this;
     }
 }

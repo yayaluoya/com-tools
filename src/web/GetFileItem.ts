@@ -42,7 +42,9 @@ export class GetFileItem extends BaseEvent<'change'> {
         input.addEventListener('change', (event) => {
             let files: File[] = [...(event.target as any).files];
             if (files && files.length > 0) {
-                this.length > 1 ? this.emit('change', files) : this.emit('change', files[0]);
+                this.length > 1
+                    ? this.emit('change', files)
+                    : this.emit('change', files[0]);
             }
             input.value = null;
         });
@@ -53,5 +55,30 @@ export class GetFileItem extends BaseEvent<'change'> {
      */
     select() {
         this.inputEl.click();
+    }
+
+    /**
+     * 选择任何音频文件
+     * @param length
+     * @returns
+     */
+    static getAudio(length?: number) {
+        return new GetFileItem('audio/*', length);
+    }
+    /**
+     * 选择任何视频文件
+     * @param length
+     * @returns
+     */
+    static getVideo(length?: number) {
+        return new GetFileItem('video/*', length);
+    }
+    /**
+     * 选择任何图片文件
+     * @param length
+     * @returns
+     */
+    static getImage(length?: number) {
+        return new GetFileItem('image/*', length);
     }
 }
