@@ -56,4 +56,22 @@ export class Pagination {
     getIndex(index: number) {
         return index + 1 + (this.currentPage - 1) * this.pageSize;
     }
+
+    /**
+     * 为列表添加序号
+     * @param {*} list
+     * @param {*} key
+     * @returns
+     */
+    addIndex<T extends object[] = object[], K extends string = 'index_'>(
+        list: T,
+        key?: K,
+    ) {
+        return list.map((_, i) => {
+            return {
+                ..._,
+                [key || 'index_']: this.getIndex(i),
+            } as getArrayItemType<T> & Record<K, number>;
+        });
+    }
 }
