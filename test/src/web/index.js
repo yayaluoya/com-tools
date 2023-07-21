@@ -18,6 +18,7 @@ require('./Crypto');
 require('./api');
 require('./baseItemTool');
 require('./msg');
+require('./time');
 
 window.Clipboard = Clipboard;
 
