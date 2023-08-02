@@ -2,15 +2,16 @@ const path = require('path');
 
 /** webpack参数 */
 const webpackConfig = {
-    mode: "development",
+    mode: 'development',
     entry: path.resolve(__dirname, './src/web/index.js'),
     output: {
         path: path.resolve(__dirname, './dist'),
-        filename: 'bundle.js'
+        filename: 'bundle.js',
     },
     resolve: {
         extensions: ['.js'],
     },
+    target: ['web', 'es5'], // 必须
     //源代码调试工具
     devtool: 'inline-source-map',
     // 缓存
@@ -34,6 +35,17 @@ const webpackConfig = {
     //     port: 3000,
     //     open: true,
     // },
+    module: {
+        rules: [
+            {
+                test: /\.js$/i,
+                exclude: /node_module/,
+                use: {
+                    loader: 'babel-loader',
+                },
+            },
+        ],
+    },
 };
 
 module.exports = webpackConfig;
