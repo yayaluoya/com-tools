@@ -18,4 +18,9 @@ export class PlatformT {
             return 'pc';
         }
     }
+
+    /** 是否是ie浏览器 */
+    static get ifIEBrowser() {
+        return /\bTrident\b/i.test(navigator.userAgent);
+    }
 }
