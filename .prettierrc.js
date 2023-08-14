@@ -1,3 +1,24 @@
-const { PrettierrcT } = require('./dist/ide/PrettierrcT');
+/** @type {import('prettier').Options} */
+const Prettierrc = {
+    printWidth: 90,
+    tabWidth: 4,
+    useTabs: false,
+    semi: true,
+    singleQuote: true,
+    quoteProps: 'as-needed',
+    jsxSingleQuote: false,
+    trailingComma: 'all',
+    bracketSpacing: true,
+    jsxBracketSameLine: false,
+    arrowParens: 'always',
+    requirePragma: false,
+    insertPragma: false,
+    vueIndentScriptAndStyle: false,
+    proseWrap: 'preserve',
+};
 
-module.exports = PrettierrcT.getConfig({});
+try {
+    Prettierrc = require('./dist/ide/PrettierrcT').PrettierrcT.getConfig();
+} catch {}
+
+module.exports = Prettierrc;

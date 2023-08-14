@@ -167,7 +167,17 @@ export interface IHttpHeard {
     'X-Content-Type-Options'?: string;
     /** X-Frame-Options HTTP 响应头是用来给浏览器指示允许一个页面可否在 <frame>、<iframe>、<embed> 或者 <object> 中展现的标记。 */
     'X-Frame-Options'?: string;
-
-    //
+    /**
+     * 其余自定义的属性
+     */
     [key: string]: string;
 }
+
+/**
+ * 跨域响应头
+ */
+export const CORS_REQ_HEAD: IHttpHeard = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': '*',
+    'Access-Control-Allow-Methods': '*',
+};
