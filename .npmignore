@@ -1,2 +1,8 @@
 #忽略所有node的包文件
 /**/node_modules
+
+/test
+/ts_test
+/src
+/.idea
+/.vscode
