@@ -1,5 +1,6 @@
 <script lang="ts">
 import { ref, reactive, defineComponent } from 'vue';
+import { Vector2 } from 'yayaluoya-tool/Vector2';
 
 export default defineComponent({
     components: {},
@@ -10,13 +11,14 @@ export default defineComponent({
         }>({
             a: '',
         });
+        console.log(new Vector2());
         return {};
     },
 });
 </script>
 
 <template>
-    <div class="test">hhh</div>
+    <div class="test">测试页面</div>
 </template>
 
 <style scoped lang="scss">

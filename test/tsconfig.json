@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+        "baseUrl": "./",
+        "allowJs": true,
+        "paths": {
+            "yayaluoya-tool/*": ["node_modules/yayaluoya-tool/src/*"]
+        },
+        "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
+    }
+}

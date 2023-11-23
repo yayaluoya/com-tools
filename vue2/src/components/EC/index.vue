@@ -4,7 +4,7 @@
 
 <script>
 import echarts from 'echarts';
-import { WindowSizeChangeE } from 'yayaluoya-tool/dist/web/event/WindowSizeChangeE';
+import { WindowSizeChangeE } from 'yayaluoya-tool/web/event/WindowSizeChangeE';
 
 export default {
     components: {},

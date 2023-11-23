@@ -1,5 +1,11 @@
 <template>
-    <Editor api-key="no-api-key" :init="init" v-model="content_" tag-name="div" :disabled="disabled" />
+    <Editor
+        api-key="no-api-key"
+        :init="init"
+        v-model="content_"
+        tag-name="div"
+        :disabled="disabled"
+    />
 </template>
 
 <script>

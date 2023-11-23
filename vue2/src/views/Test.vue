@@ -9,6 +9,8 @@
 <script>
 import TEditor from '@/components/TEditor/index.vue';
 import EC from '@/components/EC/index.vue';
+import { Vector2 } from 'yayaluoya-tool/Vector2';
+
 export default {
     components: { TEditor, EC },
     data() {
@@ -18,6 +20,7 @@ export default {
         };
     },
     mounted() {
+        console.log(new Vector2());
         this.ecOp = {
             xAxis: {
                 type: 'category',

@@ -1,7 +1,9 @@
 <template>
     <div id="app">
+        <h1>yayaluoya-tool的vue2项目</h1>
         <nav>
-            <router-link to="/">Home</router-link> | <router-link to="/about">About</router-link> |
+            <router-link to="/">Home</router-link> |
+            <router-link to="/about">About</router-link> |
             <router-link to="/test">Test</router-link>
         </nav>
         <router-view />
