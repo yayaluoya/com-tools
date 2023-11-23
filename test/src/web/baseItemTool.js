@@ -1,4 +1,4 @@
-import { BaseItemPool } from 'yayaluoya-tool/dist/BaseItemPool';
+import { BaseItemPool } from 'yayaluoya-tool/BaseItemPool';
 class BaseItemPoolTest extends BaseItemPool {
     static I = new BaseItemPool();
 }

@@ -1,3 +1,3 @@
-const { HttpTool } = require('yayaluoya-tool/dist/node/HttpTool');
+const { HttpTool } = require('yayaluoya-tool/node/HttpTool');
 
 console.log(HttpTool.hostname);

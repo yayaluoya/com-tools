@@ -1,4 +1,4 @@
-const { ObjectUtils } = require("yayaluoya-tool/dist/obj/ObjectUtils");
+const { ObjectUtils } = require("yayaluoya-tool/obj/ObjectUtils");
 
 console.log(ObjectUtils.merge(
     {

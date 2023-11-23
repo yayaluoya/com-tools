@@ -1,5 +1,5 @@
-const { getCmdOp } = require('yayaluoya-tool/dist/node/getCmdOp');
-const { cmdSecondCom } = require('yayaluoya-tool/dist/node/cmdSecondCom');
+const { getCmdOp } = require('yayaluoya-tool/node/getCmdOp');
+const { cmdSecondCom } = require('yayaluoya-tool/node/cmdSecondCom');
 
 console.log(getCmdOp((p) => {
     p.option('-d --de');

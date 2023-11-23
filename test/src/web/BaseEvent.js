@@ -1,4 +1,4 @@
-const { BaseEvent } = require('yayaluoya-tool/dist/BaseEvent');
+const { BaseEvent } = require('yayaluoya-tool/BaseEvent');
 
 let e = new BaseEvent();
 

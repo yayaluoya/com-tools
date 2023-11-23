@@ -1,4 +1,4 @@
-import { TimeUtils } from 'yayaluoya-tool/dist/TimeUtils';
+import { TimeUtils } from 'yayaluoya-tool/TimeUtils';
 
 let calender = TimeUtils.getMonthCalendar();
 

@@ -1,4 +1,4 @@
-const { URLT } = require('yayaluoya-tool/dist/http/URLT');
+const { URLT } = require('yayaluoya-tool/http/URLT');
 
 console.log('url-tool测试');
 

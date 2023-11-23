@@ -1,4 +1,4 @@
-const { instanceTool } = require('yayaluoya-tool/dist/instanceTool');
+const { instanceTool } = require('yayaluoya-tool/instanceTool');
 
 class A {
     a = '我是一个A的实例';

@@ -1,4 +1,4 @@
-const { BaseApiCon } = require("yayaluoya-tool/dist/node/BaseApiCon");
+const { BaseApiCon } = require("yayaluoya-tool/node/BaseApiCon");
 
 class H extends BaseApiCon {
     get op() {
@@ -27,7 +27,7 @@ let h = new H();
 h.requestData({
     url: 'http://baidu.com',
 }).then((res) => {
-    console.log('成功', res);
+    // console.log('成功', res);
 }).catch((err) => {
-    console.log('失败', err);
+    // console.log('失败', err);
 });

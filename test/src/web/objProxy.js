@@ -3,8 +3,8 @@ const {
     cleanProxyObjCon,
     autoROF,
     getobjProxyMap,
-} = require('yayaluoya-tool/dist/obj/createProxyObj');
-const { BaseDataProxy } = require('yayaluoya-tool/dist/web/localData/BaseDataProxy');
+} = require('yayaluoya-tool/obj/createProxyObj');
+const { BaseDataProxy } = require('yayaluoya-tool/web/localData/BaseDataProxy');
 
 let testData = createProxyObj(
     {

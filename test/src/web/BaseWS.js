@@ -1,5 +1,5 @@
-import { BaseWS as BaseWS_ } from "yayaluoya-tool/dist/http/BaseWS";
-import { WS } from "yayaluoya-tool/dist/web/WS";
+import { BaseWS as BaseWS_ } from "yayaluoya-tool/http/BaseWS";
+import { WS } from "yayaluoya-tool/web/WS";
 
 class BaseWS extends BaseWS_ {
     static getWS(key) {

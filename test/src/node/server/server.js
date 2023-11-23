@@ -1,6 +1,6 @@
 const express = require('express');
-const { ResData } = require("yayaluoya-tool/dist/http/ResData");
-const { CredentialsT } = require('yayaluoya-tool/dist/node/AliYun/CredentialsT');
+const { ResData } = require("yayaluoya-tool/http/ResData");
+const { CredentialsT } = require('yayaluoya-tool/node/AliYun/CredentialsT');
 
 const app = express()
 const port = 1423

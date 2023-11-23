@@ -1,4 +1,4 @@
-const { SocketManager } = require('yayaluoya-tool/dist/http/SocketManager');
+const { SocketManager } = require('yayaluoya-tool/http/SocketManager');
 
 SocketManager.instance.start(3021);
 
