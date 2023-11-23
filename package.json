@@ -1,6 +1,6 @@
 {
     "name": "yayaluoya-tool",
-    "version": "2.0.3",
+    "version": "3.0.0",
     "description": "yayaluoya常用的一些工具",
     "author": "yayaluoya <yayaluoya@sina.com>",
     "license": "ISC",
@@ -9,9 +9,9 @@
         "url": "git+https://github.com/yayaluoya/com-tools.git"
     },
     "exports": {
-        ".":{
-            "import":"./dist_esm/index.js",
-            "require":"./dist/index.js"
+        ".": {
+            "import": "./dist_esm/index.js",
+            "require": "./dist/index.js"
         },
         "./*": {
             "import": "./dist_esm/*.js",
