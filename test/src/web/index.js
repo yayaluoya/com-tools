@@ -4,6 +4,7 @@ const { Clipboard } = require('yayaluoya-tool/web/Clipboard');
 const { MathUtils } = require('yayaluoya-tool/MathUtils');
 const { TimeUtils } = require('yayaluoya-tool/TimeUtils');
 const { ObjectUtils } = require('yayaluoya-tool/obj/ObjectUtils');
+import { getSpanRect } from 'yayaluoya-tool/web/getSpanRect';
 
 console.log('web端的测试');
 
@@ -29,9 +30,15 @@ window.MathUtils = MathUtils;
 window.ObjectUtils = ObjectUtils;
 console.log(2);
 require('yayaluoya-tool');
-import "yayaluoya-tool";
+import 'yayaluoya-tool';
 
 console.log(1);
 
-
 require('./ie11/index');
+
+console.log(
+  '一段文字的尺寸',
+  getSpanRect('一段文字的尺寸', {
+    fontSize: '16px',
+  }),
+);

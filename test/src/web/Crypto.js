@@ -1,4 +1,4 @@
-const { Crypto } = require("yayaluoya-tool/Crypto");
+const { Crypto } = require('yayaluoya-tool/Crypto');
 let c = new Crypto('fasdfasdfasdfasdfasdfasdfasdfasd', 'fasdfdasdf');
 
 console.log(Crypto.md5('哈哈哈哈'));

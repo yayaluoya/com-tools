@@ -5,10 +5,14 @@
  * @param def
  * @param reviver
  */
-export function JSONPar<T = any>(str: string, def?: T, reviver?: (this: any, key: string, value: any) => any): T {
-    try {
-        return JSON.parse(str, reviver);
-    } catch {
-        return def;
-    }
+export function JSONPar<T = any>(
+  str: string,
+  def?: T,
+  reviver?: (this: any, key: string, value: any) => any,
+): T {
+  try {
+    return JSON.parse(str, reviver);
+  } catch {
+    return def;
+  }
 }

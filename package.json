@@ -1,47 +1,47 @@
 {
-    "name": "yayaluoya-tool",
-    "version": "3.0.0",
-    "description": "yayaluoya常用的一些工具",
-    "author": "yayaluoya <yayaluoya@sina.com>",
-    "license": "ISC",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/yayaluoya/com-tools.git"
+  "name": "yayaluoya-tool",
+  "version": "4.0.0",
+  "description": "yayaluoya常用的一些工具",
+  "author": "yayaluoya <yayaluoya@sina.com>",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yayaluoya/com-tools.git"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist_esm/index.js",
+      "require": "./dist/index.js"
     },
-    "exports": {
-        ".": {
-            "import": "./dist_esm/index.js",
-            "require": "./dist/index.js"
-        },
-        "./*": {
-            "import": "./dist_esm/*.js",
-            "require": "./dist/*.js"
-        }
-    },
-    "scripts": {
-        "rm-dist": "node ./.node/clearDist.js",
-        "打包Src": "node ./.node/build.js",
-        "npm-publish": "npm publish"
-    },
-    "keywords": [
-        "yayaluoya",
-        "tool"
-    ],
-    "dependencies": {
-        "@types/ali-oss": "^6.16.7",
-        "@types/node": "^18.11.18",
-        "@types/prettier": "^2.7.2",
-        "@types/uni-app": "^1.4.4",
-        "@types/ws": "^8.5.4",
-        "ali-oss": "^6.17.1",
-        "axios": "^0.27.2",
-        "chalk": "^4.1.2",
-        "commander": "^9.4.1",
-        "crypto-js": "^4.1.1",
-        "internal-ip": "^6.2.0",
-        "js-base64": "^3.7.2",
-        "moment": "^2.29.4",
-        "ws": "^8.8.1"
-    },
-    "devDependencies": {}
+    "./*": {
+      "import": "./dist_esm/*.js",
+      "require": "./dist/*.js"
+    }
+  },
+  "scripts": {
+    "rm-dist": "node ./.node/clearDist.js",
+    "打包Src": "node ./.node/build.js",
+    "npm-publish": "npm publish"
+  },
+  "keywords": [
+    "yayaluoya",
+    "tool"
+  ],
+  "dependencies": {
+    "@types/ali-oss": "^6.16.7",
+    "@types/node": "^18.11.18",
+    "@types/prettier": "^2.7.2",
+    "@types/uni-app": "^1.4.4",
+    "@types/ws": "^8.5.4",
+    "ali-oss": "^6.17.1",
+    "axios": "^0.27.2",
+    "chalk": "^4.1.2",
+    "commander": "^9.4.1",
+    "crypto-js": "^4.1.1",
+    "internal-ip": "^6.2.0",
+    "js-base64": "^3.7.2",
+    "moment": "^2.29.4",
+    "ws": "^8.8.1"
+  },
+  "devDependencies": {}
 }

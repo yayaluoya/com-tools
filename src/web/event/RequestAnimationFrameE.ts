@@ -5,19 +5,22 @@ import { instanceTool } from '../../instanceTool';
  * RequestAnimationFrame事件
  */
 @instanceTool()
-export class RequestAnimationFrameE<T extends string = string> extends BaseEvent<'exec' | T> {
-    /** 单例 */
-    static readonly instance: RequestAnimationFrameE;
-    static readonly I: RequestAnimationFrameE;
+export class RequestAnimationFrameE extends BaseEvent<'exec' | 'e'> {
+  /** 单例 */
+  static readonly instance: RequestAnimationFrameE;
+  /** 单例 */
+  static readonly I: RequestAnimationFrameE;
 
-    constructor() {
-        super();
-        let time = Date.now();
-        let f = () => {
-            this.emit('exec', Date.now() - time);
-            time = Date.now();
-            requestAnimationFrame(f);
-        };
-        requestAnimationFrame(f);
-    }
+  constructor() {
+    super();
+    let time = Date.now();
+    let f = () => {
+      let now = Date.now();
+      this.emit('exec', now - time);
+      this.emit('e', now - time);
+      time = now;
+      requestAnimationFrame(f);
+    };
+    requestAnimationFrame(f);
+  }
 }

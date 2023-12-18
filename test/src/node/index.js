@@ -15,14 +15,14 @@ require('./cmd');
 
 console.log('获取apipost列表');
 require('yayaluoya-tool/node/getApipostList')
-    .getApipostList('b19ad72b1fe67014', '5b576e616b1149bb')
-    .then((data) => {
-        fs.writeFileSync(
-            path.join(__dirname, '../../dist/openapiList.json'),
-            JSON.stringify(data, undefined, 2),
-        );
-        console.log('获取apipost列表完成');
-    });
+  .getApipostList('b19ad72b1fe67014', '5b576e616b1149bb')
+  .then((data) => {
+    fs.writeFileSync(
+      path.join(__dirname, '../../dist/openapiList.json'),
+      JSON.stringify(data, undefined, 2),
+    );
+    console.log('获取apipost列表完成');
+  });
 
 require('yayaluoya-tool');
 console.log(1);

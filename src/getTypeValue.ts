@@ -5,5 +5,5 @@
  * @returns
  */
 export function getTypeValue<T = any>(v: T) {
-    return v;
+  return v;
 }

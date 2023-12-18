@@ -1,6 +1,6 @@
 import { BaseItemPool } from 'yayaluoya-tool/BaseItemPool';
 class BaseItemPoolTest extends BaseItemPool {
-    static I = new BaseItemPool();
+  static I = new BaseItemPool();
 }
 
 console.log('对象池测试');

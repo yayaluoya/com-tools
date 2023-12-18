@@ -13,23 +13,23 @@ const instanceName = Symbol();
  * @param {*} arg new时带的参数
  */
 export function instanceTool<T extends new (...arg: any[]) => any>(
-    names: ArraifyT<string> = ['instance', 'I'],
-    passive = true,
-    ...arg: ConstructorParameters<T>
+  names: ArraifyT<string> = ['instance', 'I'],
+  passive = true,
+  ...arg: ConstructorParameters<T>
 ) {
-    return function (class_: T) {
-        let newF = () => {
-            return class_[instanceName] || (class_[instanceName] = new class_(...arg));
-        };
-        passive || newF();
-        for (let name of ArrayUtils.arraify(names)) {
-            Object.defineProperty(class_, name, {
-                configurable: false,
-                enumerable: true,
-                get() {
-                    return newF();
-                },
-            });
-        }
+  return function (class_: T) {
+    let newF = () => {
+      return class_[instanceName] || (class_[instanceName] = new class_(...arg));
     };
+    passive || newF();
+    for (let name of ArrayUtils.arraify(names)) {
+      Object.defineProperty(class_, name, {
+        configurable: false,
+        enumerable: true,
+        get() {
+          return newF();
+        },
+      });
+    }
+  };
 }
