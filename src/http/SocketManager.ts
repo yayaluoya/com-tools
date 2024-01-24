@@ -23,7 +23,7 @@ export class SocketManager extends BaseEvent<'connection' | 'message' | 'close'>
   static readonly I: SocketManager;
 
   /** ws 服务 实例 */
-  wss: Server<WebSocket>;
+  wss: Server<typeof WebSocket>;
   /** 连接socket列表 */
   wsList: {
     /** ws实例列表 */
