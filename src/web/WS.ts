@@ -59,26 +59,30 @@ export class WS extends BaseEvent<'close' | 'error' | 'message' | 'open'> implem
 
   /**
    * 事件处理
+   * close
    */
-  private async handleEvent_close(e: WebSocketEventMap['close']) {
+  protected async handleEvent_close(e: WebSocketEventMap['close']) {
     return e;
   }
   /**
    * 事件处理
+   * error
    */
-  private async handleEvent_error(e: WebSocketEventMap['error']) {
+  protected async handleEvent_error(e: WebSocketEventMap['error']) {
     return e;
   }
   /**
    * 事件处理
+   * message
    */
-  private async handleEvent_message(e: WebSocketEventMap['message']) {
+  protected async handleEvent_message(e: WebSocketEventMap['message']) {
     return e;
   }
   /**
    * 事件处理
+   * open
    */
-  private async handleEvent_open(e: WebSocketEventMap['open']) {
+  protected async handleEvent_open(e: WebSocketEventMap['open']) {
     return e;
   }
 }
