@@ -1,5 +1,5 @@
-const { BaseEvent } = require('yayaluoya-tool/BaseEvent');
-const { MouseE } = require('yayaluoya-tool/web/event/MouseE');
+const { BaseEvent } = require('yayaluoya-tool/dist/BaseEvent');
+const { MouseE } = require('yayaluoya-tool/dist/web/event/MouseE');
 
 let e = new BaseEvent();
 

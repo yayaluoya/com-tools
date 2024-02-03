@@ -1,4 +1,4 @@
-const { ArrayUtils } = require('yayaluoya-tool/ArrayUtils');
+const { ArrayUtils } = require('yayaluoya-tool/dist/ArrayUtils');
 
 /**
  * 数组工具测试

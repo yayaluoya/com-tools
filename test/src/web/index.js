@@ -1,10 +1,10 @@
 import 'core-js';
 
-const { Clipboard } = require('yayaluoya-tool/web/Clipboard');
-const { MathUtils } = require('yayaluoya-tool/MathUtils');
-const { TimeUtils } = require('yayaluoya-tool/TimeUtils');
-const { ObjectUtils } = require('yayaluoya-tool/obj/ObjectUtils');
-import { getSpanRect } from 'yayaluoya-tool/web/getSpanRect';
+const { Clipboard } = require('yayaluoya-tool/dist/web/Clipboard');
+const { MathUtils } = require('yayaluoya-tool/dist/MathUtils');
+const { TimeUtils } = require('yayaluoya-tool/dist/TimeUtils');
+const { ObjectUtils } = require('yayaluoya-tool/dist/obj/ObjectUtils');
+import { getSpanRect } from 'yayaluoya-tool/dist/web/getSpanRect';
 
 console.log('web端的测试');
 
@@ -29,8 +29,8 @@ window.TimeUtils = TimeUtils;
 window.MathUtils = MathUtils;
 window.ObjectUtils = ObjectUtils;
 console.log(2);
-require('yayaluoya-tool');
-import 'yayaluoya-tool';
+require('yayaluoya-tool/dist/index');
+import 'yayaluoya-tool/dist/index';
 
 console.log(1);
 

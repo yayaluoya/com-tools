@@ -1,16 +1,14 @@
 {
-    "files": [],
-    "references": [
-        {
-            "path": "./tsconfig.node.json"
-        },
-        {
-            "path": "./tsconfig.app.json"
-        }
-    ],
-    "compilerOptions": {
-        "paths": {
-            "yayaluoya-tool/*": ["./node_modules/yayaluoya-tool/src/*"]
-        }
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    },
+    {
+      "path": "./tsconfig.app.json"
     }
+  ],
+  "compilerOptions": {
+    "paths": {}
+  }
 }

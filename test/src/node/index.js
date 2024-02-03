@@ -14,7 +14,7 @@ require('./server/server');
 require('./cmd');
 
 console.log('获取apipost列表');
-require('yayaluoya-tool/node/getApipostList')
+require('yayaluoya-tool/dist/node/getApipostList')
   .getApipostList('b19ad72b1fe67014', '5b576e616b1149bb')
   .then((data) => {
     fs.writeFileSync(
@@ -24,6 +24,6 @@ require('yayaluoya-tool/node/getApipostList')
     console.log('获取apipost列表完成');
   });
 
-require('yayaluoya-tool');
+require('yayaluoya-tool/dist/index');
 console.log(1);
-import('yayaluoya-tool');
+import('yayaluoya-tool/dist_esm/index.js');

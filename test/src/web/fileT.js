@@ -1,6 +1,6 @@
-const { FileT } = require('yayaluoya-tool/web/FileT');
-const { AliOSST } = require('yayaluoya-tool/web/AliYun/AliOSST');
-const { GetFileItem } = require('yayaluoya-tool/web/GetFileItem');
+const { FileT } = require('yayaluoya-tool/dist/web/FileT');
+const { AliOSST } = require('yayaluoya-tool/dist/web/AliYun/AliOSST');
+const { GetFileItem } = require('yayaluoya-tool/dist/web/GetFileItem');
 
 const fileSelect = new GetFileItem();
 const filesSelect = new GetFileItem('', 999);

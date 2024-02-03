@@ -1,4 +1,4 @@
-const { ArrayUtils } = require('yayaluoya-tool/ArrayUtils');
+const { ArrayUtils } = require('yayaluoya-tool/dist/ArrayUtils');
 
 // console.log(ArrayUtils.at([1, 2, 3], -2));
 

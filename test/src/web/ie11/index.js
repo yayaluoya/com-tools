@@ -1,4 +1,4 @@
-const { ObjectUtils } = require('yayaluoya-tool/obj/ObjectUtils');
+const { ObjectUtils } = require('yayaluoya-tool/dist/obj/ObjectUtils');
 const a = require('./a');
 
 console.log('对象克隆测试', ObjectUtils.clone2({ a: 10 }));

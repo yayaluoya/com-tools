@@ -1,4 +1,4 @@
-const { Mes: Mes_ } = require('yayaluoya-tool/web/Mes');
+const { Mes: Mes_ } = require('yayaluoya-tool/dist/web/Mes');
 
 class Mes extends Mes_ {
   static intervalTime = 3000;

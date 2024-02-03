@@ -1,4 +1,4 @@
-const { ObjectUtils } = require('yayaluoya-tool/obj/ObjectUtils');
+const { ObjectUtils } = require('yayaluoya-tool/dist/obj/ObjectUtils');
 
 console.log(
   '克隆对象1',

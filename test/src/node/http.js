@@ -1,4 +1,4 @@
-const { BaseApiCon } = require('yayaluoya-tool/node/BaseApiCon');
+const { BaseApiCon } = require('yayaluoya-tool/dist/node/BaseApiCon');
 
 class H extends BaseApiCon {
   get op() {

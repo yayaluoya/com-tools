@@ -4,19 +4,10 @@
   "description": "yayaluoya常用的一些工具",
   "author": "yayaluoya <yayaluoya@sina.com>",
   "license": "ISC",
+  "types": "./src/_d/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/yayaluoya/com-tools.git"
-  },
-  "exports": {
-    ".": {
-      "import": "./dist_esm/index.js",
-      "require": "./dist/index.js"
-    },
-    "./*": {
-      "import": "./dist_esm/*.js",
-      "require": "./dist/*.js"
-    }
   },
   "scripts": {
     "rm-dist": "node ./.node/clearDist.js",
